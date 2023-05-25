@@ -1,0 +1,117 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+*{
+-fx-font-family: Roboto;
+-fx-base-color-focus:#09b6bc;
+-fx-base-color-unfocus:#4d4d4d;
+-fx-base-color-etiquetas:#4d4d4d;
+-fx-base-color-titulos:#d0242c;
+-fx-base-color-id:#00c853;
+
+
+}
+.jfx-titulo-label{
+    -fx-font-size:28px;
+    -fx-padding: 5 0 5 0;
+    -fx-text-fill:-fx-base-color-titulos;
+    -fx-font-weight:bold;
+    -fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.6),2,0.0,1,2);
+    
+}
+.vbox-jugador1{
+    -fx-border-color:#000099;
+    -fx-border-width:2px;
+   
+}
+
+.vbox-jugador2{
+    -fx-border-color:#999900;
+    -fx-border-width:2px;
+}
+
+.anchor-pane-Font{
+   -fx-background-color: #99ffcc;
+  
+}
+ 
+ 
+.gridPaneTablero{
+   -fx-background-image: url("../resources/Tablero.png");
+    -fx-background-size: auto 100%;
+    -fx-background-position: center center;;
+    -fx-background-repeat: no-repeat;
+}
+.jfx-text-field{
+       -fx-font-size:12px;
+    -fx-pref-width:100px;
+    -fx-min-width:100px;
+    -fx-max-width:100px;
+}
+
+.label-Jugador1{
+    -fx-background-color: #000099;
+     -fx-text-fill: #f2f2f2; /* Cambia el color de letra a rojo */
+    -fx-font-size: 14px; 
+}
+.txt-Jugador1{
+    -fx-prompt-text-fill:#000099;
+         -jfx-focus-color:#000099;
+         -jfx-unfocus-color:#000099;
+}
+.label-Jugador2{
+    -fx-background-color: #999900;
+     -fx-text-fill: #f2f2f2; /* Cambia el color de letra a rojo */
+    -fx-font-size: 14px; 
+}
+.txt-Jugador2{
+    -fx-prompt-text-fill:#999900;
+         -jfx-focus-color:#999900;
+         -jfx-unfocus-color:#999900;
+}
+
+.hbox-centro{
+     -fx-background-color: #f2f2f2;
+  -fx-padding: 10px;
+  -fx-effect: dropshadow(three-pass-box, rgba(33, 150, 243, 1), 10, 0, 0, 0);
+}
+
+.jfx-button{
+    -fx-background-color: #660000;
+    -jfx-button-type: RAISED;
+    -fx-opacity: 0.8;
+    -fx-content-display: left;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-alignment:CENTER;
+    -fx-graphic-text-gap: 10px;
+}
+.jfx-button .jfx-rippler-{-jfx-rippler-fill: white;}
+.jfx-button:hover, .button:hover{-fx-background-color: #FF6D00;}
+.jfx-btn-jugar{
+-fx-background-image: url("../resources/play.png");
+  -fx-background-size: 30px 30px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;}
+
+.jfx-btn-jugar{-fx-background-color: #23B82E;}
+.jfx-btn-jugar:hover{-fx-background-color: #4efd5c;}
+.jfx-btn-cancelar{
+-fx-background-image: url("../resources/cancelar.png");
+  -fx-background-size: 30px 30px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;}
+.jfx-btn-cancelar{-fx-background-color: #CC0000;}
+.jfx-btn-cancelar:hover{-fx-background-color: #f95454;}
+.jfx-btn-propiedades1 {
+     -fx-font-size:12px;
+    -fx-background-color: #999900; /* Cambia el color de fondo a rojo */
+    -fx-text-fill: #FFFFFF; /* Cambia el color del texto a blanco */
+}
+.jfx-btn-propiedades2 {
+    -fx-font-size:12px;
+    -fx-background-color: #000099; /* Cambia el color de fondo a rojo */
+    -fx-text-fill: #FFFFFF; /* Cambia el color del texto a blanco */
+}
