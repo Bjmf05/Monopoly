@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
    <children>
-      <GridPane fx:id="gridPaneTablero" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" styleClass="gridPaneTablero" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+      <GridPane fx:id="gridPaneTablero" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" styleClass="gridPaneTablero" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="95.0" />
             <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="59.0" />
@@ -34,30 +36,50 @@
             <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="-Infinity" prefHeight="58.0" vgrow="SOMETIMES" />
          </rowConstraints>
-      </GridPane>
-      <HBox alignment="CENTER" layoutX="31.0" layoutY="386.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: ;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
          <children>
-            <JFXButton text="Finalizar Juego" />
-            <JFXButton text="Vender" />
-            <JFXButton text="Hipotecar" />
-            <JFXButton text="Pagar Hipoteca" />
-            <JFXButton text="Terminar Turno" />
+            <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fx:id="imgDado2" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/fondoDado.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="27.0" prefWidth="43.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <children>
+                  <ImageView fx:id="imgDado1" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/fondoDado.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Label fx:id="lblresul" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER" layoutX="31.0" layoutY="386.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" style="-fx-background-color: ;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+         <children>
+            <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" text="Finalizar Juego" />
+            <JFXButton fx:id="btnPagarHipoteca" onAction="#onActionBtnPagarHipoteca" text="Pagar Hipoteca" />
+            <JFXButton fx:id="btnLanzarDados" onAction="#onActionBtnLanzarDados" text="Lanzar Dados" />
+            <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" text="Terminar Turno" />
          </children>
       </HBox>
       <VBox alignment="CENTER" layoutX="586.0" layoutY="82.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador1" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label styleClass="label-Jugador2" text="Name1" />
+            <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
             <Label styleClass="label-Jugador2" text="Dinero:" />
             <Label styleClass="label-Jugador2" text="0" />
-            <JFXButton styleClass="jfx-btn-propiedades1" text="Propiedades" />
+            <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
          </children>
       </VBox>
       <VBox alignment="CENTER" layoutX="596.0" layoutY="92.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
          <children>
-            <Label styleClass="label-Jugador1" text="Name2" />
+            <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
             <Label styleClass="label-Jugador1" text="Dinero:" />
             <Label styleClass="label-Jugador1" text="0" />
-            <JFXButton styleClass="jfx-btn-propiedades2" text="Propiedades" />
+            <JFXButton fx:id="btnPropiedades2" onAction="#onActionBtnPropiedades2" styleClass="jfx-btn-propiedades2" text="Propiedades" />
          </children>
       </VBox>
    </children>

@@ -5,12 +5,17 @@
 package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
+import cr.ac.una.monopoly.util.FlowController;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -23,9 +28,10 @@ import javafx.stage.Stage;
  * @author Servidor
  */
 public class LogInViewController extends Controller implements Initializable {
+   
    @FXML
     private AnchorPane root;
-       
+      
 
     @FXML
     private JFXButton btnCancelar;
@@ -48,6 +54,22 @@ public class LogInViewController extends Controller implements Initializable {
     @FXML
     private TextField txtJugador2;
 
+    public String getTxtJugador1() {
+        return txtJugador1.getText();
+    }
+
+    public void setTxtJugador1(TextField txtJugador1) {
+        this.txtJugador1 = txtJugador1;
+    }
+
+    public String getTxtJugador2() {
+        return txtJugador2.getText();
+    }
+
+    public void setTxtJugador2(TextField txtJugador2) {
+        this.txtJugador2 = txtJugador2;
+    }
+
    
        @FXML
     void onActionCancelar(ActionEvent event) {
@@ -55,10 +77,13 @@ public class LogInViewController extends Controller implements Initializable {
     }
 
     @FXML
-    void onActionJugar(ActionEvent event) {
-
-    }
-
+void onActionJugar(ActionEvent event) throws IOException {
+ FlowController.getInstance().goMain();
+   PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView"); 
+   String jugador1 = getTxtJugador1();
+   String jugador2 = getTxtJugador2();
+    principalView.nombreJugadores(jugador1,jugador2);
+}
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {

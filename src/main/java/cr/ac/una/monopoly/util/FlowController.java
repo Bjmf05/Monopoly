@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package cr.ac.una.monopoly.util;
-
 import cr.ac.una.monopoly.App;
 import java.io.IOException;
 import java.util.HashMap;
@@ -85,7 +84,7 @@ public class FlowController {
             this.mainStage.setScene(new Scene(FXMLLoader.load(App.class.getResource("view/PrincipalView.fxml"), this.idioma)));
             this.mainStage.show();
         } catch (IOException ex) {
-           // java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE, "Error inicializando la vista base.", ex);
+           java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE, "Error inicializando la vista base.", ex);
         }
     }
 
