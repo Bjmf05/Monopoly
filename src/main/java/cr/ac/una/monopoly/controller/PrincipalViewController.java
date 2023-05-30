@@ -75,7 +75,16 @@ public class PrincipalViewController extends Controller implements Initializable
         int dado1=(int)(Math.random()*6)+1;
     int dado2=(int)(Math.random()*6)+1;
      int total = dado1+dado2;
-    lblresul.setText("total"+total);
+    lblresul.setText("Suma: "+total);
+    valDados=total;
+    valTotal+=valDados;
+    
+    if (valTotal>32){
+    valTotal = 0;
+    //txfJugador1.setText(String.valueOf(valTotal));
+    }
+    else { /*txfJugador1.setText(String.valueOf(valTotal));*/}
+    txfJugador1.setText(String.valueOf(valTotal));
     Image uno=new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado1.png"));
     Image dos=new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado2.png"));
     Image tres=new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado3.png"));
@@ -131,11 +140,58 @@ public class PrincipalViewController extends Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        Datos datos = (Datos) AppContext.getInstance().get("Llave");
+   /* txfJugador1.setText(datos.getJugador1());
+    txfJugador2.setText(datos.getJugador2());*/
+    lblName1.setText(datos.getJugador1());
+    lblName2.setText(datos.getJugador2());
+    
+    Circle ficha1 = crearFicha(Color.GREEN);
+   // Circle ficha2 = crearFicha(Color.BLUE); 
+    
+    gridPaneTablero.add(ficha1, 8, 8);
+   // gridPaneTablero.add(ficha2, 8, 8);
     }    
 
     @Override
     public void initialize() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+   
+   private Circle crearFicha(Color color) {
+    Circle ficha = new Circle(14);
+    ficha.setFill(color);
+
+    ficha.setOnMouseClicked(event -> {
+
+        //valDados; No esta al 100 esta funcion aun hay que trabajarla 
+        int posInicial=0;
+        int pos =0;
+            pos+=valTotal;
+        int resto=0;
+        
+         if (pos <=8) {
+            fila = 8;
+            columna = 8 - pos;
+        } else if (pos >8 || pos <= 17) {
+            fila = 8 - valTotal;
+            columna = 0;
+        } else if (pos > 17 || pos <= 25) {
+            fila = 0;
+            columna = 0 + valDados;
+        } else if (pos > 25 || pos <= 32) {
+            fila = 0 + valDados;
+            columna = 8;
+        } 
+      
+        txfJugador2.setText(String.valueOf(resto));
+    
+        gridPaneTablero.setColumnIndex(ficha, columna);
+        gridPaneTablero.setRowIndex(ficha, fila);
+ 
+        
+    });
+
+    return ficha;
+}
     
 }
