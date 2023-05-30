@@ -31,22 +31,20 @@ public class LogInViewController extends Controller implements Initializable {
    
    @FXML
     private AnchorPane root;
-      
 
     @FXML
     private JFXButton btnCancelar;
 
     @FXML
     private JFXButton btnJugar;
-       @FXML
- private ImageView imvFondo;
     @FXML
- 
+    private ImageView imvFondo;
+    @FXML
+
     private Label lblJugador1;
 
     @FXML
     private Label lblJugador2;
-
 
     @FXML
     private TextField txtJugador1;
@@ -70,30 +68,70 @@ public class LogInViewController extends Controller implements Initializable {
         this.txtJugador2 = txtJugador2;
     }
 
-   
-       @FXML
+    @FXML
     void onActionCancelar(ActionEvent event) {
-        ((Stage)btnCancelar.getScene().getWindow()).close();
+        ((Stage) btnCancelar.getScene().getWindow()).close();
+
     }
 
     @FXML
-void onActionJugar(ActionEvent event) throws IOException {
- FlowController.getInstance().goMain();
-   PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView"); 
-   String jugador1 = getTxtJugador1();
-   String jugador2 = getTxtJugador2();
-    principalView.nombreJugadores(jugador1,jugador2);
-}
-  
+    void onActionJugar(ActionEvent event) throws IOException {
+
+        try {
+            if (txtJugador1.getText() == null || txtJugador1.getText().isEmpty()) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el juador 1", getStage(), "Es necesario digitar el Jugador 1");
+            } else if (txtJugador2.getText() == null || txtJugador2.getText().isEmpty()) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el juador 2", getStage(), "Es necesario digitar el Jugador 2");
+            } else {
+                Datos datos = new Datos();
+                datos.setJugador1(txtJugador1.getText());
+                datos.setJugador2(txtJugador2.getText());
+                String Llave = "Llave";
+                AppContext.getInstance().set(Llave, datos);
+
+                FlowController.getInstance().goMain();
+                // PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
+                getStage().close();
+                //String jugador1 = getTxtJugador1();
+                //String jugador2 = getTxtJugador2();
+                //principalView.nombreJugadores(jugador1, jugador2);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(LogInViewController.class.getName()).log(Level.SEVERE, "Error ingresando.", ex);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-     
-    }    
+    }
 
     @Override
     public void initialize() {
-      
-            }
 
+    }
+
+}
+
+class Datos {
+
+    private String Jugador1;
+    private String Jugador2;
+
+    public String getJugador1() {
+        return this.Jugador1;
+    }
+
+    public void setJugador1(String Jugador1) {
+        this.Jugador1 = Jugador1;
+    }
+
+    public String getJugador2() {
+        return this.Jugador2;
+    }
+
+    public void setJugador2(String Jugador2) {
+        this.Jugador2 = Jugador2;
+    }
 }
