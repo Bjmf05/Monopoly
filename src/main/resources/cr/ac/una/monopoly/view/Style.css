@@ -12,6 +12,14 @@
 
 
 }
+
+.jfx-imvFondo {
+    -fx-image: url("../resources/Tablero.png");
+    -fx-fit-height: 100%;
+    -fx-fit-width: 100%;
+}
+
+
 .jfx-titulo-label{
     -fx-font-size:28px;
     -fx-padding: 5 0 5 0;
@@ -42,6 +50,8 @@
     -fx-background-size: auto 100%;
     -fx-background-position: center center;;
     -fx-background-repeat: no-repeat;
+    -fx-fit-height: 100%;
+    -fx-fit-width: 100%;
 }
 .jfx-text-field{
        -fx-font-size:12px;
@@ -114,4 +124,18 @@
     -fx-font-size:12px;
     -fx-background-color: #000099; /* Cambia el color de fondo a rojo */
     -fx-text-fill: #FFFFFF; /* Cambia el color del texto a blanco */
+}
+
+.jfx-btnimg-lanzarDados{
+    -fx-alignment: center-right;
+    -fx-font-size: 13px;
+    -fx-padding: 10px;
+    -fx-background-image: url("../resources/Icono.png");
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 30px 30px;
+    -fx-background-position:8 7;
+    /* xy*/
+    -fx-padding: 5 5 5 2; 
 }

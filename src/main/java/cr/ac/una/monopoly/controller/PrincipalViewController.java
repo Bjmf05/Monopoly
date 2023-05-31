@@ -5,7 +5,10 @@
 package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import cr.ac.una.monopoly.util.AppContext;
 import cr.ac.una.monopoly.util.FlowController;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -15,6 +18,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import cr.ac.una.monopoly.controller.Datos;
+import javafx.geometry.Bounds;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
  * FXML Controller class
@@ -22,6 +29,11 @@ import javafx.scene.layout.GridPane;
  * @author Servidor
  */
 public class PrincipalViewController extends Controller implements Initializable {
+
+    @FXML
+    private JFXTextField txfJugador2;
+    @FXML
+    private JFXTextField txfJugador1;
 
    public void nombreJugadores(String nombre1,String nombre2){
        lblName1.setText(nombre1);
@@ -63,6 +75,15 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     private Label lblresul;
 
+    private int valDados= 0;
+    private int valTotal=0;
+    private int comodin;
+    
+    private int fila;
+    
+    private int columna;
+    
+    
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
         FlowController.getInstance().salir();
@@ -72,9 +93,10 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     void onActionBtnLanzarDados(ActionEvent event) {
         
-        int dado1=(int)(Math.random()*6)+1;
+    int dado1=(int)(Math.random()*6)+1;
     int dado2=(int)(Math.random()*6)+1;
-     int total = dado1+dado2;
+    int total = dado1+dado2;
+   
     lblresul.setText("Suma: "+total);
     valDados=total;
     valTotal+=valDados;
@@ -93,21 +115,21 @@ public class PrincipalViewController extends Controller implements Initializable
     Image seis=new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado6.png"));
     switch(dado1){
         case 1:imgDado1.setImage(uno); break;
-     case 2:imgDado1.setImage(dos); break;
-      case 3:imgDado1.setImage(tres); break;
-       case 4:imgDado1.setImage(cuatro); break;
+        case 2:imgDado1.setImage(dos); break;
+        case 3:imgDado1.setImage(tres); break;
+        case 4:imgDado1.setImage(cuatro); break;
         case 5:imgDado1.setImage(cinco); break;
-         case 6:imgDado1.setImage(seis); break;
+        case 6:imgDado1.setImage(seis); break;
     }
     switch(dado2){
         case 1:imgDado2.setImage(uno); break;
-     case 2:imgDado2.setImage(dos); break;
-      case 3:imgDado2.setImage(tres); break;
-       case 4:imgDado2.setImage(cuatro); break;
+        case 2:imgDado2.setImage(dos); break;
+        case 3:imgDado2.setImage(tres); break;
+        case 4:imgDado2.setImage(cuatro); break;
         case 5:imgDado2.setImage(cinco); break;
-         case 6:imgDado2.setImage(seis); break;
+        case 6:imgDado2.setImage(seis); break;
     }
-   btnLanzarDados.setDisable(true);
+   //btnLanzarDados.setDisable(true);
 
     }
 
@@ -130,7 +152,7 @@ public class PrincipalViewController extends Controller implements Initializable
     void onActionBtnTerminarTurno(ActionEvent event) {
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         imgDado2.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
-         btnLanzarDados.setDisable(false);
+        btnLanzarDados.setDisable(false);
         
     }
 
@@ -139,8 +161,7 @@ public class PrincipalViewController extends Controller implements Initializable
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        Datos datos = (Datos) AppContext.getInstance().get("Llave");
+    Datos datos = (Datos) AppContext.getInstance().get("Llave");
    /* txfJugador1.setText(datos.getJugador1());
     txfJugador2.setText(datos.getJugador2());*/
     lblName1.setText(datos.getJugador1());
@@ -149,21 +170,30 @@ public class PrincipalViewController extends Controller implements Initializable
     Circle ficha1 = crearFicha(Color.GREEN);
    // Circle ficha2 = crearFicha(Color.BLUE); 
     
-    gridPaneTablero.add(ficha1, 8, 8);
+  //  gridPaneTablero.add(ficha1, 8, 8);
    // gridPaneTablero.add(ficha2, 8, 8);
     }    
-
     @Override
     public void initialize() {
     }
-   
-   private Circle crearFicha(Color color) {
+      
+    
+    
+    private Circle crearFicha(Color color) {
     Circle ficha = new Circle(14);
     ficha.setFill(color);
+    
+    Image fichaImage = new Image("/cr/ac/una/monopoly/resources/helicoptero.png");
+        
+        // Crear el ImageView de la ficha
+        ImageView fichaImageView = new ImageView(fichaImage);
+        fichaImageView.setFitWidth(40);
+        fichaImageView.setFitHeight(40);
+        gridPaneTablero.add(fichaImageView, 8, 8);
 
-    ficha.setOnMouseClicked(event -> {
+    fichaImageView.setOnMouseClicked(event -> {
 
-        //valDados; No esta al 100 esta funcion aun hay que trabajarla 
+        //valDados;
         int posInicial=0;
         int pos =0;
             pos+=valTotal;
@@ -187,11 +217,16 @@ public class PrincipalViewController extends Controller implements Initializable
     
         gridPaneTablero.setColumnIndex(ficha, columna);
         gridPaneTablero.setRowIndex(ficha, fila);
- 
+        gridPaneTablero.setColumnIndex(fichaImageView, columna);
+        gridPaneTablero.setRowIndex(fichaImageView, fila);
         
     });
 
     return ficha;
 }
+    
+    
+     
+    
     
 }

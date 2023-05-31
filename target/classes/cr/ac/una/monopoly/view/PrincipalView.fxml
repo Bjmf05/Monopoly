@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,78 +11,133 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
    <children>
-      <GridPane fx:id="gridPaneTablero" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" styleClass="gridPaneTablero" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="95.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="59.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="59.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="57.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="58.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="58.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="58.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="58.0" />
-            <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="99.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="-Infinity" prefHeight="60.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="31.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="-Infinity" prefHeight="58.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="562.0" spacing="20.0" HBox.hgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="imgDado2" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/fondoDado.png" />
-                     </image>
-                  </ImageView>
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="416.0" prefWidth="629.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="426.0" fitWidth="637.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <image>
+                                          <Image url="@../resources/Tablero.png" />
+                                       </image>
+                                    </ImageView>
+                                    <GridPane fx:id="gridPaneTablero" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="426.0" prefWidth="637.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="124.0" minWidth="-Infinity" prefWidth="102.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="-Infinity" prefWidth="63.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="81.0" minWidth="-Infinity" prefWidth="61.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.0" minWidth="-Infinity" prefWidth="61.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="77.0" minWidth="-Infinity" prefWidth="62.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="-Infinity" prefWidth="61.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="-Infinity" prefWidth="61.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="73.0" minWidth="-Infinity" prefWidth="62.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="131.0" minWidth="-Infinity" prefWidth="104.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="78.0" minHeight="-Infinity" prefHeight="68.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="47.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="52.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="58.0" minHeight="-Infinity" prefHeight="39.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="56.0" minHeight="-Infinity" prefHeight="42.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="53.0" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="48.0" minHeight="-Infinity" prefHeight="41.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="46.0" minHeight="-Infinity" prefHeight="41.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="78.0" minHeight="-Infinity" prefHeight="68.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                                             <children>
+                                                <ImageView fx:id="imgDado2" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/fondoDado.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="27.0" prefWidth="43.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                             <children>
+                                                <ImageView fx:id="imgDado1" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../resources/fondoDado.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
+                                          <Label fx:id="lblresul" text="Cuenta" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="73.0" prefWidth="643.0" spacing="35.0" style="-fx-background-color: ;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" prefHeight="40.0" prefWidth="150.0" text="Finalizar Juego" />
+                        <JFXButton fx:id="btnPagarHipoteca" onAction="#onActionBtnPagarHipoteca" prefHeight="40.0" prefWidth="150.0" text="Pagar Hipoteca" />
+                        <JFXButton fx:id="btnLanzarDados" buttonType="RAISED" onAction="#onActionBtnLanzarDados" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-lanzarDados" text="Lanzar Dados" />
+                        <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" prefHeight="40.0" prefWidth="150.0" text="Terminar Turno" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="27.0" prefWidth="43.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+            </VBox>
+            <VBox maxWidth="150.0" prefHeight="800.0" prefWidth="100.0" spacing="2.0" HBox.hgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="imgDado1" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/fondoDado.png" />
-                     </image>
-                  </ImageView>
+                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador1">
+                     <children>
+                        <JFXTextField fx:id="txfJugador1" promptText="Jugador 1">
+                           <padding>
+                              <Insets left="30.0" right="30.0" />
+                           </padding></JFXTextField>
+                        <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
+                        <Label styleClass="label-Jugador2" text="Dinero:" />
+                        <Label styleClass="label-Jugador2" text="0" />
+                        <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador2">
+                     <children>
+                        <JFXTextField fx:id="txfJugador2" promptText="Jugador 2">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="30.0" right="30.0" />
+                           </padding>
+                        </JFXTextField>
+                        <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
+                        <Label styleClass="label-Jugador1" text="Dinero:" />
+                        <Label styleClass="label-Jugador1" text="0" />
+                        <JFXButton fx:id="btnPropiedades2" onAction="#onActionBtnPropiedades2" styleClass="jfx-btn-propiedades2" text="Propiedades" />
+                     </children>
+                  </VBox>
                </children>
-            </HBox>
-            <Label fx:id="lblresul" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
-      <HBox alignment="CENTER" layoutX="31.0" layoutY="386.0" prefHeight="100.0" prefWidth="200.0" spacing="35.0" style="-fx-background-color: ;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
-         <children>
-            <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" text="Finalizar Juego" />
-            <JFXButton fx:id="btnPagarHipoteca" onAction="#onActionBtnPagarHipoteca" text="Pagar Hipoteca" />
-            <JFXButton fx:id="btnLanzarDados" onAction="#onActionBtnLanzarDados" text="Lanzar Dados" />
-            <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" text="Terminar Turno" />
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets top="40.0" />
+               </HBox.margin>
+            </VBox>
          </children>
       </HBox>
-      <VBox alignment="CENTER" layoutX="586.0" layoutY="82.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador1" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
-            <Label styleClass="label-Jugador2" text="Dinero:" />
-            <Label styleClass="label-Jugador2" text="0" />
-            <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" layoutX="596.0" layoutY="92.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador2" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="600.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
-         <children>
-            <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
-            <Label styleClass="label-Jugador1" text="Dinero:" />
-            <Label styleClass="label-Jugador1" text="0" />
-            <JFXButton fx:id="btnPropiedades2" onAction="#onActionBtnPropiedades2" styleClass="jfx-btn-propiedades2" text="Propiedades" />
-         </children>
-      </VBox>
    </children>
 </AnchorPane>

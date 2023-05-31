@@ -5,17 +5,22 @@
 package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import cr.ac.una.monopoly.util.AppContext;
 import cr.ac.una.monopoly.util.FlowController;
+import cr.ac.una.monopoly.util.Mensaje;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -28,8 +33,8 @@ import javafx.stage.Stage;
  * @author Servidor
  */
 public class LogInViewController extends Controller implements Initializable {
-   
-   @FXML
+
+    @FXML
     private AnchorPane root;
 
     @FXML
@@ -90,7 +95,7 @@ public class LogInViewController extends Controller implements Initializable {
                 AppContext.getInstance().set(Llave, datos);
 
                 FlowController.getInstance().goMain();
-                PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
+                // PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
                 getStage().close();
                 //String jugador1 = getTxtJugador1();
                 //String jugador2 = getTxtJugador2();
