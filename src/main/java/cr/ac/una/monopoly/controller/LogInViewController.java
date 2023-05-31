@@ -90,7 +90,7 @@ public class LogInViewController extends Controller implements Initializable {
                 AppContext.getInstance().set(Llave, datos);
 
                 FlowController.getInstance().goMain();
-                // PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
+                PrincipalViewController principalView = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
                 getStage().close();
                 //String jugador1 = getTxtJugador1();
                 //String jugador2 = getTxtJugador2();
