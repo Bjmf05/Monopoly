@@ -1,5 +1,14 @@
 cr\ac\una\monopoly\controller\Controller.class
 cr\ac\una\monopoly\util\FlowController.class
+cr\ac\una\monopoly\util\Respuesta.class
+cr\ac\una\monopoly\util\GridPanePosiciones.class
+cr\ac\una\monopoly\controller\PrincipalViewController$Position.class
+cr\ac\una\monopoly\controller\LogInViewController.class
+cr\ac\una\monopoly\util\GridPanePosiciones$Position.class
 cr\ac\una\monopoly\App.class
 cr\ac\una\unaplanilla\util\BindingUtils.class
 cr\ac\una\monopoly\util\AppContext.class
+cr\ac\una\monopoly\util\Mensaje.class
+cr\ac\una\monopoly\util\Formato.class
+cr\ac\una\monopoly\controller\Datos.class
+cr\ac\una\monopoly\controller\PrincipalViewController.class
