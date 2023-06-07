@@ -89,7 +89,7 @@
                   <HBox alignment="BOTTOM_CENTER" prefHeight="73.0" prefWidth="643.0" spacing="35.0" style="-fx-background-color: ;" VBox.vgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" prefHeight="40.0" prefWidth="150.0" text="Finalizar Juego" />
-                        <JFXButton fx:id="btnPagarHipoteca" onAction="#onActionBtnPagarHipoteca" prefHeight="40.0" prefWidth="150.0" text="Pagar Hipoteca" />
+                        <JFXButton fx:id="btnComprar" onAction="#onActionBtnComprar" prefHeight="40.0" prefWidth="150.0" text="Comprar" />
                         <JFXButton fx:id="btnLanzarDados" buttonType="RAISED" onAction="#onActionBtnLanzarDados" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-lanzarDados" text="Lanzar Dados" />
                         <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" prefHeight="40.0" prefWidth="150.0" text="Terminar Turno" />
                      </children>

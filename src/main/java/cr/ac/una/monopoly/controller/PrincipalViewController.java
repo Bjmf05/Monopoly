@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import cr.ac.una.monopoly.util.AppContext;
 import cr.ac.una.monopoly.util.FlowController;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,6 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.controller.Datos;
+import cr.ac.una.monopoly.util.Mensaje;
+import cr.ac.una.monopoly.util.Position;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.geometry.Bounds;
@@ -48,7 +49,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXButton btnLanzarDados;
 
     @FXML
-    private JFXButton btnPagarHipoteca;
+    private JFXButton btnComprar;
 
     @FXML
     private JFXButton btnPropiedades1;
@@ -76,13 +77,12 @@ public class PrincipalViewController extends Controller implements Initializable
 
     @FXML
     private Label lblresul;
+    private ImageView carta = new ImageView();  
 
     private int valDados= 0;
     private int valTotal=0;
        private int sumaTotal1=0;
          private int sumaTotal2=0;
-    private int comodin;
-    
     private int fila;
     
     private int columna;
@@ -108,7 +108,10 @@ void onActionBtnLanzarDados(ActionEvent event) {
     actualizarTextoJugador1();
     mostrarImagenDado(dado1, imgDado1);
     mostrarImagenDado(dado2, imgDado2);
+    revizar();
     btnLanzarDados.setDisable(true);
+   
+    
 }
 
 int lanzarDado() {
@@ -145,6 +148,112 @@ void actualizarTextoJugador1() {
     txfJugador1.setText(String.valueOf(valTotal));
 }
 
+void revizar() {
+    Position position = this.position.getPositionMap().get(valTotal);
+    String characteristic = position.getCharacteristic();
+    
+    carta.setImage(null); // Vaciar la imagen por defecto
+    
+    switch (characteristic) {
+        case "Suerte":
+            montarCarta();
+            break;
+        case "Ve a carcel":
+        case "Carcel":
+        case "Go":
+        case "Libre":
+            // No se requiere acción adicional
+            break;
+        default:
+            break;
+    }
+    
+    btnComprar.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel") ||
+                          characteristic.equals("Carcel") || characteristic.equals("Go") ||
+                          characteristic.equals("Libre"));
+}
+void montarCarta(){
+
+mostrarImagenSuerte(carta);
+int startColumn = 3;  // Columna inicial
+int endColumn = 6;    // Columna final
+int startRow = 3;     // Fila inicial
+int endRow = 6;       // Fila final
+GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
+gridPaneTablero.getChildren().add(carta);
+
+}
+
+void mostrarImagenSuerte(ImageView imageView){
+    int numeroSuerte = (int)(Math.random()*16) +1;
+      Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte1.png"));
+      Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte2.png"));
+    Image tres = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte3.png"));
+    Image cuatro = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte4.png"));
+    Image cinco = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte5.png"));
+    Image seis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte6.png"));
+  Image siete = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte7.png"));
+    Image ocho = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte8.png"));
+    Image nueve = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte9.png"));
+    Image diez = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte10.png"));
+    Image once = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte11.png"));
+    Image doce = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte12.png"));
+    Image trece = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte13.png"));
+    Image catorce = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte14.png"));
+    Image quince = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte15.png"));
+    Image dieciseis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte16.png"));
+
+    switch (numeroSuerte) {
+        case 1:
+            imageView.setImage(uno);
+            break;
+        case 2:
+            imageView.setImage(dos);
+            break;
+        case 3:
+            imageView.setImage(tres);
+            break;
+        case 4:
+            imageView.setImage(cuatro);
+            break;
+        case 5:
+            imageView.setImage(cinco);
+            break;
+        case 6:
+            imageView.setImage(seis);
+            break;
+        case 7:
+            imageView.setImage(siete);
+            break;
+        case 8:
+            imageView.setImage(ocho);
+            break;
+        case 9:
+            imageView.setImage(nueve);
+            break;
+        case 10:
+            imageView.setImage(diez);
+            break;
+        case 11:
+            imageView.setImage(once);
+            break;
+        case 12:
+            imageView.setImage(doce);
+            break;
+        case 13:
+            imageView.setImage(trece);
+            break;
+        case 14:
+            imageView.setImage(catorce);
+            break;
+        case 15:
+            imageView.setImage(quince);
+            break;
+        case 16:
+            imageView.setImage(dieciseis);
+            break;
+    }
+}
 void mostrarImagenDado(int dado, ImageView imageView) {
     Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado1.png"));
     Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado2.png"));
@@ -176,7 +285,21 @@ void mostrarImagenDado(int dado, ImageView imageView) {
 }
 
     @FXML
-    void onActionBtnPagarHipoteca(ActionEvent event) {
+    void onActionBtnComprar(ActionEvent event) {
+    Position position = this.position.getPositionMap().get(valTotal);
+Mensaje mensaje = new Mensaje();
+    if (position != null && !position.isOwned()&& position.getPrice() != 0 ) {
+        position.setOwnedBy(jugadorActual);
+        // Realizar las acciones necesarias al comprar la posición
+        // Por ejemplo, actualizar el estado de la posición en la GUI, ajustar el saldo del jugador, etc.
+        // Mostrar un mensaje de confirmación
+       String mensajeTexto = "¡Has comprado la Propiedad " + position.getName() + "!";
+        mensaje.showConfirmation("Confirmación de compra", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+     } else {
+       String mensajeTexto = "La Propiedad " + position.getName() + " no está disponible para comprar.";
+        mensaje.showConfirmation("Error", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+      }
+    btnComprar.setDisable(true);
 
     }
 
@@ -196,6 +319,8 @@ private int jugadorActual = 1;
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         imgDado2.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         btnLanzarDados.setDisable(false);
+        btnComprar.setDisable(false);
+        carta.setImage(null);
         jugadorActual = (jugadorActual == 1) ? 2 : 1;
     if (!fichaJugador2Creada) {
         Circle ficha2 = crearFicha(Color.BLUE, fichaJugador2);
@@ -215,72 +340,11 @@ private int jugadorActual = 1;
     Circle ficha1 = crearFicha(Color.GREEN, fichaJugador1);
         
  
-   initPositionMap();
     }    
     @Override
     public void initialize() {
     }
-      
-    
-    private Map<Integer, Position> positionMap;
-
-// Clase auxiliar para representar una posición en el GridPane
-private class Position {
-    private int row;
-    private int column;
-
-    public Position(int row, int column) {
-        this.row = row;
-        this.column = column;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-}
-
-// Método de inicialización para crear el mapeo de posiciones
-private void initPositionMap() {
-            positionMap = new HashMap<>();
-    positionMap.put(0, new Position(8, 8));
-    positionMap.put(1, new Position(8, 7));
-    positionMap.put(2, new Position(8, 6));
-    positionMap.put(3, new Position(8, 5));
-    positionMap.put(4, new Position(8, 4));
-    positionMap.put(5, new Position(8, 3));
-    positionMap.put(6, new Position(8, 2));
-    positionMap.put(7, new Position(8, 1));
-    positionMap.put(8, new Position(8, 0));
-    positionMap.put(9, new Position(7, 0));
-    positionMap.put(10, new Position(6, 0));
-    positionMap.put(11, new Position(5, 0));
-    positionMap.put(12, new Position(4, 0));
-    positionMap.put(13, new Position(3, 0));
-    positionMap.put(14, new Position(2, 0));
-    positionMap.put(15, new Position(1, 0));
-    positionMap.put(16, new Position(0, 0));
-    positionMap.put(17, new Position(0, 1));
-    positionMap.put(18, new Position(0, 2));
-    positionMap.put(19, new Position(0, 3));
-    positionMap.put(20, new Position(0, 4));
-    positionMap.put(21, new Position(0, 5));
-    positionMap.put(22, new Position(0, 6));
-    positionMap.put(23, new Position(0, 7));
-    positionMap.put(24, new Position(0, 8));
-    positionMap.put(25, new Position(1, 8));
-    positionMap.put(26, new Position(2, 8));
-    positionMap.put(27, new Position(3, 8));
-    positionMap.put(28, new Position(4, 8));
-    positionMap.put(29, new Position(5, 8));
-    positionMap.put(30, new Position(6, 8));
-    positionMap.put(31, new Position(7, 8));
-
-
-}
+private Position position = new Position();
 private Circle crearFicha(Color color, Image fichaImage) {
     Circle ficha = new Circle(14);
     ficha.setFill(color);
@@ -293,14 +357,11 @@ private Circle crearFicha(Color color, Image fichaImage) {
         if ((jugadorActual == 1 && color == Color.GREEN) || (jugadorActual == 2 && color == Color.BLUE)) {
             c = gridPaneTablero.getColumnIndex(fichaImageView);
             f = gridPaneTablero.getRowIndex(fichaImageView);
-            int comodin = 0;
-
-            Position position = positionMap.get(valTotal);
+            Position actualPosition = this.position.getPositionMap().get(valTotal);
             if (position != null) {
-                columna = position.getColumn();
-                fila = position.getRow();
+                columna = actualPosition.getColumn();
+                fila = actualPosition.getRow();
             } 
-
             gridPaneTablero.setColumnIndex(ficha, columna);
             gridPaneTablero.setRowIndex(ficha, fila);
             gridPaneTablero.setColumnIndex(fichaImageView, columna);
