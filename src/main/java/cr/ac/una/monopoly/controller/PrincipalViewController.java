@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package cr.ac.una.monopoly.controller;
+    package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -19,9 +19,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.controller.Datos;
+import cr.ac.una.monopoly.controller.Banco;
+//import cr.ac.una.monopoly.controller.BancoViewController;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -40,152 +41,176 @@ public class PrincipalViewController extends Controller implements Initializable
     private ImageView ImVJugador1;
     @FXML
     private ImageView ImVJugador2;
+    @FXML
+    private Label lblSaldoJugador1;
+    @FXML
+    private Label lblSaldoJugador2;
+    @FXML
+    private JFXTextField Vuelta1;
+    @FXML
+    private JFXTextField Vuelta2;
+    
+   
 
-   public void nombreJugadores(String nombre1,String nombre2){
-       lblName1.setText(nombre1);
-       lblName2.setText(nombre2);
+    public void nombreJugadores(String nombre1, String nombre2) {
+        lblName1.setText(nombre1);
+        lblName2.setText(nombre2);
     }
     @FXML
     private JFXButton btnFinalizarJuego;
-
     @FXML
     private JFXButton btnLanzarDados;
-
     @FXML
     private JFXButton btnPagarHipoteca;
-
     @FXML
     private JFXButton btnPropiedades1;
-
     @FXML
     private JFXButton btnPropiedades2;
-
     @FXML
     private JFXButton btnTerminarTurno;
-
     @FXML
     private GridPane gridPaneTablero;
-
     @FXML
     private ImageView imgDado1;
-
     @FXML
     private ImageView imgDado2;
-
     @FXML
     private Label lblName1;
-
     @FXML
     private Label lblName2;
-
     @FXML
     private Label lblresul;
-
-    private int valDados= 0;
-    private int valTotal=0;
-    private int sumaTotal1=0;
-    private int sumaTotal2=0;
+    private int valDados = 0;
+    private int valTotal = 0;
+    private int sumaTotal1 = 0;
+    private int sumaTotal2 = 0;
+    private double cuentaJugador1 = 0;
+    private double cuentaJugador2 = 0;
     private int comodin;
-    
     private int fila;
-    
     private int columna;
     private int c;
     private int f;
-
     private String imageJ1;
     private String imageJ2;
-    
-    
-   // private Image fichaJugador1=new Image("/cr/ac/una/monopoly/resources/helicoptero.png");
-  //  private Image fichaJugador2=new Image("/cr/ac/una/monopoly/resources/sombrero.png");
+    double saldoJ1 = 0;
+    double saldoJ2 = 0;
+    int contadorJ1;
+    int contadorJ2;
+    private int myVariable;
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
         FlowController.getInstance().salir();
-
     }
 
     @FXML
-void onActionBtnLanzarDados(ActionEvent event) {
-    int dado1 = lanzarDado();
-    int dado2 = lanzarDado();
-    int total = dado1 + dado2;
+    void onActionBtnLanzarDados(ActionEvent event) {
+        int dado1 = lanzarDado();
+        int dado2 = lanzarDado();
+        int total = dado1 + dado2;
 
-    mostrarResultado(total);
-    actualizarValores(total);
-    actualizarSumaTotal(total);
-    actualizarTextoJugador1();
-    mostrarImagenDado(dado1, imgDado1);
-    mostrarImagenDado(dado2, imgDado2);
-    btnLanzarDados.setDisable(true);
-}
-
-int lanzarDado() {
-    return (int) (Math.random() * 6) + 1;
-}
-
-void mostrarResultado(int total) {
-    lblresul.setText("Suma: " + total);
-    valDados = total;
-    valTotal = 0;
-}
-
-void actualizarValores(int total) {
-    if (jugadorActual == 1) {
-        valTotal = total + sumaTotal1;
-    } else if (jugadorActual == 2) {
-        valTotal = total + sumaTotal2;
+        mostrarResultado(total);
+        actualizarValores(total);
+        actualizarSumaTotal(total);
+        actualizarTextoJugador1();
+        mostrarImagenDado(dado1, imgDado1);
+        mostrarImagenDado(dado2, imgDado2);
+        btnLanzarDados.setDisable(true);
     }
 
-    if (valTotal > 31) {
-        valTotal %= 32;
+    int lanzarDado() {
+        return (int) (Math.random() * 6) + 1;
     }
-}
 
-void actualizarSumaTotal(int total) {
-    if (jugadorActual == 1) {
-        sumaTotal1 = valTotal;
-    } else if (jugadorActual == 2) {
-        sumaTotal2 = valTotal;
+    void mostrarResultado(int total) {
+        lblresul.setText("Suma: " + total);
+        valDados = total;
+        valTotal = 0;
     }
-}
 
-void actualizarTextoJugador1() {
-    txfJugador1.setText(String.valueOf(valTotal));
-}
-
-void mostrarImagenDado(int dado, ImageView imageView) {
-    Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado1.png"));
-    Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado2.png"));
-    Image tres = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado3.png"));
-    Image cuatro = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado4.png"));
-    Image cinco = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado5.png"));
-    Image seis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado6.png"));
-
-    switch (dado) {
-        case 1:
-            imageView.setImage(uno);
-            break;
-        case 2:
-            imageView.setImage(dos);
-            break;
-        case 3:
-            imageView.setImage(tres);
-            break;
-        case 4:
-            imageView.setImage(cuatro);
-            break;
-        case 5:
-            imageView.setImage(cinco);
-            break;
-        case 6:
-            imageView.setImage(seis);
-            break;
+    void actualizarValores(int total) {
+        if (jugadorActual == 1) {
+            valTotal = total + sumaTotal1;
+            contarVueltas1(valTotal, 1);
+        }else if (jugadorActual == 2) {
+            valTotal = total + sumaTotal2;
+            contarVueltas2(valTotal,2);
+        }
+        if (valTotal > 31) {
+            valTotal %= 32;
+        }
     }
-}
+
+    void actualizarSumaTotal(int total) {
+        if (jugadorActual == 1) {
+            sumaTotal1 = valTotal;
+        } else if (jugadorActual == 2) {
+            sumaTotal2 = valTotal;
+        }
+    }
+
+    void actualizarTextoJugador1() {
+        txfJugador1.setText(String.valueOf(valTotal));
+    }
+    
+    void contarVueltas1(int valor, int id) {
+        if (valor > 32) {
+            int prueba = (31 - valor) * -1;
+            valor = 0;
+            if (valor == 0) {
+                contadorJ1++;
+                pagoGo("J1", 200);
+                 Vuelta1.setText("Vuelta: " + String.valueOf(contadorJ1));
+                
+            }
+        }
+    }
+    
+     void contarVueltas2(int valor, int id) {
+        if (valor > 32) {
+            int prueba = (31 - valor) * -1;
+            valor = 0;
+            if (valor == 0) {
+                contadorJ2++;
+                 pagoGo("J2", 200);
+                 Vuelta2.setText("Vuelta: " + String.valueOf(contadorJ2));
+            }
+        }
+    }
+
+    void mostrarImagenDado(int dado, ImageView imageView) {
+        Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado1.png"));
+        Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado2.png"));
+        Image tres = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado3.png"));
+        Image cuatro = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado4.png"));
+        Image cinco = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado5.png"));
+        Image seis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Dado6.png"));
+
+        switch (dado) {
+            case 1:
+                imageView.setImage(uno);
+                break;
+            case 2:
+                imageView.setImage(dos);
+                break;
+            case 3:
+                imageView.setImage(tres);
+                break;
+            case 4:
+                imageView.setImage(cuatro);
+                break;
+            case 5:
+                imageView.setImage(cinco);
+                break;
+            case 6:
+                imageView.setImage(seis);
+                break;
+        }
+    }
 
     @FXML
     void onActionBtnPagarHipoteca(ActionEvent event) {
+       pagoGo("J1", 200);
 
     }
 
@@ -212,9 +237,6 @@ void mostrarImagenDado(int dado, ImageView imageView) {
             fichaJugador2Creada = true;
         }
     }
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         imageJ1 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
@@ -242,25 +264,28 @@ void mostrarImagenDado(int dado, ImageView imageView) {
 
         Circle ficha1 = crearFicha(Color.GREEN, imageJ1);
         initPositionMap();
-    }  
-    
+        bonoInicial();//inicializa una vez el bonoInicial que recibe cada jugador
+
+    }
+
     @Override
     public void initialize() {
     }
-      
-    
+
     private Map<Integer, Position> positionMap;
 
 // Clase auxiliar para representar una posición en el GridPane
     private class Position {
 
-        private int row;
-        private int column;
-
         public Position(int row, int column) {
             this.row = row;
             this.column = column;
         }
+
+        private int row;
+        private int column;
+
+      
 
         public int getRow() {
             return row;
@@ -308,6 +333,7 @@ void mostrarImagenDado(int dado, ImageView imageView) {
         positionMap.put(31, new Position(7, 8));
 
     }
+
     private Circle crearFicha(Color color, String fichaImage) {
         Circle ficha = new Circle(14);
         ficha.setFill(color);
@@ -331,7 +357,34 @@ void mostrarImagenDado(int dado, ImageView imageView) {
                 gridPaneTablero.setRowIndex(fichaImageView, fila);
             }
         });
-
         return ficha;
     }
+
+    private void metodoReceptor() {
+        Banco BonoInicial = (Banco) AppContext.getInstance().get("BonoInicial");
+        cuentaJugador1 += BonoInicial.getCuentaJ1();
+        cuentaJugador2 += BonoInicial.getCuentaJ2();
+        cargarValores();
+       
+    }
+    
+    
+    private void cargarValores() {
+        lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
+        lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
+
+    }
+ 
+    public void bonoInicial() {
+        BancoViewController bancoViewController = new BancoViewController();
+        bancoViewController.pagarBonoInicial();
+        metodoReceptor();
+    }
+    
+    public void pagoGo(String Jugador, double cantidad) {
+        BancoViewController bancoViewController = new BancoViewController();
+        bancoViewController.pagarBonoGO(Jugador,cantidad);
+        metodoReceptor();
+    }
+ 
 }
