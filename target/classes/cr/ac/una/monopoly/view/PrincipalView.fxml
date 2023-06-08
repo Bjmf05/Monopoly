@@ -110,7 +110,7 @@
                         <ImageView fx:id="ImVJugador1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
                         <Label styleClass="label-Jugador2" text="Dinero:" />
-                        <Label styleClass="label-Jugador2" text="0" />
+                        <Label fx:id="lblSaldoJugador1" styleClass="label-Jugador2" text="0" />
                         <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
                      </children>
                   </VBox>
@@ -127,10 +127,12 @@
                         <ImageView fx:id="ImVJugador2" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
                         <Label styleClass="label-Jugador1" text="Dinero:" />
-                        <Label styleClass="label-Jugador1" text="0" />
+                        <Label fx:id="lblSaldoJugador2" styleClass="label-Jugador1" text="0" />
                         <JFXButton fx:id="btnPropiedades2" onAction="#onActionBtnPropiedades2" styleClass="jfx-btn-propiedades2" text="Propiedades" />
                      </children>
                   </VBox>
+                  <JFXTextField fx:id="Vuelta1" minWidth="51.0" prefHeight="40.0" prefWidth="51.0" promptText="VueltaJ1" />
+                  <JFXTextField fx:id="Vuelta2" minWidth="51.0" prefHeight="40.0" prefWidth="51.0" promptText="VueltaJ2" />
                </children>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

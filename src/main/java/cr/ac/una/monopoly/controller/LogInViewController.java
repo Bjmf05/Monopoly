@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -127,6 +128,18 @@ public class LogInViewController extends Controller implements Initializable {
     private void onActionBtnElegirFichas(ActionEvent event) {
          FlowController.getInstance().goViewInWindow("FichaView");
     }
+    
+  /*  public void cargaImagen(String V1, String V2){
+    
+         Image imageA = new Image(V1);
+         imVJugador1.setImage(imageA);
+    
+         Image imageB = new Image(V2);
+         imVJugador2.setImage(imageB);
+    
+    
+    }*/
+    
 
 }
 
