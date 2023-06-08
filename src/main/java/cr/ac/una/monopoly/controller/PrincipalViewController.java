@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import cr.ac.una.monopoly.controller.Datos;
 import cr.ac.una.monopoly.util.Mensaje;
 import cr.ac.una.monopoly.util.Position;
 import java.util.HashMap;
@@ -37,10 +36,14 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXTextField txfJugador2;
     @FXML
     private JFXTextField txfJugador1;
+    @FXML
+    private ImageView ImVJugador1;
+    @FXML
+    private ImageView ImVJugador2;
 
    public void nombreJugadores(String nombre1,String nombre2){
        lblName1.setText(nombre1);
-          lblName2.setText(nombre2);
+       lblName2.setText(nombre2);
     }
     @FXML
     private JFXButton btnFinalizarJuego;
@@ -81,15 +84,24 @@ public class PrincipalViewController extends Controller implements Initializable
 
     private int valDados= 0;
     private int valTotal=0;
-       private int sumaTotal1=0;
-         private int sumaTotal2=0;
+
+    private int sumaTotal1=0;
+    private int sumaTotal2=0;
+    private int comodin;
+    
+
     private int fila;
     
     private int columna;
     private int c;
     private int f;
-    private Image fichaJugador1=new Image("/cr/ac/una/monopoly/resources/helicoptero.png");
-    private Image fichaJugador2=new Image("/cr/ac/una/monopoly/resources/sombrero.png");
+
+    private Image imageJ1;
+    private Image imageJ2;
+    
+    
+   // private Image fichaJugador1=new Image("/cr/ac/una/monopoly/resources/helicoptero.png");
+  //  private Image fichaJugador2=new Image("/cr/ac/una/monopoly/resources/sombrero.png");
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
         FlowController.getInstance().salir();
@@ -313,7 +325,8 @@ Mensaje mensaje = new Mensaje();
 
     }
     private boolean fichaJugador2Creada = false;
-private int jugadorActual = 1;
+    private int jugadorActual = 1;
+
     @FXML
     void onActionBtnTerminarTurno(ActionEvent event) {
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
@@ -322,25 +335,45 @@ private int jugadorActual = 1;
         btnComprar.setDisable(false);
         carta.setImage(null);
         jugadorActual = (jugadorActual == 1) ? 2 : 1;
-    if (!fichaJugador2Creada) {
-        Circle ficha2 = crearFicha(Color.BLUE, fichaJugador2);
-        fichaJugador2Creada = true;
+        if (!fichaJugador2Creada) {
+            Circle ficha2 = crearFicha(Color.BLUE, imageJ2);
+            fichaJugador2Creada = true;
+        }
     }
-    }
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    Datos datos = (Datos) AppContext.getInstance().get("Llave");
-    lblName1.setText(datos.getJugador1());
-    lblName2.setText(datos.getJugador2());
+       String rutaJ1 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
+        String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloVerde.png";
+
+        Datos datos = (Datos) AppContext.getInstance().get("Llave");
+        lblName1.setText(datos.getJugador1());
+        lblName2.setText(datos.getJugador2());
+        Datos rut = (Datos) AppContext.getInstance().get("Ruta");
+
+        if (rut != null) {
+            if (rut.getRuta1() != null) {
+                System.out.println("Esta es la ruta1 que jala: " + rut.getRuta1());
+                System.out.println("Esta es la ruta2 que jala: " + rut.getRuta2());
+                rutaJ1 = rut.getRuta1();
+                rutaJ2 = rut.getRuta2();
+
+            }
+        }
+
+     imageJ1 = new Image(rutaJ1);
+        ImVJugador1.setImage(imageJ1);
+      imageJ2= new Image(rutaJ2);
+        ImVJugador2.setImage(imageJ2);
+
+        Circle ficha1 = crearFicha(Color.GREEN, imageJ1);
+    }  
     
-    Circle ficha1 = crearFicha(Color.GREEN, fichaJugador1);
-        
+
  
-    }    
+     
     @Override
     public void initialize() {
     }
@@ -373,4 +406,7 @@ private Circle crearFicha(Color color, Image fichaImage) {
     
     return ficha;
 }
+
+      
+
 }

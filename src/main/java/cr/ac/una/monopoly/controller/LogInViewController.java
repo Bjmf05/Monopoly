@@ -56,6 +56,12 @@ public class LogInViewController extends Controller implements Initializable {
 
     @FXML
     private TextField txtJugador2;
+    @FXML
+    private ImageView imVJugador1;
+    @FXML
+    private ImageView imVJugador2;
+    @FXML
+    private JFXButton btnElegirFichas;
 
     public String getTxtJugador1() {
         return txtJugador1.getText();
@@ -117,12 +123,35 @@ public class LogInViewController extends Controller implements Initializable {
 
     }
 
+    @FXML
+    private void onActionBtnElegirFichas(ActionEvent event) {
+         FlowController.getInstance().goViewInWindow("FichaView");
+    }
+
 }
 
 class Datos {
 
-    private String Jugador1;
+   private String Jugador1;
     private String Jugador2;
+    private String Ruta1;
+
+    public String getRuta1() {
+        return Ruta1;
+    }
+
+    public void setRuta1(String Ruta1) {
+        this.Ruta1 = Ruta1;
+    }
+
+    public String getRuta2() {
+        return Ruta2;
+    }
+
+    public void setRuta2(String Ruta2) {
+        this.Ruta2 = Ruta2;
+    }
+    private String Ruta2;
 
     public String getJugador1() {
         return this.Jugador1;
