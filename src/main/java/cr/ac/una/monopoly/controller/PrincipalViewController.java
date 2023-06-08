@@ -199,7 +199,9 @@ void mostrarImagenSuerte(ImageView imageView){
 
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
-        FlowController.getInstance().salir();
+       // FlowController.getInstance().salir();
+       cuentaJugador1+=100;
+       cargarValores();
     }
 
     @FXML
@@ -332,14 +334,26 @@ void mostrarImagenDado(int dado, ImageView imageView) {
         ImVJugador2.setImage(imageJ2);
 
         Circle ficha1 = crearFicha(Color.GREEN, imageJ1);
-
+        bonoInicial();
     } 
     @FXML
     void onActionBtnComprar(ActionEvent event) {
     Position position = this.position.getPositionMap().get(valTotal);
+    
 Mensaje mensaje = new Mensaje();
     if (position != null && !position.isOwned()&& position.getPrice() != 0 ) {
         position.setOwnedBy(jugadorActual);
+        double total=0;
+            
+            if(jugadorActual==1){
+
+        total = cuentaJugador1-position.getPrice();
+    cuentaJugador1=total;}
+            else{
+      
+        total = cuentaJugador2-position.getPrice();
+           cuentaJugador2=total;  }
+            
         // Realizar las acciones necesarias al comprar la posición
         // Por ejemplo, actualizar el estado de la posición en la GUI, ajustar el saldo del jugador, etc.
         // Mostrar un mensaje de confirmación
@@ -349,6 +363,7 @@ Mensaje mensaje = new Mensaje();
        String mensajeTexto = "La Propiedad " + position.getName() + " no está disponible para comprar.";
         mensaje.showConfirmation("Error", gridPaneTablero.getScene().getWindow(), mensajeTexto);
       }
+    cargarValores();
     btnComprar.setDisable(true);
     }
     
@@ -396,6 +411,7 @@ void revizar() {
     
     @Override
     public void initialize() {
+        
     }
     
 private Position position = new Position();
