@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
    <children>
@@ -55,12 +56,15 @@
                                           <RowConstraints maxHeight="78.0" minHeight="-Infinity" prefHeight="68.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="103.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                                          <HBox alignment="CENTER" prefHeight="27.0" prefWidth="43.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
                                              <children>
                                                 <ImageView fx:id="imgDado2" fitHeight="38.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../resources/fondoDado.png" />
                                                    </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
                                                 </ImageView>
                                              </children>
                                           </HBox>
@@ -70,11 +74,51 @@
                                                    <image>
                                                       <Image url="@../resources/fondoDado.png" />
                                                    </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
                                                 </ImageView>
                                              </children>
                                           </HBox>
-                                          <Label fx:id="lblresul" text="Cuenta" GridPane.columnIndex="6" GridPane.rowIndex="5" />
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                                          <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                             <children>
+                                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                                                   <VBox.margin>
+                                                      <Insets bottom="8.0" left="15.0" right="15.0" top="8.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label fx:id="lblJCuentaPasos" text="0" textAlignment="CENTER">
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                             <children>
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label text="Cuenta:" />
+                                                      <Label fx:id="lblresul" text="0" />
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets right="4.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <Label text="Turno de " />
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                                             <children>
+                                                <Label fx:id="lblJugadorEnTurno" text="Jugador" />
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </GridPane>
                                  </children>
@@ -89,7 +133,7 @@
                   <HBox alignment="BOTTOM_CENTER" prefHeight="73.0" prefWidth="643.0" spacing="35.0" style="-fx-background-color: ;" VBox.vgrow="ALWAYS">
                      <children>
                         <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" prefHeight="40.0" prefWidth="150.0" text="Finalizar Juego" />
-                        <JFXButton fx:id="btnComprar" onAction="#onActionBtnComprar" prefHeight="40.0" prefWidth="150.0" text="Comprar" />
+                        <JFXButton fx:id="btnComprar" buttonType="RAISED" onAction="#onActionBtnComprar" prefHeight="40.0" prefWidth="150.0" text="Comprar" />
                         <JFXButton fx:id="btnLanzarDados" buttonType="RAISED" onAction="#onActionBtnLanzarDados" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-lanzarDados" text="Lanzar Dados" />
                         <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" prefHeight="40.0" prefWidth="150.0" text="Terminar Turno" />
                      </children>
