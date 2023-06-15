@@ -536,7 +536,7 @@ public class PrincipalViewController extends Controller implements Initializable
         String saldo;
         if (position.getName() == "Carcel") {
           double residuo;
-            if (jugadorActual == 1) {
+          if (jugadorActual == 1) {
                 residuo = cuentaJugador1 - multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
@@ -544,7 +544,7 @@ public class PrincipalViewController extends Controller implements Initializable
                     //No tiene saldo suficiente 
                     //compara el valor de las propiedades que tiene con la deuda
                     // metodo que vende una propiedad
-                } else if (residuo <= 0) {
+                } else if (residuo > 0) {
                     cuentaJugador1 -= multa;
                     //Deuda saldada
                     //Sale de la carcel 
@@ -554,12 +554,16 @@ public class PrincipalViewController extends Controller implements Initializable
                 residuo = cuentaJugador2 - multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
-                     FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
+                     FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
                     //No tiene saldo suficiente 
                     //compara el valor de las propiedades que tiene con la deuda
                     // metodo que vende una propiedad
+                } else if (residuo > 0) {
+                    cuentaJugador2 -= multa;
+                    //Deuda saldada
+                    //Sale de la carcel 
                 }
-            }
+            } 
         }
         cargarValores();
     }
