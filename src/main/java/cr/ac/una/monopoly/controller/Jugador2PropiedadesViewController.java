@@ -50,6 +50,8 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
     private TableColumn<List<Object>, Boolean> hipotecarColumna;
     @FXML
     private JFXButton btnActualizar;
+    @FXML
+    private TableColumn<List<Object>, Boolean> perteneceColumna;
   
 
     /**
@@ -57,17 +59,16 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        llenarTabla();
+       llenarTabla();
     }
-
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
-        List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
+        List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J2");
         List<List<Object>> listaPreestablecida = (List<List<Object>>) AppContext.getInstance().get("Vacia");
-        if (datosJ2 == null) {
+        if (datosJ1 == null) {
             datosPropiedades.addAll(listaPreestablecida);
         } else {
-            datosPropiedades.addAll(datosJ2);
+            datosPropiedades.addAll(datosJ1);
         }
 
         tViewDatosPropiedades.setItems(datosPropiedades);
@@ -80,7 +81,7 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
         // Configurar celdas de botón personalizadas para las columnas de vender y hipotecar
         venderColumna.setCellFactory(createButtonCellFactory("Vender"));
         hipotecarColumna.setCellFactory(createButtonCellFactory("Hipotecar"));
-
+        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(5)));
     }
 
     private Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>> createButtonCellFactory(String buttonText) {
@@ -92,16 +93,34 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
 
                     {
                         button.setOnAction(event -> {
-                            // Lógica de acción del botón
-                            List<Object> property = getTableView().getItems().get(getIndex());
                             
-                            if (buttonText == "Vender"){
-                                System.out.println(buttonText + " Funcion 1");
-                                System.out.println(buttonText + " para: " + valorDeVentaColumna);
+                           
+                            
+                            if (buttonText == "Vender") {
+                                List<Object> rowData = getTableView().getItems().get(getIndex());
+                                System.out.println("datin: "+getIndex());
+                                System.out.println("Nombre: " + (String) rowData.get(0));
+                                System.out.println("Precio: " + (Double) rowData.get(2));
+                         
+                                VentasJ2 ventaJ2 = new VentasJ2();
+                                ventaJ2.setVentaJ2((Double) rowData.get(2));
+                                AppContext.getInstance().set("VentaJ1", ventaJ2);
+                         
+                                List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
+                        
+                                int indiceABorrar = getIndex(); // Índice que deseas borrar
+                                  
+                                if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
+                                    datosJ1.remove(indiceABorrar);
+                                } else {
+                                    System.out.println("El índice está fuera de rango");
+                                }
+                      
+                                llenarTabla();
                                 
+                               
                             }if (buttonText == "Hipotecar"){
-                                System.out.println(buttonText + " Funcion 2");
-                                System.out.println(buttonText + " para: " + valorDeVentaColumna);
+    
                             }
                         });
                     }
@@ -124,8 +143,30 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
     @Override
     public void initialize() {
     }
+    
+  
+    
+    
     @FXML
     private void onActionBtnActualizar(ActionEvent event) {
        llenarTabla();
     }
+
+    @FXML
+    private void onActionBtnCerrar(ActionEvent event) {
+      
+    }
+}
+class VentasJ2{
+
+private double VentaJ2;
+
+    public double getVentaJ2() {
+        return VentaJ2;
+    }
+
+    public void setVentaJ2(double VentaJ2) {
+        this.VentaJ2 = VentaJ2;
+    }
+
 }

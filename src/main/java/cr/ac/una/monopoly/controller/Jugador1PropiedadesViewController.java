@@ -6,6 +6,7 @@ package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
 import cr.ac.una.monopoly.util.AppContext;
+import cr.ac.una.monopoly.util.Position;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
+import cr.ac.una.monopoly.controller.PrincipalViewController;
 
 /**
  * FXML Controller class
@@ -50,6 +52,11 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
     private TableColumn<List<Object>, Boolean> hipotecarColumna;
     @FXML
     private JFXButton btnActualizar;
+    @FXML
+    private TableColumn<List<Object>, Boolean> perteneceColumna;
+    @FXML
+    private JFXButton btnCerrar;
+
 
     /**
      * Initializes the controller class.
@@ -78,7 +85,7 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
         // Configurar celdas de botón personalizadas para las columnas de vender y hipotecar
         venderColumna.setCellFactory(createButtonCellFactory("Vender"));
         hipotecarColumna.setCellFactory(createButtonCellFactory("Hipotecar"));
-
+        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(5)));
     }
 
     private Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>> createButtonCellFactory(String buttonText) {
@@ -90,16 +97,34 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
 
                     {
                         button.setOnAction(event -> {
-                            // Lógica de acción del botón
-                            List<Object> property = getTableView().getItems().get(getIndex());
                             
-                            if (buttonText == "Vender"){
-                                System.out.println(buttonText + " Funcion 1");
-                                System.out.println(buttonText + " para: " + valorDeVentaColumna);
+                           
+                            
+                            if (buttonText == "Vender") {
+                                List<Object> rowData = getTableView().getItems().get(getIndex());
+                                System.out.println("datin: "+getIndex());
+                                System.out.println("Nombre: " + (String) rowData.get(0));
+                                System.out.println("Precio: " + (Double) rowData.get(2));
+                         
+                                VentasJ1 ventaJ1 = new VentasJ1();
+                                ventaJ1.setVentaJ1((Double) rowData.get(2));
+                                AppContext.getInstance().set("VentaJ1", ventaJ1);
+                         
+                                List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
+                        
+                                int indiceABorrar = getIndex(); // Índice que deseas borrar
+                                  
+                                if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
+                                    datosJ1.remove(indiceABorrar);
+                                } else {
+                                    System.out.println("El índice está fuera de rango");
+                                }
+                      
+                                llenarTabla();
                                 
+                               
                             }if (buttonText == "Hipotecar"){
-                                System.out.println(buttonText + " Funcion 2");
-                                System.out.println(buttonText + " para: " + valorDeVentaColumna);
+    
                             }
                         });
                     }
@@ -130,4 +155,22 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
     private void onActionBtnActualizar(ActionEvent event) {
        llenarTabla();
     }
+
+    @FXML
+    private void onActionBtnCerrar(ActionEvent event) {
+      
+    }
+}
+class VentasJ1{
+private double VentaJ1;
+
+
+    public double getVentaJ1() {
+        return VentaJ1;
+    }
+
+    public void setVentaJ1(double VentaJ1) {
+        this.VentaJ1 = VentaJ1;
+    }
+
 }
