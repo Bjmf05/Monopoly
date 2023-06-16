@@ -20,6 +20,9 @@ import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.util.Mensaje;
 import cr.ac.una.monopoly.util.Position;
 import cr.ac.una.monopoly.controller.Banco;
+import cr.ac.una.monopoly.controller.VentasJ1;
+import cr.ac.una.monopoly.controller.VentasJ2;
+    
 import java.util.ArrayList;
 //import cr.ac.una.monopoly.controller.BancoViewController;
 import java.util.HashMap;
@@ -81,10 +84,26 @@ public class PrincipalViewController extends Controller implements Initializable
     private Label lblresul;
     private ImageView carta = new ImageView();
     private int valDados = 0;
-    private int valTotal = 0;
+    private int valTotal = 0;    
     private int sumaTotal1 = 0;
     private int sumaTotal2 = 0;
     private int comodin;
+
+    public double getCuentaJugador1() {
+        return cuentaJugador1;
+    }
+
+    public void setCuentaJugador1(double cuentaJugador1) {
+        this.cuentaJugador1 = cuentaJugador1;
+    }
+
+    public double getCuentaJugador2() {
+        return cuentaJugador2;
+    }
+
+    public void setCuentaJugador2(double cuentaJugador2) {
+        this.cuentaJugador2 = cuentaJugador2;
+    }
     private double cuentaJugador1 = 0;
     private double cuentaJugador2 = 0;
     private boolean fichaJugador2Creada = false;
@@ -105,6 +124,9 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     private Label lblJugadorEnTurno;
     List<Object> listaJ1 = new ArrayList<>();
+    
+   
+    
 
     void montarCarta() {
 
@@ -212,9 +234,8 @@ public class PrincipalViewController extends Controller implements Initializable
 
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
-        // FlowController.getInstance().salir();
-        cuentaJugador1 += 100;
-        cargarValores();
+         FlowController.getInstance().salir();
+        
     }
 
     @FXML
@@ -281,11 +302,13 @@ public class PrincipalViewController extends Controller implements Initializable
             contarVueltas1(valTotal, 1);
             lblJugadorEnTurno.setText(datos.getJugador1());
             carcel();
+            VentaJ1();
         } else if (jugadorActual == 2) {
             valTotal = total + sumaTotal2;
             contarVueltas2(valTotal, 2);
             lblJugadorEnTurno.setText(datos.getJugador2());
             carcel();
+            VentaJ2();
         }
         if (valTotal > 31) {
             valTotal %= 32;
@@ -365,6 +388,7 @@ public class PrincipalViewController extends Controller implements Initializable
                 nombres.add(Double.valueOf(0));
                 nombres.add(Double.valueOf(0));
                 nombres.add("Vacio");
+                nombres.add(Boolean.valueOf(false));
                 listaPreestablecida.add(nombres);
                 AppContext.getInstance().set("Vacia", listaPreestablecida);
         
@@ -375,6 +399,7 @@ public class PrincipalViewController extends Controller implements Initializable
         Position position = this.position.getPositionMap().get(valTotal);
 
         Mensaje mensaje = new Mensaje();
+      
         if (position != null && !position.isOwned() && position.getPrice() != 0) {
             position.setOwnedBy(jugadorActual);
            
@@ -395,10 +420,11 @@ public class PrincipalViewController extends Controller implements Initializable
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(datos.getJugador1());
+                nombres.add(Boolean.valueOf(position.isOwned()));
                 System.out.println("Propiedad Comprada: " + nombre);
                 datos1.add(nombres);
                 AppContext.getInstance().set("J1", datos1);
-
+              
             } else {
             // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 2
                 cuentaJugador2 -= position.getPrice();
@@ -414,6 +440,7 @@ public class PrincipalViewController extends Controller implements Initializable
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(datos.getJugador2());
+                nombres.add(Boolean.valueOf(position.isOwned()));
                 System.out.println("Propiedad Comprada: " + nombre);
                 datos2.add(nombres);
                 AppContext.getInstance().set("J2", datos2);
@@ -440,9 +467,7 @@ public class PrincipalViewController extends Controller implements Initializable
 
     @FXML
     void onActionBtnPropiedades2(ActionEvent event) {
-      
-        FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
-
+     FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
     }
 
     void revizar() {
@@ -511,10 +536,28 @@ public class PrincipalViewController extends Controller implements Initializable
         cargarValores();
 
     }
+    
+    public void VentaJ1() {
+        VentasJ1 venta = (VentasJ1) AppContext.getInstance().get("VentaJ1");
+        cuentaJugador1 += venta.getVentaJ1();
+        cargarValores();
+        venta.setVentaJ1(0);
+
+    }
+    
+    private void VentaJ2() {
+        VentasJ2 venta = (VentasJ2) AppContext.getInstance().get("VentaJ1");
+        cuentaJugador2 += venta.getVentaJ2();
+        cargarValores();
+        venta.setVentaJ2(0);
+
+    }
+    
 
     private void cargarValores() {
         lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
         lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
+        
 
     }
 
@@ -536,7 +579,7 @@ public class PrincipalViewController extends Controller implements Initializable
         String saldo;
         if (position.getName() == "Carcel") {
           double residuo;
-          if (jugadorActual == 1) {
+            if (jugadorActual == 1) {
                 residuo = cuentaJugador1 - multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
@@ -569,3 +612,4 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
 }
+
