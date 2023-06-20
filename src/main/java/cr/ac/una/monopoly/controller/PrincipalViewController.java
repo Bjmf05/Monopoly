@@ -82,13 +82,19 @@ public class PrincipalViewController extends Controller implements Initializable
     private Label lblName2;
     @FXML
     private Label lblresul;
+    private boolean monopoly1Creado = false;
+    private boolean monopoly2Creado = false;
+    private boolean monopoly3Creado = false;
+    private boolean monopoly4Creado = false;
+    private boolean monopoly5Creado = false;
+    private boolean monopoly6Creado = false;
     private ImageView carta = new ImageView();
     private int valDados = 0;
     private int valTotal = 0;    
     private int sumaTotal1 = 0;
     private int sumaTotal2 = 0;
     private int comodin;
-
+    private int valorUtilidades=10;
     public double getCuentaJugador1() {
         return cuentaJugador1;
     }
@@ -129,84 +135,115 @@ public class PrincipalViewController extends Controller implements Initializable
     
 
     void montarCarta() {
-
+gridPaneTablero.getChildren().remove(carta);
         mostrarImagenSuerte(carta);
         int startColumn = 3;  // Columna inicial
         int endColumn = 6;    // Columna final
         int startRow = 3;     // Fila inicial
         int endRow = 6;       // Fila final
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
+        
         gridPaneTablero.getChildren().add(carta);
 
     }
 
     void mostrarImagenSuerte(ImageView imageView) {
         int numeroSuerte = (int) (Math.random() * 16) + 1;
-        Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte1.png"));
-        Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte2.png"));
-        Image tres = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte3.png"));
-        Image cuatro = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte4.png"));
-        Image cinco = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte5.png"));
-        Image seis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte6.png"));
-        Image siete = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte7.png"));
-        Image ocho = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte8.png"));
-        Image nueve = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte9.png"));
-        Image diez = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte10.png"));
-        Image once = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte11.png"));
-        Image doce = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte12.png"));
-        Image trece = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte13.png"));
-        Image catorce = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte14.png"));
-        Image quince = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte15.png"));
-        Image dieciseis = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte16.png"));
-
+        CartasSuerte suerte = new CartasSuerte();
+        suerte.cartasSuertes(imageView, numeroSuerte); 
         switch (numeroSuerte) {
             case 1:
-                imageView.setImage(uno);
+                carcel();
                 break;
             case 2:
-                imageView.setImage(dos);
+                //ve a GO
                 break;
             case 3:
-                imageView.setImage(tres);
+                if (jugadorActual==1){
+                    cuentaJugador1+=600;
+                }
+                else{
+                    cuentaJugador2+=600;}
                 break;
             case 4:
-                imageView.setImage(cuatro);
+               if (jugadorActual==1){
+                    cuentaJugador1-=20;
+                }
+                else{
+                    cuentaJugador2-=200;}
                 break;
             case 5:
-                imageView.setImage(cinco);
+                //retrosede 2 lugares
                 break;
             case 6:
-                imageView.setImage(seis);
+                if (jugadorActual==1){
+                    cuentaJugador1+=400;
+                }
+                else{
+                    cuentaJugador2+=400;}
                 break;
             case 7:
-                imageView.setImage(siete);
+                if (jugadorActual==1){
+                    cuentaJugador1-=500;
+                }
+                else{
+                    cuentaJugador2-=500;}
                 break;
             case 8:
-                imageView.setImage(ocho);
+                if (jugadorActual==1){
+                    cuentaJugador1-=50;
+                }
+                else{
+                    cuentaJugador2-=50;}
                 break;
             case 9:
-                imageView.setImage(nueve);
+                if (jugadorActual==1){
+                    cuentaJugador1-=20;
+                }
+                else{
+                    cuentaJugador2-=20;}
                 break;
             case 10:
-                imageView.setImage(diez);
+                if (jugadorActual==1){
+                    cuentaJugador1+=100;
+                }
+                else{
+                    cuentaJugador2+=100;}
                 break;
             case 11:
-                imageView.setImage(once);
+                
+                //pagar por cada casa y hotel
                 break;
             case 12:
-                imageView.setImage(doce);
+                if (jugadorActual==1){
+                    cuentaJugador1+=50;
+                }
+                else{
+                    cuentaJugador2+=50;}
                 break;
             case 13:
-                imageView.setImage(trece);
+                //paseo a zona franca
                 break;
             case 14:
-                imageView.setImage(catorce);
+                if (jugadorActual==1){
+                    cuentaJugador1-=100;
+                }
+                else{
+                    cuentaJugador2-=100;}
                 break;
             case 15:
-                imageView.setImage(quince);
+                   if (jugadorActual==1){
+                    cuentaJugador1-=100;
+                }
+                else{
+                    cuentaJugador2-=100;}
                 break;
             case 16:
-                imageView.setImage(dieciseis);
+                if (jugadorActual==1){
+                    cuentaJugador1+=50;
+                }
+                else{
+                    cuentaJugador2+=50;}
                 break;
         }
     }
@@ -217,7 +254,7 @@ public class PrincipalViewController extends Controller implements Initializable
         imgDado2.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         btnLanzarDados.setDisable(false);
         btnComprar.setDisable(false);
-        carta.setImage(null);
+   
         jugadorActual = (jugadorActual == 1) ? 2 : 1;
         if (!fichaJugador2Creada) {
             Circle ficha2 = crearFicha(Color.BLUE, imageJ2);
@@ -225,6 +262,8 @@ public class PrincipalViewController extends Controller implements Initializable
         }
         lblJugadorEnTurno.setText(" ");
         lblJCuentaPasos.setText("0");
+        cargarValores();
+        gridPaneTablero.getChildren().remove(carta);
     }
 
     public void nombreJugadores(String nombre1, String nombre2) {
@@ -301,18 +340,19 @@ public class PrincipalViewController extends Controller implements Initializable
             valTotal = total + sumaTotal1;
             contarVueltas1(valTotal, 1);
             lblJugadorEnTurno.setText(datos.getJugador1());
-            carcel();
-            VentaJ1();
+           // carcel();
+          //  VentaJ1();
         } else if (jugadorActual == 2) {
             valTotal = total + sumaTotal2;
             contarVueltas2(valTotal, 2);
             lblJugadorEnTurno.setText(datos.getJugador2());
-            carcel();
-            VentaJ2();
+           // carcel();
+           // VentaJ2();
         }
         if (valTotal > 31) {
             valTotal %= 32;
         }
+       
     }
 
     void actualizarSumaTotal(int total) {
@@ -455,6 +495,7 @@ public class PrincipalViewController extends Controller implements Initializable
             mensaje.showConfirmation("Error", gridPaneTablero.getScene().getWindow(), mensajeTexto);
         }
         cargarValores();
+        monopolio();
         btnComprar.setDisable(true);
     }
 
@@ -471,30 +512,53 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
     void revizar() {
+         cobroRenta();
+     
         Position position = this.position.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
-
-        carta.setImage(null); // Vaciar la imagen por defecto
-
         switch (characteristic) {
             case "Suerte":
                 montarCarta();
                 break;
             case "Ve a carcel":
+                carcel();
+                break;
             case "Carcel":
             case "Go":
-            case "Libre":
-                // No se requiere acción adicional
+            case "Impuesto":
+                 // cobrarImpuesto();
                 break;
             default:
                 break;
+              
         }
 
         btnComprar.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel")
                 || characteristic.equals("Carcel") || characteristic.equals("Go")
                 || characteristic.equals("Libre"));
+        mostrarPropiedad();
+      
     }
+    void cobrarImpuesto(int val){
+        int impuesto = (val == 9) ? 190 : 160;
 
+if (jugadorActual == 1) {
+    cuentaJugador1 -= impuesto;
+} else {
+    cuentaJugador2 -= impuesto;
+}
+    }
+void mostrarPropiedad(){
+    Position propiedad = new Position();
+    gridPaneTablero.getChildren().remove(carta);
+    propiedad.showPosition(carta, valTotal);
+          int startColumn = 3;  // Columna inicial
+        int endColumn = 6;    // Columna final
+        int startRow = 3;     // Fila inicial
+        int endRow = 6;       // Fila final
+        GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
+        gridPaneTablero.getChildren().add(carta);
+}
     @Override
     public void initialize() {
 
@@ -611,5 +675,187 @@ public class PrincipalViewController extends Controller implements Initializable
         cargarValores();
     }
 
+    private void cobroRenta(){
+         Position position = this.position.getPositionMap().get(valTotal);
+    double rent = position.getRent();
+
+    if (position.isOwned() && jugadorActual != position.getOwnedBy()) {
+        
+        if (jugadorActual == 1) {
+            if(valTotal==2||valTotal==18){
+            rent=rentaAguaOLuz()*valorUtilidades;}
+            cuentaJugador1 -= rent;
+            cuentaJugador2 += rent;
+        } else {
+            if(valTotal==2||valTotal==18){
+            rent=rentaAguaOLuz()*valorUtilidades;}
+            cuentaJugador2 -= rent;
+            cuentaJugador1 += rent;
+        }
+    }
+
+    if (valTotal == 9 || valTotal == 23) {
+        if (jugadorActual == 1) {
+            cuentaJugador1 -= rent;
+        } else {
+            cuentaJugador2 -= rent;
+        }
+    }
+    
+    }
+    
+    void monopolio(){
+     Mensaje mensaje = new Mensaje();
+    
+    // Monopolio 1
+    Position position4 = this.position.getPositionMap().get(4);
+    Position position6 = this.position.getPositionMap().get(6);
+    Position position7 = this.position.getPositionMap().get(7);
+    
+    if (jugadorActual == position4.getOwnedBy() && jugadorActual == position6.getOwnedBy() && jugadorActual == position7.getOwnedBy()) {
+        if (!monopoly1Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            
+            position4.setRent(position4.getRent() * 2);
+            position6.setRent(position6.getRent() * 2);
+            position7.setRent(position7.getRent() * 2);
+            monopoly1Creado = true;
+        }
+    }
+    
+    // Monopolio 2
+    Position position12 = this.position.getPositionMap().get(12);
+    Position position14 = this.position.getPositionMap().get(14);
+    Position position15 = this.position.getPositionMap().get(15);
+    
+    if (jugadorActual == position12.getOwnedBy() && jugadorActual == position14.getOwnedBy() && jugadorActual == position15.getOwnedBy()) {
+        if (!monopoly2Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            
+            position12.setRent(position12.getRent() * 2);
+            position14.setRent(position14.getRent() * 2);
+            position15.setRent(position15.getRent() * 2);
+            monopoly2Creado = true;
+        }
+    }
+    
+    // Monopolio 3
+    Position position17 = this.position.getPositionMap().get(17);
+    Position position19 = this.position.getPositionMap().get(19);
+    Position position20 = this.position.getPositionMap().get(20);
+    
+    if (jugadorActual == position17.getOwnedBy() && jugadorActual == position19.getOwnedBy() && jugadorActual == position20.getOwnedBy()) {
+        if (!monopoly3Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            
+            position17.setRent(position17.getRent() * 2);
+            position19.setRent(position19.getRent() * 2);
+            position20.setRent(position20.getRent() * 2);
+            monopoly3Creado = true;
+        }
+    }
+    
+    // Monopolio 4
+    Position position25 = this.position.getPositionMap().get(26);
+    Position position26 = this.position.getPositionMap().get(25);
+    Position position28 = this.position.getPositionMap().get(28);
+    
+    if (jugadorActual == position25.getOwnedBy() && jugadorActual == position26.getOwnedBy() && jugadorActual == position28.getOwnedBy()) {
+        if (!monopoly4Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            
+            position25.setRent(position25.getRent() * 2);
+            position26.setRent(position26.getRent() * 2);
+            position28.setRent(position28.getRent() * 2);
+            monopoly4Creado = true;
+        }
+    }
+    
+        // Monopolio 5
+    Position position2 = this.position.getPositionMap().get(2);
+    Position position18 = this.position.getPositionMap().get(18);
+
+    
+    if (jugadorActual == position2.getOwnedBy() && jugadorActual == position18.getOwnedBy()) {
+        if (!monopoly5Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            valorUtilidades=20;
+
+            monopoly5Creado = true;
+        }
+    }
+    
+        // Monopolio 6
+    Position position5 = this.position.getPositionMap().get(5);
+    Position position11 = this.position.getPositionMap().get(11);
+    Position position22 = this.position.getPositionMap().get(22);
+    Position position30 = this.position.getPositionMap().get(30);
+    
+    if (jugadorActual == position5.getOwnedBy() && jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+        if (!monopoly6Creado) {
+            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+            position5.setRent(450);
+            position11.setRent(450);
+            position22.setRent(450);
+            position30.setRent(450);
+            monopoly6Creado = true;
+        }
+    }
+    
+   // Trenes
+if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+    position30.setRent(315);
+    position11.setRent(315);
+    position22.setRent(315);
+} else {
+    if (jugadorActual == position5.getOwnedBy()) {
+        if (jugadorActual == position11.getOwnedBy()) {
+            position5.setRent(315);
+            position11.setRent(315);
+        } else if (jugadorActual == position22.getOwnedBy()) {
+            position5.setRent(315);
+            position22.setRent(315);
+        } else if (jugadorActual == position30.getOwnedBy()) {
+            position5.setRent(315);
+            position30.setRent(315);
+        }
+    }
+    if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy()) {
+        position11.setRent(206);
+        position22.setRent(206);
+    } else if (jugadorActual == position11.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+        position11.setRent(206);
+        position30.setRent(206);
+    } else if (jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+        position22.setRent(206);
+        position30.setRent(206);
+    }
+}     
+    }
+
+    private int rentaAguaOLuz(){
+        lblresul.setText(null);
+            gridPaneTablero.getChildren().remove(carta);
+            int dado1 = lanzarDado();
+        int dado2 = lanzarDado();
+        int total = dado1 + dado2;
+        
+        mostrarImagenDado(dado1, imgDado1);
+        mostrarImagenDado(dado2, imgDado2);
+        lblresul.setText(String.valueOf(total));
+        return total;
+    }
 }
 

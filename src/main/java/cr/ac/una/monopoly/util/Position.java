@@ -10,6 +10,8 @@ package cr.ac.una.monopoly.util;
  */
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Position {
      HashMap<Integer, Position> positionMap = new HashMap<>();
@@ -19,6 +21,9 @@ public class Position {
     private int ownedBy;
     private String name;
     private String characteristic;
+    private double rent;
+    private double mortgage;
+       
 
     public Position() {
         initPositionMap();
@@ -71,6 +76,23 @@ public class Position {
     public boolean isOwned() {
         return ownedBy != 0;
     }
+
+    public double getRent() {
+        return rent;
+    }
+
+    public void setRent(double rent) {
+        this.rent = rent;
+    }
+
+    public double getMortgage() {
+        return mortgage;
+    }
+
+    public void setMortgage(double mortgage) {
+        this.mortgage = mortgage;
+    }
+    
     public Map<Integer, Position> getPositionMap() {
     return positionMap;
 }
@@ -114,6 +136,8 @@ public void initPositionMap() {
 setPropertyInfo();
 setPositionName();
 setPositionCharacteristic();
+setPositionRent();
+setPositionMortgage();
 }
 public void setPositionCharacteristic(){
     positionMap.get(0).setCharacteristic("Go");
@@ -156,13 +180,13 @@ public void setPositionName(){
     positionMap.get(2).setName("Agua");
     positionMap.get(3).setName("Suerte");
     positionMap.get(4).setName("Avenida Lopez");
-    positionMap.get(5).setName("Tren");
+    positionMap.get(5).setName("Tren Sur");
     positionMap.get(6).setName("Avenida Toros");
     positionMap.get(7).setName("Avenida Camaano");
     positionMap.get(8).setName("Carcel pos");
     positionMap.get(9).setName("Impuesto");
     positionMap.get(10).setName("Suerte");
-    positionMap.get(11).setName("Tren");
+    positionMap.get(11).setName("Tren Oeste");
     positionMap.get(12).setName("Zona Franca");
     positionMap.get(13).setName("Suerte");
     positionMap.get(14).setName("Finca Miramar");
@@ -173,7 +197,7 @@ public void setPositionName(){
     positionMap.get(19).setName("Avenida Central");
     positionMap.get(20).setName("Heredia Media Calle");
     positionMap.get(21).setName("Suerte");
-    positionMap.get(22).setName("Tren");
+    positionMap.get(22).setName("Tren Norte");
     positionMap.get(23).setName("Impuesto");
     positionMap.get(24).setName("Ve a carcel");
     positionMap.get(25).setName("Lagunilla Escuela");
@@ -181,7 +205,7 @@ public void setPositionName(){
     positionMap.get(27).setName("Suerte");
     positionMap.get(28).setName("Calle Soledad");
     positionMap.get(29).setName("Suerte");
-    positionMap.get(30).setName("Tren");
+    positionMap.get(30).setName("Tren Este");
     positionMap.get(31).setName("Suerte");
 
 }
@@ -219,5 +243,124 @@ private void setPropertyInfo() {
     positionMap.get(29).setPrice(0); // Suerte
     positionMap.get(31).setPrice(0); // Suerte
 }
-
+private void setPositionMortgage(){
+positionMap.get(2).setMortgage(250);
+       positionMap.get(4).setMortgage(180);
+          positionMap.get(5).setMortgage(250);
+       positionMap.get(6).setMortgage(100);
+          positionMap.get(7).setMortgage(500);
+       positionMap.get(11).setMortgage(250);
+          positionMap.get(12).setMortgage(200);
+       positionMap.get(14).setMortgage(230);
+          positionMap.get(15).setMortgage(230);
+       positionMap.get(17).setMortgage(180);
+         positionMap.get(18).setMortgage(250);
+          positionMap.get(19).setMortgage(200);
+       positionMap.get(20).setMortgage(380);
+          positionMap.get(22).setMortgage(250);
+       positionMap.get(25).setMortgage(350);
+          positionMap.get(26).setMortgage(180);
+       positionMap.get(28).setMortgage(150);
+         positionMap.get(30).setMortgage(250);}
+private void setPositionRent(){
+    positionMap.get(2).setRent(250);//agua
+       positionMap.get(4).setRent(50);
+          positionMap.get(5).setRent(100);//tren
+       positionMap.get(6).setRent(30);
+          positionMap.get(7).setRent(90);
+          positionMap.get(9).setRent(190);//impuesto
+       positionMap.get(11).setRent(100);//tren
+          positionMap.get(12).setRent(60);
+       positionMap.get(14).setRent(65);
+          positionMap.get(15).setRent(65);
+       positionMap.get(17).setRent(45);
+         positionMap.get(18).setRent(250);//luz
+          positionMap.get(19).setRent(55);
+       positionMap.get(20).setRent(85);
+          positionMap.get(22).setRent(100);//tren
+           positionMap.get(23).setRent(160);//impuesto
+       positionMap.get(25).setRent(75);
+          positionMap.get(26).setRent(50);
+       positionMap.get(28).setRent(45);
+         positionMap.get(30).setRent(100);//tren
+}
+public void showPosition(ImageView imageView, int posicion){
+    Image agua = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Agua.png"));
+    Image luz = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Luz.png"));
+    Image avenidaCamaano = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Avenida Camaano.png"));
+    Image avenidaLopez = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Avenida Lopez.png"));
+    Image avenidaToros = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Avenida Toros.png"));
+    Image fincaMiramar = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Finca Miramar.png"));
+    Image avenidaPerez = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Avenida Central.png"));
+    Image avenidaCentral = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Avenida Perez.png"));
+    Image heredia = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Heredia Media Calle.png"));
+    Image mirador = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Mirador.png"));
+    Image zonaFranca = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Zona Franca.png"));
+    Image callePerdidos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Calle Los Perdidos.png"));
+    Image calleSoledad = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Calle Soledad.png"));
+    Image lagunillaEscuela = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Lagunilla Escuela.png"));
+    Image trenSur = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Tren Sur.png"));
+    Image trenNorte = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Tren Norte.png"));
+    Image trenEste = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Tren Este.png"));
+    Image trenOeste = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Tren Oeste.png"));
+    
+switch (posicion) {
+    case 2:
+        imageView.setImage(agua);
+        break;
+    case 4:
+        imageView.setImage(avenidaLopez);
+        break;
+    case 5:
+        imageView.setImage(trenSur);
+        break;
+    case 6:
+        imageView.setImage(avenidaToros);
+        break;
+    case 7:
+        imageView.setImage(avenidaCamaano);
+        break;
+    case 11:
+        imageView.setImage(trenOeste);
+        break;
+    case 12:
+        imageView.setImage(zonaFranca);
+        break;
+    case 14:
+        imageView.setImage(fincaMiramar);
+        break;
+    case 15:
+        imageView.setImage(mirador);
+        break;
+    case 17:
+        imageView.setImage(avenidaPerez);
+        break;
+    case 18:
+        imageView.setImage(luz);
+        break;
+    case 19:
+        imageView.setImage(avenidaCentral);
+        break;
+    case 20:
+        imageView.setImage(heredia);
+        break;
+    case 22:
+        imageView.setImage(trenNorte);
+        break;
+    case 25:
+        imageView.setImage(lagunillaEscuela);
+        break;
+    case 26:
+        imageView.setImage(callePerdidos);
+        break;
+    case 28:
+        imageView.setImage(calleSoledad);
+        break;
+    case 30:
+        imageView.setImage(trenEste);
+        break;
+    default:
+        break;
+}
+}
 }
