@@ -24,6 +24,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import cr.ac.una.monopoly.controller.PrincipalViewController;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -32,7 +35,7 @@ import cr.ac.una.monopoly.controller.PrincipalViewController;
  */
 public class Jugador1PropiedadesViewController extends Controller implements Initializable {
 
-    @FXML
+     @FXML
     private AnchorPane root;
     @FXML
     private TableView<List<Object>> tViewDatosPropiedades;
@@ -51,8 +54,6 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
     @FXML
     private TableColumn<List<Object>, Boolean> hipotecarColumna;
     @FXML
-    private JFXButton btnActualizar;
-    @FXML
     private TableColumn<List<Object>, Boolean> perteneceColumna;
     @FXML
     private JFXButton btnCerrar;
@@ -63,7 +64,7 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       llenarTabla();
+    
     }
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
@@ -97,34 +98,26 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
 
                     {
                         button.setOnAction(event -> {
-                            
-                           
-                            
+
                             if (buttonText == "Vender") {
                                 List<Object> rowData = getTableView().getItems().get(getIndex());
-                                System.out.println("datin: "+getIndex());
-                                System.out.println("Nombre: " + (String) rowData.get(0));
-                                System.out.println("Precio: " + (Double) rowData.get(2));
-                         
                                 VentasJ1 ventaJ1 = new VentasJ1();
                                 ventaJ1.setVentaJ1((Double) rowData.get(2));
                                 AppContext.getInstance().set("VentaJ1", ventaJ1);
-                         
                                 List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
-                        
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-                                  
+                                
+
                                 if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
                                     datosJ1.remove(indiceABorrar);
                                 } else {
-                                    System.out.println("El índice está fuera de rango");
+                                    System.out.println("El índice no existe");
                                 }
-                      
                                 llenarTabla();
-                                
-                               
-                            }if (buttonText == "Hipotecar"){
-    
+
+                            }
+                            if (buttonText == "Hipotecar") {
+
                             }
                         });
                     }
@@ -146,24 +139,26 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
 
     @Override
     public void initialize() {
-    }
-    
-  
-    
-    
-    @FXML
-    private void onActionBtnActualizar(ActionEvent event) {
-       llenarTabla();
+        llenarTabla();
     }
 
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
-      
+        ((Stage) root.getScene().getWindow()).close();
     }
-}
-class VentasJ1{
-private double VentaJ1;
 
+    @FXML
+    private void onKeyPressedCargar(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            llenarTabla();
+        }
+    }
+
+}
+
+class VentasJ1 {
+
+    private double VentaJ1;
 
     public double getVentaJ1() {
         return VentaJ1;

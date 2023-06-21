@@ -111,8 +111,5 @@ public class FichaViewController extends Controller implements Initializable {
         ((Stage) root.getScene().getWindow()).close();
     }
     
-   /** private void cargaImagen(){
-    LogInViewController logInViewController = new LogInViewController();
-    logInViewController.cargaImagen(rutaImagen1, rutaImagen2);}
-    */ //tengo que hacerlo al reves
+  
 }

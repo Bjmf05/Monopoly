@@ -63,6 +63,8 @@ public class LogInViewController extends Controller implements Initializable {
     private ImageView imVJugador2;
     @FXML
     private JFXButton btnElegirFichas;
+    private Image imageJ1;
+    private Image imageJ2;
 
     public String getTxtJugador1() {
         return txtJugador1.getText();
@@ -121,24 +123,13 @@ public class LogInViewController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-
+        System.out.println("Hola");
     }
 
     @FXML
     private void onActionBtnElegirFichas(ActionEvent event) {
          FlowController.getInstance().goViewInWindow("FichaView");
     }
-    
-  /*  public void cargaImagen(String V1, String V2){
-    
-         Image imageA = new Image(V1);
-         imVJugador1.setImage(imageA);
-    
-         Image imageB = new Image(V2);
-         imVJugador2.setImage(imageB);
-    
-    
-    }*/
     
 
 }

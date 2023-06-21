@@ -20,7 +20,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -49,26 +52,26 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
     @FXML
     private TableColumn<List<Object>, Boolean> hipotecarColumna;
     @FXML
-    private JFXButton btnActualizar;
-    @FXML
     private TableColumn<List<Object>, Boolean> perteneceColumna;
-  
+    @FXML
+    private JFXButton btnCerrar;
+
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       llenarTabla();
+    
     }
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
-        List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J2");
+        List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
         List<List<Object>> listaPreestablecida = (List<List<Object>>) AppContext.getInstance().get("Vacia");
-        if (datosJ1 == null) {
+        if (datosJ2 == null) {
             datosPropiedades.addAll(listaPreestablecida);
         } else {
-            datosPropiedades.addAll(datosJ1);
+            datosPropiedades.addAll(datosJ2);
         }
 
         tViewDatosPropiedades.setItems(datosPropiedades);
@@ -93,34 +96,25 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
 
                     {
                         button.setOnAction(event -> {
-                            
-                           
-                            
+
                             if (buttonText == "Vender") {
                                 List<Object> rowData = getTableView().getItems().get(getIndex());
-                                System.out.println("datin: "+getIndex());
-                                System.out.println("Nombre: " + (String) rowData.get(0));
-                                System.out.println("Precio: " + (Double) rowData.get(2));
-                         
                                 VentasJ2 ventaJ2 = new VentasJ2();
                                 ventaJ2.setVentaJ2((Double) rowData.get(2));
-                                AppContext.getInstance().set("VentaJ1", ventaJ2);
-                         
-                                List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
-                        
+                                AppContext.getInstance().set("VentaJ2", ventaJ2);
+                                List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-                                  
-                                if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
-                                    datosJ1.remove(indiceABorrar);
+
+                                if (indiceABorrar >= 0 && indiceABorrar < datosJ2.size()) {
+                                    datosJ2.remove(indiceABorrar);
                                 } else {
-                                    System.out.println("El índice está fuera de rango");
+                                    System.out.println("El índice no existe");
                                 }
-                      
                                 llenarTabla();
-                                
-                               
-                            }if (buttonText == "Hipotecar"){
-    
+
+                            }
+                            if (buttonText == "Hipotecar") {
+
                             }
                         });
                     }
@@ -142,21 +136,23 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
 
     @Override
     public void initialize() {
-    }
-    
-  
-    
-    
-    @FXML
-    private void onActionBtnActualizar(ActionEvent event) {
-       llenarTabla();
+        llenarTabla();
     }
 
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
-      
+        ((Stage) root.getScene().getWindow()).close();
     }
+
+    @FXML
+    private void onKeyPressedCargar(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            llenarTabla();
+        }
+    }
+
 }
+
 class VentasJ2{
 
 private double VentaJ2;

@@ -95,6 +95,10 @@ public class PrincipalViewController extends Controller implements Initializable
     private int sumaTotal2 = 0;
     private int comodin;
     private int valorUtilidades=10;
+    @FXML
+    private ImageView imvEmojiJ1;
+    @FXML
+    private ImageView imvEmojiJ2;
     public double getCuentaJugador1() {
         return cuentaJugador1;
     }
@@ -340,19 +344,21 @@ gridPaneTablero.getChildren().remove(carta);
             valTotal = total + sumaTotal1;
             contarVueltas1(valTotal, 1);
             lblJugadorEnTurno.setText(datos.getJugador1());
-           // carcel();
-          //  VentaJ1();
+            carcel();
+            VentaJ2();
+            VentaJ1();
         } else if (jugadorActual == 2) {
             valTotal = total + sumaTotal2;
             contarVueltas2(valTotal, 2);
             lblJugadorEnTurno.setText(datos.getJugador2());
-           // carcel();
-           // VentaJ2();
+            carcel();
+            VentaJ1();
+            VentaJ2();
         }
         if (valTotal > 31) {
             valTotal %= 32;
         }
-       
+
     }
 
     void actualizarSumaTotal(int total) {
@@ -601,26 +607,67 @@ void mostrarPropiedad(){
 
     }
     
-    public void VentaJ1() {
-        VentasJ1 venta = (VentasJ1) AppContext.getInstance().get("VentaJ1");
+    public double VentaJ1() {
+       VentasJ1 venta = (VentasJ1) AppContext.getInstance().get("VentaJ1");
+        if ( venta != null){
         cuentaJugador1 += venta.getVentaJ1();
         cargarValores();
         venta.setVentaJ1(0);
+        
+        }
+        
+        return cuentaJugador1; 
 
     }
     
-    private void VentaJ2() {
-        VentasJ2 venta = (VentasJ2) AppContext.getInstance().get("VentaJ1");
+    private double VentaJ2() {
+       VentasJ2 venta = (VentasJ2) AppContext.getInstance().get("VentaJ2");
+        
+        if ( venta != null){
         cuentaJugador2 += venta.getVentaJ2();
         cargarValores();
         venta.setVentaJ2(0);
+       
+        }
+        
+        return cuentaJugador2;
 
     }
     
 
     private void cargarValores() {
-        lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
-        lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
+       lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
+       lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
+       
+        String Juga1 = "/cr/ac/una/monopoly/resources/muybueno.png";
+        String Juga2 = "/cr/ac/una/monopoly/resources/muybueno.png";
+        if (jugadorActual == 1) {
+
+            if (cuentaJugador1 <= 0) {
+                Juga1 = "/cr/ac/una/monopoly/resources/malo.png";
+            } else if (cuentaJugador1 > 0 && cuentaJugador1 < 1500) {
+                Juga1 = "/cr/ac/una/monopoly/resources/regular.png";
+            } else if (cuentaJugador1 >= 1500 && cuentaJugador1 <= 5000) {
+                Juga1 = "/cr/ac/una/monopoly/resources/muybueno.png";
+            } else {
+                Juga1 = "/cr/ac/una/monopoly/resources/excelente.png";
+            }
+            imvEmojiJ1.setImage(new Image(Juga1));
+        }
+
+        if (jugadorActual == 2) {
+
+            if (cuentaJugador2 <= 0) {
+                Juga2 = "/cr/ac/una/monopoly/resources/malo.png";
+            } else if (cuentaJugador2 > 0 && cuentaJugador2 < 1500) {
+                Juga2 = "/cr/ac/una/monopoly/resources/regular.png";
+            } else if (cuentaJugador2 >= 1500 && cuentaJugador2 <= 5000) {
+                Juga2 = "/cr/ac/una/monopoly/resources/muybueno.png";
+            } else {
+                Juga2 = "/cr/ac/una/monopoly/resources/excelente.png";
+            }
+             imvEmojiJ2.setImage(new Image(Juga2));
+        }
         
 
     }
@@ -641,7 +688,7 @@ void mostrarPropiedad(){
         Position position = this.position.getPositionMap().get(valTotal);
         double multa = ThreadLocalRandom.current().nextInt(20, 301);
         String saldo;
-        if (position.getName() == "Carcel") {
+        if (position.getName() != null && position.getName() == "Carcel") {
           double residuo;
             if (jugadorActual == 1) {
                 residuo = cuentaJugador1 - multa;
@@ -661,7 +708,7 @@ void mostrarPropiedad(){
                 residuo = cuentaJugador2 - multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
-                     FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
+                     FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
                     //No tiene saldo suficiente 
                     //compara el valor de las propiedades que tiene con la deuda
                     // metodo que vende una propiedad
