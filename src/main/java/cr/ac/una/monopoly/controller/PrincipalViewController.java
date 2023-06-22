@@ -400,8 +400,9 @@ gridPaneTablero.getChildren().remove(carta);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String rutaJ1 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
-        String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloVerde.png";
+        String rutaJ1 = "/cr/ac/una/monopoly/resources/circuloVerde.png";
+        String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
+
 
         Datos datos = (Datos) AppContext.getInstance().get("Llave");
         lblName1.setText(datos.getJugador1());
