@@ -34,11 +34,13 @@ import javafx.stage.Stage;
  * @author Joshua Cambronero
  */
 public class Jugador1PropiedadesViewController extends Controller implements Initializable {
-
+PrincipalViewController principal = new PrincipalViewController();
      @FXML
     private AnchorPane root;
     @FXML
     private TableView<List<Object>> tViewDatosPropiedades;
+        @FXML
+    private TableColumn<List<Object>,Integer> idColumna;
     @FXML
     private TableColumn<List<Object>, String> nombreColumna;
     @FXML
@@ -66,6 +68,9 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
     public void initialize(URL url, ResourceBundle rb) {
     
     }
+    public void setPrincipal(PrincipalViewController principal) {
+    this.principal = principal;
+}
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
         List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
@@ -78,24 +83,25 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
 
         tViewDatosPropiedades.setItems(datosPropiedades);
         // Configurar las celdas de cada columna
-        nombreColumna.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get(0)));
-        valorColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(1)));
-        valorDeVentaColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(2)));
-        valorDeHipotecaColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(3)));
-        propietarioColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((String) cellData.getValue().get(4)));
+        idColumna.setCellValueFactory(cellData -> new SimpleObjectProperty((Integer) cellData.getValue().get(0)));
+        nombreColumna.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get(1)));
+        valorColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(2)));
+        valorDeVentaColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(3)));
+        valorDeHipotecaColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(4)));
+        propietarioColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((String) cellData.getValue().get(5)));
         // Configurar celdas de botón personalizadas para las columnas de vender y hipotecar
         venderColumna.setCellFactory(createButtonCellFactory("Vender"));
         hipotecarColumna.setCellFactory(createButtonCellFactory("Hipotecar"));
-        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(5)));
+        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(6)));
     }
-
+        
     private Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>> createButtonCellFactory(String buttonText) {
         return new Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>>() {
             @Override
             public TableCell<List<Object>, Boolean> call(final TableColumn<List<Object>, Boolean> param) {
                 return new TableCell<List<Object>, Boolean>() {
                     private final Button button = new Button(buttonText);
-
+     
                     {
                         button.setOnAction(event -> {
 
@@ -104,10 +110,12 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
                                 VentasJ1 ventaJ1 = new VentasJ1();
                                 ventaJ1.setVentaJ1((Double) rowData.get(2));
                                 AppContext.getInstance().set("VentaJ1", ventaJ1);
+                               
                                 List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-                                
 
+                               
+                                
                                 if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
                                     datosJ1.remove(indiceABorrar);
                                 } else {
@@ -157,7 +165,16 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
 }
 
 class VentasJ1 {
+    private int ventaPropi=0;
 
+    public int getVentaPropi() {
+        return ventaPropi;
+    }
+
+    public void setVentaPropi(int ventaPropi) {
+        this.ventaPropi = ventaPropi;
+    }
+    
     private double VentaJ1;
 
     public double getVentaJ1() {

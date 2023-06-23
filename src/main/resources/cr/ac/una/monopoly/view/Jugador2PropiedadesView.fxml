@@ -14,6 +14,7 @@
          <children>
             <TableView fx:id="tViewDatosPropiedades" onKeyPressed="#onKeyPressedCargar" prefHeight="355.0" prefWidth="700.0">
                <columns>
+                  <TableColumn fx:id="idColumna" minWidth="30.0" prefWidth="30.0" text="Id" />
                   <TableColumn fx:id="nombreColumna" prefWidth="112.0" text="Nombre" />
                   <TableColumn fx:id="valorColumna" prefWidth="53.0" text="Valor" />
                   <TableColumn fx:id="valorDeVentaColumna" prefWidth="92.0" text="Valor de venta" />

@@ -23,7 +23,19 @@ public class Position {
     private String characteristic;
     private double rent;
     private double mortgage;
-       
+    private int numHouse;
+    private int numHotel; 
+    private double housePrice;
+    private double hotelPrice;   
+    private int numPosition;
+
+    public int getNumPosition() {
+        return numPosition;
+    }
+
+    public void setNumPosition(int numPosition) {
+        this.numPosition = numPosition;
+    }
 
     public Position() {
         initPositionMap();
@@ -92,6 +104,38 @@ public class Position {
     public void setMortgage(double mortgage) {
         this.mortgage = mortgage;
     }
+
+    public int getNumHouse() {
+        return numHouse;
+    }
+
+    public void setNumHouse(int numHouse) {
+        this.numHouse = numHouse;
+    }
+
+    public int getNumHotel() {
+        return numHotel;
+    }
+
+    public void setNumHotel(int numHotel) {
+        this.numHotel = numHotel;
+    }
+
+    public double getHousePrice() {
+        return housePrice;
+    }
+
+    public void setHousePrice(double housePrice) {
+        this.housePrice = housePrice;
+    }
+
+    public double getHotelPrice() {
+        return hotelPrice;
+    }
+
+    public void setHotelPrice(double hotelPrice) {
+        this.hotelPrice = hotelPrice;
+    }
     
     public Map<Integer, Position> getPositionMap() {
     return positionMap;
@@ -138,6 +182,11 @@ setPositionName();
 setPositionCharacteristic();
 setPositionRent();
 setPositionMortgage();
+numberPosition();
+fillHousePrice();
+fillHotelPrice();
+fillNumHotel();
+fillNumHouse();
 }
 public void setPositionCharacteristic(){
     positionMap.get(0).setCharacteristic("Go");
@@ -173,6 +222,27 @@ positionMap.get(29).setCharacteristic("Suerte");
 positionMap.get(30).setCharacteristic("Tren");
 positionMap.get(31).setCharacteristic("Suerte");
     
+}
+public void numberPosition(){
+positionMap.get(2).setNumPosition(2);
+positionMap.get(4).setNumPosition(4);
+positionMap.get(5).setNumPosition(5);
+positionMap.get(6).setNumPosition(6);
+positionMap.get(7).setNumPosition(7);
+positionMap.get(11).setNumPosition(11);
+positionMap.get(12).setNumPosition(12);
+positionMap.get(14).setNumPosition(14);
+positionMap.get(15).setNumPosition(15);
+positionMap.get(17).setNumPosition(17);
+positionMap.get(18).setNumPosition(18);
+positionMap.get(19).setNumPosition(19);
+positionMap.get(20).setNumPosition(20);
+positionMap.get(22).setNumPosition(22);
+positionMap.get(25).setNumPosition(25);
+positionMap.get(26).setNumPosition(26);
+positionMap.get(28).setNumPosition(28);
+positionMap.get(30).setNumPosition(200);
+
 }
 public void setPositionName(){
    positionMap.get(0).setName("Go");
@@ -284,6 +354,63 @@ private void setPositionRent(){
        positionMap.get(28).setRent(45);
          positionMap.get(30).setRent(100);//tren
 }
+        public void fillNumHouse(){
+        positionMap.get(4).setNumHouse(0);
+        positionMap.get(6).setNumHouse(0);
+        positionMap.get(7).setNumHouse(0);
+        positionMap.get(12).setNumHouse(0);
+        positionMap.get(14).setNumHouse(0);
+        positionMap.get(15).setNumHouse(0);
+        positionMap.get(17).setNumHouse(0);
+        positionMap.get(19).setNumHouse(0);
+        positionMap.get(20).setNumHouse(0);
+        positionMap.get(25).setNumHouse(0);
+        positionMap.get(26).setNumHouse(0);
+        positionMap.get(28).setNumHouse(0);
+        }
+        public void fillNumHotel(){
+        positionMap.get(4).setNumHotel(0);
+        positionMap.get(6).setNumHotel(0);
+        positionMap.get(7).setNumHotel(0);
+        positionMap.get(12).setNumHotel(0);
+        positionMap.get(14).setNumHotel(0);
+        positionMap.get(15).setNumHotel(0);
+        positionMap.get(17).setNumHotel(0);
+        positionMap.get(19).setNumHotel(0);
+        positionMap.get(20).setNumHotel(0);
+        positionMap.get(25).setNumHotel(0);
+        positionMap.get(26).setNumHotel(0);
+        positionMap.get(28).setNumHotel(0);
+        }
+        public void fillHousePrice(){
+        positionMap.get(4).setHousePrice(80);
+        positionMap.get(6).setHousePrice(80);
+        positionMap.get(7).setHousePrice(150);
+        positionMap.get(12).setHousePrice(90);
+        positionMap.get(14).setHousePrice(90);
+        positionMap.get(15).setHousePrice(90);
+        positionMap.get(17).setHousePrice(80);
+        positionMap.get(19).setHousePrice(70);
+        positionMap.get(20).setHousePrice(150);
+        positionMap.get(25).setHousePrice(120);
+        positionMap.get(26).setHousePrice(100);
+        positionMap.get(28).setHousePrice(100);
+        }
+        public void fillHotelPrice(){
+        positionMap.get(4).setHotelPrice(350);
+        positionMap.get(6).setHotelPrice(320);
+        positionMap.get(7).setHotelPrice(500);
+        positionMap.get(12).setHotelPrice(300);
+        positionMap.get(14).setHotelPrice(300);
+        positionMap.get(15).setHotelPrice(300);
+        positionMap.get(17).setHotelPrice(320);
+        positionMap.get(19).setHotelPrice(350);
+        positionMap.get(20).setHotelPrice(450);
+        positionMap.get(25).setHotelPrice(350);
+        positionMap.get(26).setHotelPrice(250);
+        positionMap.get(28).setHotelPrice(250);
+        }
+
 public void showPosition(ImageView imageView, int posicion){
     Image agua = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Agua.png"));
     Image luz = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/propiedades/Luz.png"));
@@ -333,13 +460,13 @@ switch (posicion) {
         imageView.setImage(mirador);
         break;
     case 17:
-        imageView.setImage(avenidaPerez);
+        imageView.setImage(avenidaCentral);
         break;
     case 18:
         imageView.setImage(luz);
         break;
     case 19:
-        imageView.setImage(avenidaCentral);
+        imageView.setImage(avenidaPerez);
         break;
     case 20:
         imageView.setImage(heredia);

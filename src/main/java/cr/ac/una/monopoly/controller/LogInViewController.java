@@ -93,9 +93,9 @@ public class LogInViewController extends Controller implements Initializable {
 
         try {
             if (txtJugador1.getText() == null || txtJugador1.getText().isEmpty()) {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el juador 1", getStage(), "Es necesario digitar el Jugador 1");
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el jugador 1", getStage(), "Es necesario digitar el Jugador 1");
             } else if (txtJugador2.getText() == null || txtJugador2.getText().isEmpty()) {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el juador 2", getStage(), "Es necesario digitar el Jugador 2");
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Digite el jugador 2", getStage(), "Es necesario digitar el Jugador 2");
             } else {
                 Datos datos = new Datos();
                 datos.setJugador1(txtJugador1.getText());

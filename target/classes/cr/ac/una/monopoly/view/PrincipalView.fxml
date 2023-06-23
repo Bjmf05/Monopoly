@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="775.0" styleClass="anchor-pane-Font" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.monopoly.controller.PrincipalViewController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -155,6 +155,11 @@
                         <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
                         <Label styleClass="label-Jugador2" text="Dinero:" />
                         <Label fx:id="lblSaldoJugador1" styleClass="label-Jugador2" text="0" />
+                        <ImageView fx:id="imvEmojiJ1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/muybueno.png" />
+                           </image>
+                        </ImageView>
                         <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
                      </children>
                   </VBox>
@@ -172,6 +177,11 @@
                         <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
                         <Label styleClass="label-Jugador1" text="Dinero:" />
                         <Label fx:id="lblSaldoJugador2" styleClass="label-Jugador1" text="0" />
+                        <ImageView fx:id="imvEmojiJ2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/muybueno.png" />
+                           </image>
+                        </ImageView>
                         <JFXButton fx:id="btnPropiedades2" onAction="#onActionBtnPropiedades2" styleClass="jfx-btn-propiedades2" text="Propiedades" />
                      </children>
                   </VBox>

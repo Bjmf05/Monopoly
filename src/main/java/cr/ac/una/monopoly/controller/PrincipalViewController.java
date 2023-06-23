@@ -42,6 +42,10 @@ import javafx.scene.shape.Circle;
  */
 public class PrincipalViewController extends Controller implements Initializable {
 
+    public PrincipalViewController() {
+    }
+    
+
     @FXML
     private JFXTextField txfJugador2;
     @FXML
@@ -70,6 +74,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXButton btnPropiedades2;
     @FXML
     private JFXButton btnTerminarTurno;
+   
     @FXML
     private GridPane gridPaneTablero;
     @FXML
@@ -126,6 +131,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private Image imageJ2;
     double saldoJ1 = 0;
     double saldoJ2 = 0;
+    int venta=0;
     int contadorJ1;
     int contadorJ2;
     private int myVariable;
@@ -134,9 +140,15 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     private Label lblJugadorEnTurno;
     List<Object> listaJ1 = new ArrayList<>();
-    
-   
-    
+
+    public int getVenta() {
+        return venta;
+    }
+
+    public void setVenta(int venta) {
+        this.venta = venta;
+    }
+
 
     void montarCarta() {
 gridPaneTablero.getChildren().remove(carta);
@@ -155,12 +167,18 @@ gridPaneTablero.getChildren().remove(carta);
         int numeroSuerte = (int) (Math.random() * 16) + 1;
         CartasSuerte suerte = new CartasSuerte();
         suerte.cartasSuertes(imageView, numeroSuerte); 
-        switch (numeroSuerte) {
+        accionesSuerte(numeroSuerte);
+    }
+        void accionesSuerte(int numeroSuerte){
+            switch (numeroSuerte) {
             case 1:
                 carcel();
                 break;
             case 2:
                 //ve a GO
+                valTotal = 0;
+                actualizarSumaTotal(valTotal);
+                
                 break;
             case 3:
                 if (jugadorActual==1){
@@ -177,7 +195,8 @@ gridPaneTablero.getChildren().remove(carta);
                     cuentaJugador2-=200;}
                 break;
             case 5:
-                //retrosede 2 lugares
+                valTotal-=2;
+                actualizarSumaTotal(valTotal);
                 break;
             case 6:
                 if (jugadorActual==1){
@@ -196,9 +215,11 @@ gridPaneTablero.getChildren().remove(carta);
             case 8:
                 if (jugadorActual==1){
                     cuentaJugador1-=50;
+                    cuentaJugador2+=50;
                 }
                 else{
-                    cuentaJugador2-=50;}
+                    cuentaJugador2-=50;
+                cuentaJugador1+=50;}
                 break;
             case 9:
                 if (jugadorActual==1){
@@ -227,14 +248,10 @@ gridPaneTablero.getChildren().remove(carta);
                 break;
             case 13:
                 //paseo a zona franca
+                valTotal=12;
+                actualizarSumaTotal(valTotal);
                 break;
             case 14:
-                if (jugadorActual==1){
-                    cuentaJugador1-=100;
-                }
-                else{
-                    cuentaJugador2-=100;}
-                break;
             case 15:
                    if (jugadorActual==1){
                     cuentaJugador1-=100;
@@ -250,8 +267,7 @@ gridPaneTablero.getChildren().remove(carta);
                     cuentaJugador2+=50;}
                 break;
         }
-    }
-
+        }
     @FXML
     void onActionBtnTerminarTurno(ActionEvent event) {
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
@@ -268,6 +284,9 @@ gridPaneTablero.getChildren().remove(carta);
         lblJCuentaPasos.setText("0");
         cargarValores();
         gridPaneTablero.getChildren().remove(carta);
+        btnTerminarTurno.setDisable(true);
+        venderPropiedad();
+      
     }
 
     public void nombreJugadores(String nombre1, String nombre2) {
@@ -295,6 +314,7 @@ gridPaneTablero.getChildren().remove(carta);
         mostrarImagenDado(dado2, imgDado2);
         revizar();
         btnLanzarDados.setDisable(true);
+        btnTerminarTurno.setDisable(false);
 
     }
 
@@ -344,14 +364,14 @@ gridPaneTablero.getChildren().remove(carta);
             valTotal = total + sumaTotal1;
             contarVueltas1(valTotal, 1);
             lblJugadorEnTurno.setText(datos.getJugador1());
-            carcel();
+          
             VentaJ2();
             VentaJ1();
         } else if (jugadorActual == 2) {
             valTotal = total + sumaTotal2;
             contarVueltas2(valTotal, 2);
             lblJugadorEnTurno.setText(datos.getJugador2());
-            carcel();
+         
             VentaJ1();
             VentaJ2();
         }
@@ -438,16 +458,25 @@ gridPaneTablero.getChildren().remove(carta);
                 nombres.add(Boolean.valueOf(false));
                 listaPreestablecida.add(nombres);
                 AppContext.getInstance().set("Vacia", listaPreestablecida);
+                btnTerminarTurno.setDisable(true);
         
     }
+   
+  void venderPropiedad(){
+      VentasJ1 datVentas = (VentasJ1) AppContext.getInstance().get("ventLlave");
+        venta = datVentas.getVentaPropi();
+    System.out.println(getVenta());
 
+    }
+  
     @FXML
     void onActionBtnComprar(ActionEvent event) {
+       
         Position position = this.position.getPositionMap().get(valTotal);
 
         Mensaje mensaje = new Mensaje();
       
-        if (position != null && !position.isOwned() && position.getPrice() != 0) {
+        if (position != null && position.getOwnedBy()==0 && position.getPrice() != 0) {
             position.setOwnedBy(jugadorActual);
            
             List<Object> datos1 = (List<Object>) AppContext.getInstance().get("J1");
@@ -462,12 +491,14 @@ gridPaneTablero.getChildren().remove(carta);
                     datos1 = new ArrayList<>();
                 }
                 List<Object> nombres = new ArrayList<>();
+                nombres.add(Integer.valueOf(position.getNumPosition()));
                 nombres.add(position.getName());
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(datos.getJugador1());
                 nombres.add(Boolean.valueOf(position.isOwned()));
+                 nombres.add(Double.valueOf(position.getPrice()));
                 System.out.println("Propiedad Comprada: " + nombre);
                 datos1.add(nombres);
                 AppContext.getInstance().set("J1", datos1);
@@ -482,6 +513,7 @@ gridPaneTablero.getChildren().remove(carta);
                     datos2 = new ArrayList<>();
                 }
                 List<Object> nombres = new ArrayList<>();
+                nombres.add(Integer.valueOf(position.getNumPosition()));
                 nombres.add(position.getName());
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
@@ -520,20 +552,23 @@ gridPaneTablero.getChildren().remove(carta);
 
     void revizar() {
          cobroRenta();
-     
         Position position = this.position.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
         switch (characteristic) {
+            case "Ve a carcel":
+                 carcel();
+                break;
             case "Suerte":
                 montarCarta();
-                break;
-            case "Ve a carcel":
-                carcel();
+               
                 break;
             case "Carcel":
+               
             case "Go":
+                
             case "Impuesto":
-                 // cobrarImpuesto();
+               
+               
                 break;
             default:
                 break;
@@ -544,16 +579,7 @@ gridPaneTablero.getChildren().remove(carta);
                 || characteristic.equals("Carcel") || characteristic.equals("Go")
                 || characteristic.equals("Libre"));
         mostrarPropiedad();
-      
-    }
-    void cobrarImpuesto(int val){
-        int impuesto = (val == 9) ? 190 : 160;
-
-if (jugadorActual == 1) {
-    cuentaJugador1 -= impuesto;
-} else {
-    cuentaJugador2 -= impuesto;
-}
+      limpiarCarta();
     }
 void mostrarPropiedad(){
     Position propiedad = new Position();
@@ -686,27 +712,34 @@ void mostrarPropiedad(){
     }
 
     private void carcel() {
+        valTotal=8;
+        actualizarSumaTotal(valTotal);
         Position position = this.position.getPositionMap().get(valTotal);
-        double multa = ThreadLocalRandom.current().nextInt(20, 301);
+        double multa = (int) (Math.random() * 301) + 20;
+       
         String saldo;
-        if (position.getName() != null && position.getName() == "Carcel") {
-          double residuo;
+   
+          double residuo=0;
             if (jugadorActual == 1) {
-                residuo = cuentaJugador1 - multa;
+                residuo = cuentaJugador1;
+                residuo-= multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
                      FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
                     //No tiene saldo suficiente 
                     //compara el valor de las propiedades que tiene con la deuda
                     // metodo que vende una propiedad
+                    System.out.println(multa);
                 } else if (residuo > 0) {
                     cuentaJugador1 -= multa;
                     //Deuda saldada
                     //Sale de la carcel 
+                    System.out.println(multa);
                 }
             } 
             else if (jugadorActual == 2) {
-                residuo = cuentaJugador2 - multa;
+                residuo = cuentaJugador2;
+                residuo-= multa;
                 if (residuo <= 0) {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
                      FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
@@ -716,10 +749,12 @@ void mostrarPropiedad(){
                 } else if (residuo > 0) {
                     cuentaJugador2 -= multa;
                     //Deuda saldada
-                    //Sale de la carcel 
+                    //Sale de la carcel
+                    System.out.println(multa);
                 }
             } 
-        }
+        
+        System.out.println(multa);
         cargarValores();
     }
 
@@ -905,5 +940,9 @@ if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getO
         lblresul.setText(String.valueOf(total));
         return total;
     }
+    void limpiarCarta(){
+    if(valTotal==0||valTotal==24||valTotal==16||valTotal==8||valTotal==9||valTotal==23){
+    gridPaneTablero.getChildren().remove(carta);
+    }}
 }
 
