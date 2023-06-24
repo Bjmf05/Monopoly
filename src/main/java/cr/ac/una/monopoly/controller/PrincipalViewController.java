@@ -453,6 +453,7 @@ gridPaneTablero.getChildren().remove(carta);
                     listaPreestablecida = new ArrayList<>();
                 }
                 List<Object> nombres = new ArrayList<>();
+                nombres.add(Integer.valueOf(0));
                 nombres.add("No hay compras");
                 nombres.add(Double.valueOf(0));
                 nombres.add(Double.valueOf(0));
