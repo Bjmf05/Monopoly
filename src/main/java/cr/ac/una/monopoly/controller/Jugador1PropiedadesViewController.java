@@ -6,7 +6,7 @@ package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
 import cr.ac.una.monopoly.util.AppContext;
-import cr.ac.una.monopoly.util.Position;
+import cr.ac.una.monopoly.model.Position;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -113,7 +113,6 @@ PrincipalViewController principal = new PrincipalViewController();
                                
                                 List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-
                                
                                 
                                 if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {

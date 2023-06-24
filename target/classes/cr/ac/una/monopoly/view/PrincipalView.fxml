@@ -130,31 +130,53 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="BOTTOM_CENTER" prefHeight="73.0" prefWidth="643.0" spacing="35.0" style="-fx-background-color: ;" VBox.vgrow="ALWAYS">
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="73.0" prefWidth="643.0" spacing="10.0" style="-fx-background-color: ;" VBox.vgrow="ALWAYS">
                      <children>
-                        <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" prefHeight="40.0" prefWidth="150.0" text="Finalizar Juego" />
-                        <JFXButton fx:id="btnComprar" buttonType="RAISED" onAction="#onActionBtnComprar" prefHeight="40.0" prefWidth="150.0" text="Comprar" />
-                        <JFXButton fx:id="btnLanzarDados" buttonType="RAISED" onAction="#onActionBtnLanzarDados" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-lanzarDados" text="Lanzar Dados" />
-                        <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" prefHeight="40.0" prefWidth="150.0" text="Terminar Turno" />
+                        <VBox alignment="TOP_CENTER" prefHeight="114.0" prefWidth="135.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <JFXButton fx:id="btnConstruir" buttonType="RAISED" onAction="#onActionBtnConstruir" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-Construir" text="Construir" />
+                              <JFXButton fx:id="btnFinalizarJuego" onAction="#onActionBtnFinalizarJuego" prefHeight="40.0" prefWidth="150.0" text="Finalizar Juego" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="114.0" prefWidth="159.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <JFXButton fx:id="btnComprar" buttonType="RAISED" onAction="#onActionBtnComprar" prefHeight="40.0" prefWidth="137.0" styleClass="jfx-btnimg-Comprar" text="Comprar" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <JFXButton fx:id="btnLanzarDados" buttonType="RAISED" onAction="#onActionBtnLanzarDados" prefHeight="40.0" prefWidth="150.0" styleClass="jfx-btnimg-lanzarDados" text="Lanzar Dados" />
+                              <JFXButton fx:id="btnTerminarTurno" onAction="#onActionBtnTerminarTurno" prefHeight="40.0" prefWidth="150.0" text="Terminar Turno" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
                      </children>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" />
                      </padding>
                   </HBox>
                </children>
             </VBox>
-            <VBox maxWidth="150.0" prefHeight="800.0" prefWidth="100.0" spacing="2.0" HBox.hgrow="ALWAYS">
+            <VBox maxWidth="150.0" prefHeight="573.0" prefWidth="128.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador1">
+                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="245.0" prefWidth="129.0" spacing="10.0" styleClass="vbox-jugador1">
                      <children>
                         <JFXTextField fx:id="txfJugador1" promptText="Jugador 1">
                            <padding>
                               <Insets left="30.0" right="30.0" />
                            </padding></JFXTextField>
                         <ImageView fx:id="ImVJugador1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="lblName1" styleClass="label-Jugador2" text="Name1" />
-                        <Label styleClass="label-Jugador2" text="Dinero:" />
-                        <Label fx:id="lblSaldoJugador1" styleClass="label-Jugador2" text="0" />
+                        <Label fx:id="lblName1" styleClass="label-Jugador2" text=" Name1 " VBox.vgrow="ALWAYS" />
+                        <Label styleClass="label-Jugador2" text=" Dinero: " VBox.vgrow="ALWAYS" />
+                        <Label fx:id="lblSaldoJugador1" styleClass="label-Jugador2" text=" 0 " />
                         <ImageView fx:id="imvEmojiJ1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/muybueno.png" />
@@ -163,7 +185,7 @@
                         <JFXButton fx:id="btnPropiedades1" onAction="#onActionBtnPropiedades1" styleClass="jfx-btn-propiedades1" text="Propiedades" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="vbox-jugador2">
+                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="150.0" prefHeight="250.0" prefWidth="129.0" spacing="10.0" styleClass="vbox-jugador2">
                      <children>
                         <JFXTextField fx:id="txfJugador2" promptText="Jugador 2">
                            <VBox.margin>
@@ -174,9 +196,9 @@
                            </padding>
                         </JFXTextField>
                         <ImageView fx:id="ImVJugador2" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="lblName2" styleClass="label-Jugador1" text="Name2" />
-                        <Label styleClass="label-Jugador1" text="Dinero:" />
-                        <Label fx:id="lblSaldoJugador2" styleClass="label-Jugador1" text="0" />
+                        <Label fx:id="lblName2" styleClass="label-Jugador1" text=" Name2 " />
+                        <Label styleClass="label-Jugador1" text=" Dinero: " />
+                        <Label fx:id="lblSaldoJugador2" styleClass="label-Jugador1" text=" 0 " />
                         <ImageView fx:id="imvEmojiJ2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/muybueno.png" />
@@ -192,7 +214,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
                <HBox.margin>
-                  <Insets top="40.0" />
+                  <Insets top="20.0" />
                </HBox.margin>
             </VBox>
          </children>

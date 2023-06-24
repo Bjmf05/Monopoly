@@ -12,6 +12,11 @@
 
 
 }
+label {
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
 
 .jfx-imvFondo {
     -fx-image: url("../resources/Tablero.png");
@@ -29,14 +34,11 @@
     
 }
 .vbox-jugador1{
-    -fx-border-color:#000099;
-    -fx-border-width:2px;
-   
+
 }
 
 .vbox-jugador2{
-    -fx-border-color:#999900;
-    -fx-border-width:2px;
+
 }
 
 .anchor-pane-Font{
@@ -60,22 +62,27 @@
     -fx-max-width:100px;
 }
 
-.label-Jugador1{
+.label-Jugador2{
     -fx-background-color: #000099;
      -fx-text-fill: #f2f2f2; /* Cambia el color de letra a rojo */
     -fx-font-size: 14px; 
+-fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
-.txt-Jugador1{
+.txt-Jugador2{
     -fx-prompt-text-fill:#000099;
          -jfx-focus-color:#000099;
          -jfx-unfocus-color:#000099;
+        
 }
-.label-Jugador2{
+.label-Jugador1{
     -fx-background-color: #999900;
      -fx-text-fill: #f2f2f2; /* Cambia el color de letra a rojo */
     -fx-font-size: 14px; 
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
-.txt-Jugador2{
+.txt-Jugador1{
     -fx-prompt-text-fill:#999900;
          -jfx-focus-color:#999900;
          -jfx-unfocus-color:#999900;
@@ -97,22 +104,22 @@
     -fx-font-size: 14px;
     -fx-alignment:CENTER;
     -fx-graphic-text-gap: 10px;
+    -fx-background-size: 30px 30px;
+    -fx-background-position:2 3;
+    /* xy*/
 }
 .jfx-button .jfx-rippler-{-jfx-rippler-fill: white;}
 .jfx-button:hover, .button:hover{-fx-background-color: #FF6D00;}
 .jfx-btn-jugar{
 -fx-background-image: url("../resources/play.png");
-  -fx-background-size: 30px 30px;
   -fx-background-repeat: no-repeat;
-  -fx-background-position: left;}
+}
 
 .jfx-btn-jugar{-fx-background-color: #23B82E;}
 .jfx-btn-jugar:hover{-fx-background-color: #4efd5c;}
 .jfx-btn-cancelar{
 -fx-background-image: url("../resources/cancelar.png");
-  -fx-background-size: 30px 30px;
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: left;}
+  -fx-background-repeat: no-repeat;}
 .jfx-btn-cancelar{-fx-background-color: #CC0000;}
 .jfx-btn-cancelar:hover{-fx-background-color: #f95454;}
 .jfx-btn-propiedades1 {
@@ -127,15 +134,16 @@
 }
 
 .jfx-btnimg-lanzarDados{
-    -fx-alignment: center-right;
-    -fx-font-size: 13px;
-    -fx-padding: 10px;
     -fx-background-image: url("../resources/Icono.png");
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
     -fx-background-repeat: no-repeat;
-    -fx-background-size: 30px 30px;
-    -fx-background-position:8 7;
-    /* xy*/
-    -fx-padding: 5 5 5 2; 
+    -fx-background-position:2 6;
+}
+.jfx-btnimg-Comprar{
+    -fx-background-image: url("../resources/comprar.png");
+     -fx-background-repeat: no-repeat;
+}
+
+.jfx-btnimg-Construir{
+    -fx-background-image: url("../resources/construir.png");
+    -fx-background-repeat: no-repeat;
 }

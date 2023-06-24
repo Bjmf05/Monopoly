@@ -6,7 +6,7 @@ package cr.ac.una.monopoly.controller;
 
 import com.jfoenix.controls.JFXButton;
 import cr.ac.una.monopoly.util.AppContext;
-import cr.ac.una.monopoly.util.Position;
+import cr.ac.una.monopoly.model.Position;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
