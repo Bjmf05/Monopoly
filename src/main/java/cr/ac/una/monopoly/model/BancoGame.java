@@ -10,8 +10,29 @@ import cr.ac.una.monopoly.util.AppContext;
  * @author Servidor
  */
 public class BancoGame {
-    double saldoJ1 = 0 ;
+    double saldoJ1 = 0;
     double saldoJ2 = 0;
+    
+    private double cuentaJ1;
+    private double cuentaJ2;
+    private double CuentaBanco = 1000000;
+
+    public double getCuentaJ1() {
+        return cuentaJ1;
+    }
+
+    public void setCuentaJ1(double cuentaJ1) {
+        this.cuentaJ1 = cuentaJ1;
+    }
+
+    public double getCuentaJ2() {
+        return cuentaJ2;
+    }
+
+    public void setCuentaJ2(double cuentaJ2) {
+        this.cuentaJ2 = cuentaJ2;
+    }
+
     public void pagarBonoInicial() {
        
         double bonoInicialJ1 = 1500;
@@ -42,43 +63,14 @@ public class BancoGame {
     private void cargaGlobal() {
         
         //Crea instancia de la clase
-        Banco BonoInicial = new Banco();
-        BonoInicial.setCuentaJ1(saldoJ1);
-        BonoInicial.setCuentaJ2(saldoJ2);
+        //Banco BonoInicial = new Banco();
+      /// BonoInicial.setCuentaJ1(saldoJ1);
+      //  BonoInicial.setCuentaJ2(saldoJ2);
+        BancoGame BonoInicial = new BancoGame();
+         BonoInicial.setCuentaJ1(saldoJ1);
+         BonoInicial.setCuentaJ2(saldoJ2);
         //Guarda los vlaores
         AppContext.getInstance().set("BonoInicial", BonoInicial);
     }
 
 }
- class Banco{
-private double cuentaJ1;
-private double cuentaJ2;
-private double CuentaBanco = 1000000;
-
-   
-    public double getCuentaJ1() {
-        return cuentaJ1;
-    }
-
-    public void setCuentaJ1(double cuentaJ1) {
-        this.cuentaJ1 = cuentaJ1;
-    }
-
-    public double getCuentaJ2() {
-        return cuentaJ2;
-    }
-
-    public void setCuentaJ2(double cuentaJ2) {
-        this.cuentaJ2 = cuentaJ2;
-    }
-
-    public double getCuentaBanco() {
-        return CuentaBanco;
-    }
-
-    public void setCuentaBanco(double CuentaBanco) {
-        this.CuentaBanco = CuentaBanco;
-    }
-
-   
- }
