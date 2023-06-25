@@ -33,13 +33,14 @@ import javafx.util.Callback;
  * @author Joshua Cambronero
  */
 public class Jugador2PropiedadesViewController extends Controller implements Initializable {
-PrincipalViewController principal = new PrincipalViewController();
+
+    PrincipalViewController principal = new PrincipalViewController();
     @FXML
     private AnchorPane root;
     @FXML
     private TableView<List<Object>> tViewDatosPropiedades;
     @FXML
-    private TableColumn<List<Object>,Integer> idColumna;
+    private TableColumn<List<Object>, Integer> idColumna;
     @FXML
     private TableColumn<List<Object>, String> nombreColumna;
     @FXML
@@ -59,14 +60,14 @@ PrincipalViewController principal = new PrincipalViewController();
     @FXML
     private JFXButton btnCerrar;
 
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+
     }
+
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
         List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
@@ -79,7 +80,7 @@ PrincipalViewController principal = new PrincipalViewController();
 
         tViewDatosPropiedades.setItems(datosPropiedades);
         // Configurar las celdas de cada columna
-               idColumna.setCellValueFactory(cellData -> new SimpleObjectProperty((Integer) cellData.getValue().get(0)));
+        idColumna.setCellValueFactory(cellData -> new SimpleObjectProperty((Integer) cellData.getValue().get(0)));
         nombreColumna.setCellValueFactory(cellData -> new SimpleStringProperty((String) cellData.getValue().get(1)));
         valorColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(2)));
         valorDeVentaColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Double) cellData.getValue().get(3)));
@@ -89,9 +90,9 @@ PrincipalViewController principal = new PrincipalViewController();
         venderColumna.setCellFactory(createButtonCellFactory("Vender"));
         hipotecarColumna.setCellFactory(createButtonCellFactory("Hipotecar"));
         perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(6)));
-       
+
     }
- 
+
     private Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>> createButtonCellFactory(String buttonText) {
         return new Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>>() {
             @Override
@@ -109,7 +110,7 @@ PrincipalViewController principal = new PrincipalViewController();
                                 AppContext.getInstance().set("VentaJ2", ventaJ2);
                                 List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-                              
+
                                 if (indiceABorrar >= 0 && indiceABorrar < datosJ2.size()) {
                                     datosJ2.remove(indiceABorrar);
                                 } else {
@@ -158,9 +159,9 @@ PrincipalViewController principal = new PrincipalViewController();
 
 }
 
-class VentasJ2{
+class VentasJ2 {
 
-private double VentaJ2;
+    private double VentaJ2;
 
     public double getVentaJ2() {
         return VentaJ2;

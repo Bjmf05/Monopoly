@@ -15,7 +15,8 @@ public class CartasSuerte {
 
     public CartasSuerte() {
     }
-    public void cartasSuertes(ImageView imageView, int numeroSuerte){
+
+    public void cartasSuertes(ImageView imageView, int numeroSuerte) {
         Image uno = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte/Suerte1.png"));
         Image dos = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte/Suerte2.png"));
         Image tres = new Image(getClass().getResourceAsStream("/cr/ac/una/monopoly/resources/Suerte/Suerte3.png"));
@@ -82,7 +83,7 @@ public class CartasSuerte {
                 imageView.setImage(dieciseis);
                 break;
         }
-        
+
     }
-    
+
 }

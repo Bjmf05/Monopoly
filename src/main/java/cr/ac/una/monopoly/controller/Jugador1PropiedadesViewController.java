@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import cr.ac.una.monopoly.controller.PrincipalViewController;
+import cr.ac.una.monopoly.util.FlowController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -34,13 +35,13 @@ import javafx.stage.Stage;
  * @author Joshua Cambronero
  */
 public class Jugador1PropiedadesViewController extends Controller implements Initializable {
-PrincipalViewController principal = new PrincipalViewController();
-     @FXML
+
+    @FXML
     private AnchorPane root;
     @FXML
     private TableView<List<Object>> tViewDatosPropiedades;
-        @FXML
-    private TableColumn<List<Object>,Integer> idColumna;
+    @FXML
+    private TableColumn<List<Object>, Integer> idColumna;
     @FXML
     private TableColumn<List<Object>, String> nombreColumna;
     @FXML
@@ -56,21 +57,18 @@ PrincipalViewController principal = new PrincipalViewController();
     @FXML
     private TableColumn<List<Object>, Boolean> hipotecarColumna;
     @FXML
-    private TableColumn<List<Object>, Boolean> perteneceColumna;
+    private TableColumn<List<Object>, Integer> perteneceColumna;
     @FXML
     private JFXButton btnCerrar;
-
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+
     }
-    public void setPrincipal(PrincipalViewController principal) {
-    this.principal = principal;
-}
+
     public void llenarTabla() {
         ObservableList<List<Object>> datosPropiedades = FXCollections.observableArrayList();
         List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
@@ -92,16 +90,16 @@ PrincipalViewController principal = new PrincipalViewController();
         // Configurar celdas de botón personalizadas para las columnas de vender y hipotecar
         venderColumna.setCellFactory(createButtonCellFactory("Vender"));
         hipotecarColumna.setCellFactory(createButtonCellFactory("Hipotecar"));
-        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Boolean) cellData.getValue().get(6)));
+        perteneceColumna.setCellValueFactory(cellData -> new SimpleObjectProperty<>((Integer) cellData.getValue().get(6)));
     }
-        
+
     private Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>> createButtonCellFactory(String buttonText) {
         return new Callback<TableColumn<List<Object>, Boolean>, TableCell<List<Object>, Boolean>>() {
             @Override
             public TableCell<List<Object>, Boolean> call(final TableColumn<List<Object>, Boolean> param) {
                 return new TableCell<List<Object>, Boolean>() {
                     private final Button button = new Button(buttonText);
-     
+
                     {
                         button.setOnAction(event -> {
 
@@ -110,11 +108,13 @@ PrincipalViewController principal = new PrincipalViewController();
                                 VentasJ1 ventaJ1 = new VentasJ1();
                                 ventaJ1.setVentaJ1((Double) rowData.get(2));
                                 AppContext.getInstance().set("VentaJ1", ventaJ1);
-                               
+                                PrincipalViewController principalViewController = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
+
+                                int propiedad = (Integer) rowData.get(0);
+
                                 List<List<Object>> datosJ1 = (List<List<Object>>) AppContext.getInstance().get("J1");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
-                               
-                                
+
                                 if (indiceABorrar >= 0 && indiceABorrar < datosJ1.size()) {
                                     datosJ1.remove(indiceABorrar);
                                 } else {
@@ -164,7 +164,8 @@ PrincipalViewController principal = new PrincipalViewController();
 }
 
 class VentasJ1 {
-    private int ventaPropi=0;
+
+    private int ventaPropi = 0;
 
     public int getVentaPropi() {
         return ventaPropi;
@@ -173,7 +174,7 @@ class VentasJ1 {
     public void setVentaPropi(int ventaPropi) {
         this.ventaPropi = ventaPropi;
     }
-    
+
     private double VentaJ1;
 
     public double getVentaJ1() {

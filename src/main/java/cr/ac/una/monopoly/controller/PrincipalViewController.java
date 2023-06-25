@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-    package cr.ac.una.monopoly.controller;
+package cr.ac.una.monopoly.controller;
 
 import cr.ac.una.monopoly.model.CartasSuerte;
 import com.jfoenix.controls.JFXButton;
@@ -20,18 +20,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.util.Mensaje;
 import cr.ac.una.monopoly.model.Position;
-import cr.ac.una.monopoly.controller.VentasJ1;
-import cr.ac.una.monopoly.controller.VentasJ2;
 import cr.ac.una.monopoly.model.BancoGame;
-    
+import cr.ac.una.monopoly.model.PositionControl;
+
 import java.util.ArrayList;
 //import cr.ac.una.monopoly.controller.BancoViewController;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -42,9 +36,6 @@ import javafx.scene.shape.Circle;
  * @author Servidor
  */
 public class PrincipalViewController extends Controller implements Initializable {
-
-    private int recivirVenta;
-    
 
     @FXML
     private JFXTextField txfJugador2;
@@ -74,7 +65,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXButton btnPropiedades2;
     @FXML
     private JFXButton btnTerminarTurno;
-   
+
     @FXML
     private GridPane gridPaneTablero;
     @FXML
@@ -95,17 +86,18 @@ public class PrincipalViewController extends Controller implements Initializable
     private boolean monopoly6Creado = false;
     private ImageView carta = new ImageView();
     private int valDados = 0;
-    private int valTotal = 0;    
+    private int valTotal = 0;
     private int sumaTotal1 = 0;
     private int sumaTotal2 = 0;
     private int comodin;
-    private int valorUtilidades=10;
+    private int valorUtilidades = 10;
     @FXML
     private ImageView imvEmojiJ1;
     @FXML
     private ImageView imvEmojiJ2;
     @FXML
     private JFXButton btnConstruir;
+
     public double getCuentaJugador1() {
         return cuentaJugador1;
     }
@@ -133,7 +125,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private Image imageJ2;
     double saldoJ1 = 0;
     double saldoJ2 = 0;
-    int venta=0;
+    int venta = 0;
     int contadorJ1;
     int contadorJ2;
     private int myVariable;
@@ -151,16 +143,15 @@ public class PrincipalViewController extends Controller implements Initializable
         this.venta = venta;
     }
 
-
     void montarCarta() {
-gridPaneTablero.getChildren().remove(carta);
+        gridPaneTablero.getChildren().remove(carta);
         mostrarImagenSuerte(carta);
         int startColumn = 3;  // Columna inicial
         int endColumn = 6;    // Columna final
         int startRow = 3;     // Fila inicial
         int endRow = 6;       // Fila final
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
-        
+
         gridPaneTablero.getChildren().add(carta);
 
     }
@@ -168,11 +159,12 @@ gridPaneTablero.getChildren().remove(carta);
     void mostrarImagenSuerte(ImageView imageView) {
         int numeroSuerte = (int) (Math.random() * 16) + 1;
         CartasSuerte suerte = new CartasSuerte();
-        suerte.cartasSuertes(imageView, numeroSuerte); 
+        suerte.cartasSuertes(imageView, numeroSuerte);
         accionesSuerte(numeroSuerte);
     }
-        void accionesSuerte(int numeroSuerte){
-            switch (numeroSuerte) {
+
+    void accionesSuerte(int numeroSuerte) {
+        switch (numeroSuerte) {
             case 1:
                 carcel();
                 break;
@@ -180,104 +172,105 @@ gridPaneTablero.getChildren().remove(carta);
                 //ve a GO
                 valTotal = 0;
                 actualizarSumaTotal(valTotal);
-                
+
                 break;
             case 3:
-                if (jugadorActual==1){
-                    cuentaJugador1+=600;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 += 600;
+                } else {
+                    cuentaJugador2 += 600;
                 }
-                else{
-                    cuentaJugador2+=600;}
                 break;
             case 4:
-               if (jugadorActual==1){
-                    cuentaJugador1-=20;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 -= 20;
+                } else {
+                    cuentaJugador2 -= 200;
                 }
-                else{
-                    cuentaJugador2-=200;}
                 break;
             case 5:
-                valTotal-=2;
+                valTotal -= 2;
                 actualizarSumaTotal(valTotal);
                 break;
             case 6:
-                if (jugadorActual==1){
-                    cuentaJugador1+=400;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 += 400;
+                } else {
+                    cuentaJugador2 += 400;
                 }
-                else{
-                    cuentaJugador2+=400;}
                 break;
             case 7:
-                if (jugadorActual==1){
-                    cuentaJugador1-=500;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 -= 500;
+                } else {
+                    cuentaJugador2 -= 500;
                 }
-                else{
-                    cuentaJugador2-=500;}
                 break;
             case 8:
-                if (jugadorActual==1){
-                    cuentaJugador1-=50;
-                    cuentaJugador2+=50;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 -= 50;
+                    cuentaJugador2 += 50;
+                } else {
+                    cuentaJugador2 -= 50;
+                    cuentaJugador1 += 50;
                 }
-                else{
-                    cuentaJugador2-=50;
-                cuentaJugador1+=50;}
                 break;
             case 9:
-                if (jugadorActual==1){
-                    cuentaJugador1-=20;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 -= 20;
+                } else {
+                    cuentaJugador2 -= 20;
                 }
-                else{
-                    cuentaJugador2-=20;}
                 break;
             case 10:
-                if (jugadorActual==1){
-                    cuentaJugador1+=100;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 += 100;
+                } else {
+                    cuentaJugador2 += 100;
                 }
-                else{
-                    cuentaJugador2+=100;}
                 break;
             case 11:
-                
+
                 //pagar por cada casa y hotel
                 break;
             case 12:
-                if (jugadorActual==1){
-                    cuentaJugador1+=50;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 += 50;
+                } else {
+                    cuentaJugador2 += 50;
                 }
-                else{
-                    cuentaJugador2+=50;}
                 break;
             case 13:
                 //paseo a zona franca
-                valTotal=12;
+                valTotal = 12;
                 actualizarSumaTotal(valTotal);
                 break;
             case 14:
             case 15:
-                   if (jugadorActual==1){
-                    cuentaJugador1-=100;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 -= 100;
+                } else {
+                    cuentaJugador2 -= 100;
                 }
-                else{
-                    cuentaJugador2-=100;}
                 break;
             case 16:
-                if (jugadorActual==1){
-                    cuentaJugador1+=50;
+                if (jugadorActual == 1) {
+                    cuentaJugador1 += 50;
+                } else {
+                    cuentaJugador2 += 50;
                 }
-                else{
-                    cuentaJugador2+=50;}
                 break;
         }
-        }
+    }
+
     @FXML
     void onActionBtnTerminarTurno(ActionEvent event) {
-          
+
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         imgDado2.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         btnLanzarDados.setDisable(false);
         btnComprar.setDisable(false);
-   
+
         jugadorActual = (jugadorActual == 1) ? 2 : 1;
         if (!fichaJugador2Creada) {
             Circle ficha2 = crearFicha(Color.BLUE, imageJ2);
@@ -288,8 +281,7 @@ gridPaneTablero.getChildren().remove(carta);
         cargarValores();
         gridPaneTablero.getChildren().remove(carta);
         btnTerminarTurno.setDisable(true);
-     
-      
+
     }
 
     public void nombreJugadores(String nombre1, String nombre2) {
@@ -299,8 +291,8 @@ gridPaneTablero.getChildren().remove(carta);
 
     @FXML
     void onActionBtnFinalizarJuego(ActionEvent event) {
-         FlowController.getInstance().salir();
-        
+        FlowController.getInstance().salir();
+
     }
 
     @FXML
@@ -367,14 +359,14 @@ gridPaneTablero.getChildren().remove(carta);
             valTotal = total + sumaTotal1;
             contarVueltas1(valTotal, 1);
             lblJugadorEnTurno.setText(datos.getJugador1());
-          
+
             VentaJ2();
             VentaJ1();
         } else if (jugadorActual == 2) {
             valTotal = total + sumaTotal2;
             contarVueltas2(valTotal, 2);
             lblJugadorEnTurno.setText(datos.getJugador2());
-         
+
             VentaJ1();
             VentaJ2();
         }
@@ -426,7 +418,6 @@ gridPaneTablero.getChildren().remove(carta);
         String rutaJ1 = "/cr/ac/una/monopoly/resources/circuloVerde.png";
         String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
 
-
         Datos datos = (Datos) AppContext.getInstance().get("Llave");
         lblName1.setText(datos.getJugador1());
         lblName2.setText(datos.getJugador2());
@@ -447,40 +438,48 @@ gridPaneTablero.getChildren().remove(carta);
 
         Circle ficha1 = crearFicha(Color.GREEN, imageJ1);
         bonoInicial();
-         
+
         List<Object> listaPreestablecida = (List<Object>) AppContext.getInstance().get("Vacia");
         if (listaPreestablecida == null) {
-                    listaPreestablecida = new ArrayList<>();
-                }
-                List<Object> nombres = new ArrayList<>();
-                nombres.add(Integer.valueOf(0));
-                nombres.add("No hay compras");
-                nombres.add(Double.valueOf(0));
-                nombres.add(Double.valueOf(0));
-                nombres.add(Double.valueOf(0));
-                nombres.add("Vacio");
-                nombres.add(Boolean.valueOf(false));
-                listaPreestablecida.add(nombres);
-                AppContext.getInstance().set("Vacia", listaPreestablecida);
-                btnTerminarTurno.setDisable(true);
-                
-        
-    }
-   
-  void venderPropiedad(){
+            listaPreestablecida = new ArrayList<>();
+        }
+        List<Object> nombres = new ArrayList<>();
+        nombres.add(Integer.valueOf(0));
+        nombres.add("No hay aras");
+        nombres.add(Double.valueOf(0));
+        nombres.add(Double.valueOf(0));
+        nombres.add(Double.valueOf(0));
+        nombres.add("Vacio");
+        nombres.add(Boolean.valueOf(false));
+        listaPreestablecida.add(nombres);
+        AppContext.getInstance().set("Vacia", listaPreestablecida);
+        btnTerminarTurno.setDisable(true);
 
     }
-  
+
+    public void venderPropiedad(int recivirVenta) {
+        System.out.println(" Propiedad" + recivirVenta + "!");
+
+        if (recivirVenta != 0) {
+            Position position = this.positionControl.getPositionMap().get(recivirVenta);
+            System.out.println(" Propiedad" + position.getNumPosition() + "Dueño" + position.getOwnedBy() + "!");
+            position.setOwnedBy(2);
+            System.out.println(" Propiedad" + position.getNumPosition() + "Dueño" + position.getOwnedBy() + "!");
+        }
+
+    }
+
     @FXML
     void onActionBtnComprar(ActionEvent event) {
-       
-        Position position = this.position.getPositionMap().get(valTotal);
 
+        Position position = this.positionControl.getPositionMap().get(valTotal);
+
+        System.out.println("Comprar " + position.getOwnedBy());
         Mensaje mensaje = new Mensaje();
-      
-        if (position != null && position.getOwnedBy()==0 && position.getPrice() != 0) {
+        if (position != null && position.getOwnedBy() == 0 && position.getPrice() != 0) {
             position.setOwnedBy(jugadorActual);
-           
+            Position position1 = this.positionControl.getPositionMap().get(valTotal);
+            System.out.println(position1.getOwnedBy());
             List<Object> datos1 = (List<Object>) AppContext.getInstance().get("J1");
             List<Object> datos2 = (List<Object>) AppContext.getInstance().get("J2");
             Datos datos = (Datos) AppContext.getInstance().get("Llave");
@@ -488,6 +487,7 @@ gridPaneTablero.getChildren().remove(carta);
                 // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 1
                 cuentaJugador1 -= position.getPrice();
                 // Crea una nueva lista para guardar los datos de la propiedad
+                System.out.println("Comprar " + position.getOwnedBy());
                 String nombre = position.getName();
                 if (datos1 == null) {
                     datos1 = new ArrayList<>();
@@ -499,17 +499,16 @@ gridPaneTablero.getChildren().remove(carta);
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(datos.getJugador1());
-                nombres.add(Boolean.valueOf(position.isOwned()));
-                 nombres.add(Double.valueOf(position.getPrice()));
+                nombres.add(Integer.valueOf(position.getOwnedBy()));
+                nombres.add(Double.valueOf(position.getPrice()));
                 System.out.println("Propiedad Comprada: " + nombre);
                 datos1.add(nombres);
                 AppContext.getInstance().set("J1", datos1);
-              
+
             } else {
-            // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 2
+                // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 2
                 cuentaJugador2 -= position.getPrice();
-                
-                
+
                 String nombre = position.getName();
                 if (datos2 == null) {
                     datos2 = new ArrayList<>();
@@ -538,68 +537,71 @@ gridPaneTablero.getChildren().remove(carta);
         cargarValores();
         monopolio();
         btnComprar.setDisable(true);
+        //  venderPropiedad(valTotal);
     }
 
     @FXML
     void onActionBtnPropiedades1(ActionEvent event) {
-     
+
         FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
-        
+
     }
 
     @FXML
     void onActionBtnPropiedades2(ActionEvent event) {
-     FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
+        FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
     }
 
     void revizar() {
-         cobroRenta();
-        Position position = this.position.getPositionMap().get(valTotal);
+        cobroRenta();
+        Position position = this.positionControl.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
         switch (characteristic) {
             case "Ve a carcel":
-                 carcel();
+                carcel();
                 break;
             case "Suerte":
-                montarCarta();               
+                montarCarta();
                 break;
             default:
                 break;
-              
+
         }
 
-desHabilitarBotones();
+        desHabilitarBotones();
         mostrarPropiedad();
-      limpiarCarta();
+        limpiarCarta();
     }
-    void desHabilitarBotones(){
-                Position position = this.position.getPositionMap().get(valTotal);
+
+    void desHabilitarBotones() {
+        Position position = this.positionControl.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
-    btnComprar.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel")
-    || characteristic.equals("Carcel") || characteristic.equals("Go")
-    || characteristic.equals("Libre"));
+        btnComprar.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel")
+                || characteristic.equals("Carcel") || characteristic.equals("Go")
+                || characteristic.equals("Libre"));
         btnConstruir.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel")
-    || characteristic.equals("Carcel") || characteristic.equals("Go")
-    || characteristic.equals("Libre")|| characteristic.equals("Tren")||characteristic.equals("Utilidad"));
+                || characteristic.equals("Carcel") || characteristic.equals("Go")
+                || characteristic.equals("Libre") || characteristic.equals("Tren") || characteristic.equals("Utilidad"));
     }
-    
-void mostrarPropiedad(){
-    Position propiedad = new Position();
-    gridPaneTablero.getChildren().remove(carta);
-    propiedad.showPosition(carta, valTotal);
-          int startColumn = 3;  // Columna inicial
+
+    void mostrarPropiedad() {
+        Position propiedad = new Position();
+        gridPaneTablero.getChildren().remove(carta);
+        propiedad.showPosition(carta, valTotal);
+        int startColumn = 3;  // Columna inicial
         int endColumn = 6;    // Columna final
         int startRow = 3;     // Fila inicial
         int endRow = 6;       // Fila final
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
         gridPaneTablero.getChildren().add(carta);
-}
+    }
+
     @Override
     public void initialize() {
 
     }
 
-    private Position position = new Position();
+    public PositionControl positionControl = new PositionControl();
 
     private Circle crearFicha(Color color, Image fichaImage) {
         Circle ficha = new Circle(14);
@@ -613,8 +615,8 @@ void mostrarPropiedad(){
             if ((jugadorActual == 1 && color == Color.GREEN) || (jugadorActual == 2 && color == Color.BLUE)) {
                 c = gridPaneTablero.getColumnIndex(fichaImageView);
                 f = gridPaneTablero.getRowIndex(fichaImageView);
-                Position actualPosition = this.position.getPositionMap().get(valTotal);
-                if (position != null) {
+                Position actualPosition = this.positionControl.getPositionMap().get(valTotal);
+                if (positionControl != null) {
                     columna = actualPosition.getColumn();
                     fila = actualPosition.getRow();
                 }
@@ -629,46 +631,45 @@ void mostrarPropiedad(){
     }
 
     private void metodoReceptor() {
-        
-        Banco BonoInicial = (Banco) AppContext.getInstance().get("BonoInicial");
+
+        BancoGame BonoInicial = (BancoGame) AppContext.getInstance().get("BonoInicial");
         cuentaJugador1 += BonoInicial.getCuentaJ1();
         cuentaJugador2 += BonoInicial.getCuentaJ2();
         cargarValores();
 
     }
-    
+
     public double VentaJ1() {
-       VentasJ1 venta = (VentasJ1) AppContext.getInstance().get("VentaJ1");
-        if ( venta != null){
-        cuentaJugador1 += venta.getVentaJ1();
-        cargarValores();
-        venta.setVentaJ1(0);
-        
+        VentasJ1 venta = (VentasJ1) AppContext.getInstance().get("VentaJ1");
+        if (venta != null) {
+            cuentaJugador1 += venta.getVentaJ1();
+            cargarValores();
+            venta.setVentaJ1(0);
+
         }
-        
-        return cuentaJugador1; 
+
+        return cuentaJugador1;
 
     }
-    
+
     private double VentaJ2() {
-       VentasJ2 venta = (VentasJ2) AppContext.getInstance().get("VentaJ2");
-        
-        if ( venta != null){
-        cuentaJugador2 += venta.getVentaJ2();
-        cargarValores();
-        venta.setVentaJ2(0);
-       
+        VentasJ2 venta = (VentasJ2) AppContext.getInstance().get("VentaJ2");
+
+        if (venta != null) {
+            cuentaJugador2 += venta.getVentaJ2();
+            cargarValores();
+            venta.setVentaJ2(0);
+
         }
-        
+
         return cuentaJugador2;
 
     }
-    
 
     private void cargarValores() {
-       lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
-       lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
-       
+        lblSaldoJugador1.setText("$" + String.valueOf(cuentaJugador1));
+        lblSaldoJugador2.setText("$" + String.valueOf(cuentaJugador2));
+
         String Juga1 = "/cr/ac/una/monopoly/resources/muybueno.png";
         String Juga2 = "/cr/ac/una/monopoly/resources/muybueno.png";
         if (jugadorActual == 1) {
@@ -696,9 +697,8 @@ void mostrarPropiedad(){
             } else {
                 Juga2 = "/cr/ac/una/monopoly/resources/excelente.png";
             }
-             imvEmojiJ2.setImage(new Image(Juga2));
+            imvEmojiJ2.setImage(new Image(Juga2));
         }
-        
 
     }
 
@@ -715,346 +715,368 @@ void mostrarPropiedad(){
     }
 
     private void carcel() {
-        valTotal=8;
+        valTotal = 8;
         actualizarSumaTotal(valTotal);
-        Position position = this.position.getPositionMap().get(valTotal);
+        Position position = this.positionControl.getPositionMap().get(valTotal);
         double multa = (int) (Math.random() * 301) + 20;
-       
+
         String saldo;
-   
-          double residuo=0;
-            if (jugadorActual == 1) {
-                residuo = cuentaJugador1;
-                residuo-= multa;
-                if (residuo <= 0) {
-                    new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
-                     FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
-                    //No tiene saldo suficiente 
-                    //compara el valor de las propiedades que tiene con la deuda
-                    // metodo que vende una propiedad
-                    System.out.println(multa);
-                } else if (residuo > 0) {
-                    cuentaJugador1 -= multa;
-                    //Deuda saldada
-                    //Sale de la carcel 
-                    System.out.println(multa);
-                }
-            } 
-            else if (jugadorActual == 2) {
-                residuo = cuentaJugador2;
-                residuo-= multa;
-                if (residuo <= 0) {
-                    new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage() , "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $"+multa);
-                     FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
-                    //No tiene saldo suficiente 
-                    //compara el valor de las propiedades que tiene con la deuda
-                    // metodo que vende una propiedad
-                } else if (residuo > 0) {
-                    cuentaJugador2 -= multa;
-                    //Deuda saldada
-                    //Sale de la carcel
-                    System.out.println(multa);
-                }
-            } 
-        
+
+        double residuo = 0;
+        if (jugadorActual == 1) {
+            residuo = cuentaJugador1;
+            residuo -= multa;
+            if (residuo <= 0) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
+                FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
+                //No tiene saldo suficiente 
+                //compara el valor de las propiedades que tiene con la deuda
+                // metodo que vende una propiedad
+                System.out.println(multa);
+            } else if (residuo > 0) {
+                cuentaJugador1 -= multa;
+                //Deuda saldada
+                //Sale de la carcel 
+                System.out.println(multa);
+            }
+        } else if (jugadorActual == 2) {
+            residuo = cuentaJugador2;
+            residuo -= multa;
+            if (residuo <= 0) {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
+                FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
+                //No tiene saldo suficiente 
+                //compara el valor de las propiedades que tiene con la deuda
+                // metodo que vende una propiedad
+            } else if (residuo > 0) {
+                cuentaJugador2 -= multa;
+                //Deuda saldada
+                //Sale de la carcel
+                System.out.println(multa);
+            }
+        }
+
         System.out.println(multa);
         cargarValores();
     }
 
-    private void cobroRenta(){
-         Position position = this.position.getPositionMap().get(valTotal);
-    double rent = position.getRent();
+    private void cobroRenta() {
+        Position position = this.positionControl.getPositionMap().get(valTotal);
+        double rent = position.getRent();
 
-    if (position.isOwned() && jugadorActual != position.getOwnedBy()) {
-        
-        if (jugadorActual == 1) {
-            if(valTotal==2||valTotal==18){
-            rent=rentaAguaOLuz()*valorUtilidades;}
-            cuentaJugador1 -= rent;
-            cuentaJugador2 += rent;
-        } else {
-            if(valTotal==2||valTotal==18){
-            rent=rentaAguaOLuz()*valorUtilidades;}
-            cuentaJugador2 -= rent;
-            cuentaJugador1 += rent;
+        if (position.isOwned() && jugadorActual != position.getOwnedBy()) {
+
+            if (jugadorActual == 1) {
+                if (valTotal == 2 || valTotal == 18) {
+                    rent = rentaAguaOLuz() * valorUtilidades;
+                }
+                cuentaJugador1 -= rent;
+                cuentaJugador2 += rent;
+            } else {
+                if (valTotal == 2 || valTotal == 18) {
+                    rent = rentaAguaOLuz() * valorUtilidades;
+                }
+                cuentaJugador2 -= rent;
+                cuentaJugador1 += rent;
+            }
         }
+
+        if (valTotal == 9 || valTotal == 23) {
+            if (jugadorActual == 1) {
+                cuentaJugador1 -= rent;
+            } else {
+                cuentaJugador2 -= rent;
+            }
+        }
+
     }
 
-    if (valTotal == 9 || valTotal == 23) {
-        if (jugadorActual == 1) {
-            cuentaJugador1 -= rent;
-        } else {
-            cuentaJugador2 -= rent;
+    void monopolio() {
+        Mensaje mensaje = new Mensaje();
+
+        // Monopolio 1
+        Position position4 = this.positionControl.getPositionMap().get(4);
+        Position position6 = this.positionControl.getPositionMap().get(6);
+        Position position7 = this.positionControl.getPositionMap().get(7);
+
+        if (jugadorActual == position4.getOwnedBy() && jugadorActual == position6.getOwnedBy() && jugadorActual == position7.getOwnedBy()) {
+            if (!monopoly1Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                position4.setRent(position4.getRent() * 2);
+                position6.setRent(position6.getRent() * 2);
+                position7.setRent(position7.getRent() * 2);
+                monopoly1Creado = true;
+            }
         }
-    }
-    
-    }
-    
-    void monopolio(){
-     Mensaje mensaje = new Mensaje();
-    
-    // Monopolio 1
-    Position position4 = this.position.getPositionMap().get(4);
-    Position position6 = this.position.getPositionMap().get(6);
-    Position position7 = this.position.getPositionMap().get(7);
-    
-    if (jugadorActual == position4.getOwnedBy() && jugadorActual == position6.getOwnedBy() && jugadorActual == position7.getOwnedBy()) {
-        if (!monopoly1Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            
-            position4.setRent(position4.getRent() * 2);
-            position6.setRent(position6.getRent() * 2);
-            position7.setRent(position7.getRent() * 2);
-            monopoly1Creado = true;
+
+        // Monopolio 2
+        Position position12 = this.positionControl.getPositionMap().get(12);
+        Position position14 = this.positionControl.getPositionMap().get(14);
+        Position position15 = this.positionControl.getPositionMap().get(15);
+
+        if (jugadorActual == position12.getOwnedBy() && jugadorActual == position14.getOwnedBy() && jugadorActual == position15.getOwnedBy()) {
+            if (!monopoly2Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                position12.setRent(position12.getRent() * 2);
+                position14.setRent(position14.getRent() * 2);
+                position15.setRent(position15.getRent() * 2);
+                monopoly2Creado = true;
+            }
         }
-    }
-    
-    // Monopolio 2
-    Position position12 = this.position.getPositionMap().get(12);
-    Position position14 = this.position.getPositionMap().get(14);
-    Position position15 = this.position.getPositionMap().get(15);
-    
-    if (jugadorActual == position12.getOwnedBy() && jugadorActual == position14.getOwnedBy() && jugadorActual == position15.getOwnedBy()) {
-        if (!monopoly2Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            
-            position12.setRent(position12.getRent() * 2);
-            position14.setRent(position14.getRent() * 2);
-            position15.setRent(position15.getRent() * 2);
-            monopoly2Creado = true;
+
+        // Monopolio 3
+        Position position17 = this.positionControl.getPositionMap().get(17);
+        Position position19 = this.positionControl.getPositionMap().get(19);
+        Position position20 = this.positionControl.getPositionMap().get(20);
+
+        if (jugadorActual == position17.getOwnedBy() && jugadorActual == position19.getOwnedBy() && jugadorActual == position20.getOwnedBy()) {
+            if (!monopoly3Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                position17.setRent(position17.getRent() * 2);
+                position19.setRent(position19.getRent() * 2);
+                position20.setRent(position20.getRent() * 2);
+                monopoly3Creado = true;
+            }
         }
-    }
-    
-    // Monopolio 3
-    Position position17 = this.position.getPositionMap().get(17);
-    Position position19 = this.position.getPositionMap().get(19);
-    Position position20 = this.position.getPositionMap().get(20);
-    
-    if (jugadorActual == position17.getOwnedBy() && jugadorActual == position19.getOwnedBy() && jugadorActual == position20.getOwnedBy()) {
-        if (!monopoly3Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            
-            position17.setRent(position17.getRent() * 2);
-            position19.setRent(position19.getRent() * 2);
-            position20.setRent(position20.getRent() * 2);
-            monopoly3Creado = true;
+
+        // Monopolio 4
+        Position position25 = this.positionControl.getPositionMap().get(26);
+        Position position26 = this.positionControl.getPositionMap().get(25);
+        Position position28 = this.positionControl.getPositionMap().get(28);
+
+        if (jugadorActual == position25.getOwnedBy() && jugadorActual == position26.getOwnedBy() && jugadorActual == position28.getOwnedBy()) {
+            if (!monopoly4Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                position25.setRent(position25.getRent() * 2);
+                position26.setRent(position26.getRent() * 2);
+                position28.setRent(position28.getRent() * 2);
+                monopoly4Creado = true;
+            }
         }
-    }
-    
-    // Monopolio 4
-    Position position25 = this.position.getPositionMap().get(26);
-    Position position26 = this.position.getPositionMap().get(25);
-    Position position28 = this.position.getPositionMap().get(28);
-    
-    if (jugadorActual == position25.getOwnedBy() && jugadorActual == position26.getOwnedBy() && jugadorActual == position28.getOwnedBy()) {
-        if (!monopoly4Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            
-            position25.setRent(position25.getRent() * 2);
-            position26.setRent(position26.getRent() * 2);
-            position28.setRent(position28.getRent() * 2);
-            monopoly4Creado = true;
-        }
-    }
-    
+
         // Monopolio 5
-    Position position2 = this.position.getPositionMap().get(2);
-    Position position18 = this.position.getPositionMap().get(18);
+        Position position2 = this.positionControl.getPositionMap().get(2);
+        Position position18 = this.positionControl.getPositionMap().get(18);
 
-    
-    if (jugadorActual == position2.getOwnedBy() && jugadorActual == position18.getOwnedBy()) {
-        if (!monopoly5Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            valorUtilidades=20;
+        if (jugadorActual == position2.getOwnedBy() && jugadorActual == position18.getOwnedBy()) {
+            if (!monopoly5Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+                valorUtilidades = 20;
 
-            monopoly5Creado = true;
+                monopoly5Creado = true;
+            }
         }
-    }
-    
+
         // Monopolio 6
-    Position position5 = this.position.getPositionMap().get(5);
-    Position position11 = this.position.getPositionMap().get(11);
-    Position position22 = this.position.getPositionMap().get(22);
-    Position position30 = this.position.getPositionMap().get(30);
-    
-    if (jugadorActual == position5.getOwnedBy() && jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
-        if (!monopoly6Creado) {
-            String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
-            String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-            position5.setRent(450);
-            position11.setRent(450);
-            position22.setRent(450);
-            position30.setRent(450);
-            monopoly6Creado = true;
+        Position position5 = this.positionControl.getPositionMap().get(5);
+        Position position11 = this.positionControl.getPositionMap().get(11);
+        Position position22 = this.positionControl.getPositionMap().get(22);
+        Position position30 = this.positionControl.getPositionMap().get(30);
+
+        if (jugadorActual == position5.getOwnedBy() && jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+            if (!monopoly6Creado) {
+                String nombre = (jugadorActual == 1) ? lblName1.getText() : lblName2.getText();
+                String mensajeTexto = "! " + nombre + " ha conseguido un Monopolio!";
+                mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+                position5.setRent(450);
+                position11.setRent(450);
+                position22.setRent(450);
+                position30.setRent(450);
+                monopoly6Creado = true;
+            }
         }
-    }
-    
-   // Trenes
-if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
-    position30.setRent(315);
-    position11.setRent(315);
-    position22.setRent(315);
-} else {
-    if (jugadorActual == position5.getOwnedBy()) {
-        if (jugadorActual == position11.getOwnedBy()) {
-            position5.setRent(315);
-            position11.setRent(315);
-        } else if (jugadorActual == position22.getOwnedBy()) {
-            position5.setRent(315);
-            position22.setRent(315);
-        } else if (jugadorActual == position30.getOwnedBy()) {
-            position5.setRent(315);
+
+        // Trenes
+        if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
             position30.setRent(315);
+            position11.setRent(315);
+            position22.setRent(315);
+        } else {
+            if (jugadorActual == position5.getOwnedBy()) {
+                if (jugadorActual == position11.getOwnedBy()) {
+                    position5.setRent(315);
+                    position11.setRent(315);
+                } else if (jugadorActual == position22.getOwnedBy()) {
+                    position5.setRent(315);
+                    position22.setRent(315);
+                } else if (jugadorActual == position30.getOwnedBy()) {
+                    position5.setRent(315);
+                    position30.setRent(315);
+                }
+            }
+            if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy()) {
+                position11.setRent(206);
+                position22.setRent(206);
+            } else if (jugadorActual == position11.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+                position11.setRent(206);
+                position30.setRent(206);
+            } else if (jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
+                position22.setRent(206);
+                position30.setRent(206);
+            }
         }
-    }
-    if (jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy()) {
-        position11.setRent(206);
-        position22.setRent(206);
-    } else if (jugadorActual == position11.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
-        position11.setRent(206);
-        position30.setRent(206);
-    } else if (jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
-        position22.setRent(206);
-        position30.setRent(206);
-    }
-}     
     }
 
-    private int rentaAguaOLuz(){
+    private int rentaAguaOLuz() {
         lblresul.setText(null);
-            gridPaneTablero.getChildren().remove(carta);
-            int dado1 = lanzarDado();
+        gridPaneTablero.getChildren().remove(carta);
+        int dado1 = lanzarDado();
         int dado2 = lanzarDado();
         int total = dado1 + dado2;
-        
+
         mostrarImagenDado(dado1, imgDado1);
         mostrarImagenDado(dado2, imgDado2);
         lblresul.setText(String.valueOf(total));
         return total;
     }
-    void limpiarCarta(){
-    if(valTotal==0||valTotal==24||valTotal==16||valTotal==8||valTotal==9||valTotal==23){
-    gridPaneTablero.getChildren().remove(carta);
-    }}
-    void construirCasa(){
-   int maximoCasas=4;
-        Position position = this.position.getPositionMap().get(valTotal);
-        Mensaje mensaje = new Mensaje();
-        
- 
-    if (jugadorActual==position.getOwnedBy()){
-               if(position.getNumHouse()<maximoCasas){
-                   
-            if(valTotal==4||valTotal==6||valTotal==7&&monopoly1Creado){
-        int numeroCasas;
-        if(jugadorActual==1){          
-            cuentaJugador1-=position.getHousePrice();
-        }
-        else{
-        cuentaJugador2-=position.getHousePrice();}
-            numeroCasas=position.getNumHouse()+1;
-            position.setNumHouse(numeroCasas);
-              double aumentoRenta=40*position.getNumHouse();
-            aumentoRenta+=position.getRent();
-            position.setRent(aumentoRenta);
-             String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas +" !";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-  
-    }
-        
-        if(valTotal==12||valTotal==14||valTotal==15&&monopoly2Creado){
-        int numeroCasas;
-        if(jugadorActual==1){          
-            cuentaJugador1-=position.getHousePrice();
-        }
-        else{
-        cuentaJugador2-=position.getHousePrice();}
-            numeroCasas=position.getNumHouse()+1;
-            position.setNumHouse(numeroCasas);
-              double aumentoRenta=40*position.getNumHouse();
-            aumentoRenta+=position.getRent();
-            position.setRent(aumentoRenta);
-             String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas +" !";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-  
-    }
-        
-       if(valTotal==17||valTotal==19||valTotal==20&&monopoly3Creado){
-        int numeroCasas;
-        if(jugadorActual==1){          
-            cuentaJugador1-=position.getHousePrice();
-        }
-        else{
-        cuentaJugador2-=position.getHousePrice();}
-            numeroCasas=position.getNumHouse()+1;
-            position.setNumHouse(numeroCasas);
-              double aumentoRenta=40*position.getNumHouse();
-            aumentoRenta+=position.getRent();
-            position.setRent(aumentoRenta);
-             String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas +" !";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-  
-    }     
-        
-        
-    if(valTotal==26||valTotal==25||valTotal==28&&monopoly4Creado){
-        int numeroCasas;
-        if(jugadorActual==1){          
-            cuentaJugador1-=position.getHousePrice();
-        }
-        else{
-        cuentaJugador2-=position.getHousePrice();}
-            numeroCasas=position.getNumHouse()+1;
-            position.setNumHouse(numeroCasas);
-              double aumentoRenta=40*position.getNumHouse();
-            aumentoRenta+=position.getRent();
-            position.setRent(aumentoRenta);
-             String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas +" !";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
-  
-    }}
-              
-        }
-    else{
-         String mensajeTexto = "¡No eres dueño de esta propiedad!";
-        mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);}
-    }
-    void construirHotel(){
-            Position position = this.position.getPositionMap().get(valTotal);
-                Mensaje mensaje = new Mensaje();
-            if(position.getNumHouse()==4&&position.getNumHotel()==0){
-                double hotelPrecio=position.getHotelPrice();
-                 if (jugadorActual == 1) {
-            cuentaJugador1 -= hotelPrecio;
-        } else {
-            cuentaJugador2 -= hotelPrecio;
-        }
-              double aumentoRenta=100;
-            aumentoRenta+=position.getRent();
-            position.setRent(aumentoRenta);  
-             String mensajeTexto = "¡Felicidades ha construido su Hotel!";
-            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
 
+    void limpiarCarta() {
+        if (valTotal == 0 || valTotal == 24 || valTotal == 16 || valTotal == 8 || valTotal == 9 || valTotal == 23) {
+            gridPaneTablero.getChildren().remove(carta);
+        }
+    }
+
+    void construirCasa() {
+        int maximoCasas = 4;
+        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Mensaje mensaje = new Mensaje();
+
+        if (jugadorActual == position.getOwnedBy()) {
+            if (position.getNumHouse() < maximoCasas) {
+
+                if (valTotal == 4 || valTotal == 6 || valTotal == 7 && monopoly1Creado) {
+                    int numeroCasas;
+                    if (jugadorActual == 1) {
+                        cuentaJugador1 -= position.getHousePrice();
+                    } else {
+                        cuentaJugador2 -= position.getHousePrice();
+                    }
+                    numeroCasas = position.getNumHouse() + 1;
+                    position.setNumHouse(numeroCasas);
+                    double aumentoRenta = 40 * position.getNumHouse();
+                    aumentoRenta += position.getRent();
+                    position.setRent(aumentoRenta);
+                    String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas + " !";
+                    mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                }
+
+                if (valTotal == 12 || valTotal == 14 || valTotal == 15 && monopoly2Creado) {
+                    int numeroCasas;
+                    if (jugadorActual == 1) {
+                        cuentaJugador1 -= position.getHousePrice();
+                    } else {
+                        cuentaJugador2 -= position.getHousePrice();
+                    }
+                    numeroCasas = position.getNumHouse() + 1;
+                    position.setNumHouse(numeroCasas);
+                    double aumentoRenta = 40 * position.getNumHouse();
+                    aumentoRenta += position.getRent();
+                    position.setRent(aumentoRenta);
+                    String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas + " !";
+                    mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                }
+
+                if (valTotal == 17 || valTotal == 19 || valTotal == 20 && monopoly3Creado) {
+                    int numeroCasas;
+                    if (jugadorActual == 1) {
+                        cuentaJugador1 -= position.getHousePrice();
+                    } else {
+                        cuentaJugador2 -= position.getHousePrice();
+                    }
+                    numeroCasas = position.getNumHouse() + 1;
+                    position.setNumHouse(numeroCasas);
+                    double aumentoRenta = 40 * position.getNumHouse();
+                    aumentoRenta += position.getRent();
+                    position.setRent(aumentoRenta);
+                    String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas + " !";
+                    mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                }
+
+                if (valTotal == 26 || valTotal == 25 || valTotal == 28 && monopoly4Creado) {
+                    int numeroCasas;
+                    if (jugadorActual == 1) {
+                        cuentaJugador1 -= position.getHousePrice();
+                    } else {
+                        cuentaJugador2 -= position.getHousePrice();
+                    }
+                    numeroCasas = position.getNumHouse() + 1;
+                    position.setNumHouse(numeroCasas);
+                    double aumentoRenta = 40 * position.getNumHouse();
+                    aumentoRenta += position.getRent();
+                    position.setRent(aumentoRenta);
+                    String mensajeTexto = "¡Felicidades ha construido su casa número " + numeroCasas + " !";
+                    mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+                }
             }
 
+        } else {
+            String mensajeTexto = "¡No eres dueño de esta propiedad!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+        }
+    }
+
+    void construirHotel() {
+        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Mensaje mensaje = new Mensaje();
+        if (position.getNumHouse() == 4 && position.getNumHotel() == 0) {
+            double hotelPrecio = position.getHotelPrice();
+            if (jugadorActual == 1) {
+                cuentaJugador1 -= hotelPrecio;
+            } else {
+                cuentaJugador2 -= hotelPrecio;
+            }
+            double aumentoRenta = 100;
+            aumentoRenta += position.getRent();
+            position.setRent(aumentoRenta);
+            String mensajeTexto = "¡Felicidades ha construido su Hotel!";
+            mensaje.showConfirmation("Confirmación", gridPaneTablero.getScene().getWindow(), mensajeTexto);
+
+        }
 
     }
+
     @FXML
     private void onActionBtnConstruir(ActionEvent event) {
-                construirHotel();
+        construirHotel();
         construirCasa();
 
     }
-}
 
+    void prueba() {
+        Position position4 = this.positionControl.getPositionMap().get(4);
+        Position position6 = this.positionControl.getPositionMap().get(6);
+        Position position7 = this.positionControl.getPositionMap().get(7);
+        position4.setOwnedBy(1);
+        position6.setOwnedBy(1);
+        position7.setOwnedBy(1);
+
+    }
+
+    void prueba1() {
+        Position position4 = this.positionControl.getPositionMap().get(4);
+        Position position6 = this.positionControl.getPositionMap().get(6);
+        Position position7 = this.positionControl.getPositionMap().get(7);
+        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
+        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
+        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
+    }
+
+}
