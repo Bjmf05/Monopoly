@@ -108,6 +108,14 @@ public class Jugador1PropiedadesViewController extends Controller implements Ini
                                 VentasJ1 ventaJ1 = new VentasJ1();
                                 ventaJ1.setVentaJ1((Double) rowData.get(2));
                                 AppContext.getInstance().set("VentaJ1", ventaJ1);
+
+                                List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
+                                List<String> propiedadesOcupadas = (List<String>) AppContext.getInstance().get("propiedadesOcupadas");
+                                propiedadesOcupadas.remove(rowData.get(1));  // Elimina el dato de propiedadesOcupadas
+                                propiedadesLibres.add((String)rowData.get(1));   // Agrega el dato a propiedadesLibres
+                                AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
+                                AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+                                
                                 PrincipalViewController principalViewController = (PrincipalViewController) FlowController.getInstance().getController("PrincipalView");
 
                                 int propiedad = (Integer) rowData.get(0);
