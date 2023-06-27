@@ -108,6 +108,14 @@ public class Jugador2PropiedadesViewController extends Controller implements Ini
                                 VentasJ2 ventaJ2 = new VentasJ2();
                                 ventaJ2.setVentaJ2((Double) rowData.get(2));
                                 AppContext.getInstance().set("VentaJ2", ventaJ2);
+
+                                List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
+                                List<String> propiedadesOcupadas = (List<String>) AppContext.getInstance().get("propiedadesOcupadas");
+                                propiedadesOcupadas.remove(rowData.get(1));  // Elimina el dato de propiedadesOcupadas
+                                propiedadesLibres.add((String)rowData.get(1));   // Agrega el dato a propiedadesLibres
+                                AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
+                                AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+                                
                                 List<List<Object>> datosJ2 = (List<List<Object>>) AppContext.getInstance().get("J2");
                                 int indiceABorrar = getIndex(); // Índice que deseas borrar
 
