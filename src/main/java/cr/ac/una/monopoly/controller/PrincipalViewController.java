@@ -417,6 +417,8 @@ public class PrincipalViewController extends Controller implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         String rutaJ1 = "/cr/ac/una/monopoly/resources/circuloVerde.png";
         String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
+        creaListaPropiedadesLibres();
+        creaListaPropiedadesCompradas();
 
         Datos datos = (Datos) AppContext.getInstance().get("Llave");
         lblName1.setText(datos.getJugador1());
@@ -474,10 +476,31 @@ public class PrincipalViewController extends Controller implements Initializable
 
         Position position = this.positionControl.getPositionMap().get(valTotal);
 
+         //Llama la lista de libres y busca si esta ahi
+        List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
+        List<String> propiedadesOcupadas = (List<String>) AppContext.getInstance().get("propiedadesOcupadas");
+        int estado = 1;
+        if (propiedadesLibres.contains(position.getName())) { //Compara si esta o no
+            estado = 1;
+        } else {
+            estado = 0;
+        }
+
         System.out.println("Comprar " + position.getOwnedBy());
+        
         Mensaje mensaje = new Mensaje();
+        
         if (position != null && position.getOwnedBy() == 0 && position.getPrice() != 0) {
             position.setOwnedBy(jugadorActual);
+
+             if (estado == 1) {//Esto lo que hace es que compara si la propiedad es libre o no
+                propiedadesLibres.remove(position.getName());  // Elimina el dato de propiedadesLibres
+                propiedadesOcupadas.add(position.getName());   // Agrega el dato a propiedadesOcupadas
+                AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
+                AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+            }
+
+            
             Position position1 = this.positionControl.getPositionMap().get(valTotal);
             System.out.println(position1.getOwnedBy());
             List<Object> datos1 = (List<Object>) AppContext.getInstance().get("J1");
@@ -1078,5 +1101,39 @@ public class PrincipalViewController extends Controller implements Initializable
         System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
         System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
     }
+   private void creaListaPropiedadesLibres() {
+
+        List<String> propiedadesLibres = new ArrayList<>();
+        propiedadesLibres.add("Agua");
+        propiedadesLibres.add("Avenida Lopez");
+        propiedadesLibres.add("Tren Sur");
+        propiedadesLibres.add("Avenida Toros");
+        propiedadesLibres.add("Avenida Camaano");
+        propiedadesLibres.add("Carcel pos");
+        propiedadesLibres.add("Tren Oeste");
+        propiedadesLibres.add("Zona Franca");
+        propiedadesLibres.add("Finca Miramar");
+        propiedadesLibres.add("Mirador");
+        propiedadesLibres.add("Avenida Perez");
+        propiedadesLibres.add("Luz");
+        propiedadesLibres.add("Avenida Central");
+        propiedadesLibres.add("Heredia Media Calle");
+        propiedadesLibres.add("Tren Norte");
+        propiedadesLibres.add("Lagunilla Escuela");
+        propiedadesLibres.add("Calle Los Perdidos");
+        propiedadesLibres.add("Calle Soledad");
+        propiedadesLibres.add("Tren Este");
+
+        // Guardar la lista en AppContext
+        AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
+    }
+
+    private void creaListaPropiedadesCompradas() {
+        List<String> propiedadesOcupadas = new ArrayList<>();
+
+        AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+    }
+
+    
 
 }
