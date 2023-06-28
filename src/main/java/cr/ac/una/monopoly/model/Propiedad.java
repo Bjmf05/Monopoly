@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
@@ -51,6 +52,9 @@ public class Propiedad implements Serializable {
     private Integer propiHoteles;
     @Column(name = "PROPI_HIPOTECA")
     private Integer propiHipoteca;
+    @Version
+    @Column(name = "GAME_VERSION")
+    private Long version;
     @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Game gameId;
@@ -108,8 +112,6 @@ public class Propiedad implements Serializable {
         this.propiHipoteca = propiHipoteca;
     }
 
-
-
     public Game getGameId() {
         return gameId;
     }
@@ -117,6 +119,15 @@ public class Propiedad implements Serializable {
     public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+    
 
     @Override
     public int hashCode() {

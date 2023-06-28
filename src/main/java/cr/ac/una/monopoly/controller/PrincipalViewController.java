@@ -1083,24 +1083,6 @@ public class PrincipalViewController extends Controller implements Initializable
 
     }
 
-    void prueba() {
-        Position position4 = this.positionControl.getPositionMap().get(4);
-        Position position6 = this.positionControl.getPositionMap().get(6);
-        Position position7 = this.positionControl.getPositionMap().get(7);
-        position4.setOwnedBy(1);
-        position6.setOwnedBy(1);
-        position7.setOwnedBy(1);
-
-    }
-
-    void prueba1() {
-        Position position4 = this.positionControl.getPositionMap().get(4);
-        Position position6 = this.positionControl.getPositionMap().get(6);
-        Position position7 = this.positionControl.getPositionMap().get(7);
-        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
-        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
-        System.out.println("Propiedad " + position4.getNumPosition() + " Dueño " + position4.getOwnedBy() + " ");
-    }
    private void creaListaPropiedadesLibres() {
 
         List<String> propiedadesLibres = new ArrayList<>();
