@@ -11,7 +11,6 @@ import java.util.HashMap;
  *
  * @author ccarranza
  */
-
 public class Respuesta implements Serializable {
     
     private static final long serialVersionUID = 1L;
