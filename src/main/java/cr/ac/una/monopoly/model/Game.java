@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -49,7 +50,7 @@ public class Game implements Serializable {
     private Long id;
     @Basic(optional = false)
     @Column(name = "FECHA")
-    @Temporal(TemporalType.TIMESTAMP)
+  
     private LocalDate fecha;
     @Basic(optional = false)
     @Column(name = "NOM_JUGADOR1")
@@ -73,6 +74,7 @@ public class Game implements Serializable {
     @Column(name = "GAME_VERSION")
     private Long version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gameId", fetch = FetchType.LAZY)
+    @JoinColumn(name = "GAME_ID")
     private Collection<Propiedad> propiedadCollection;
 
     public Game() {
@@ -103,6 +105,7 @@ public class Game implements Serializable {
         this.cuentaJugador1=gameDto.getCuentaJugador1();
         this.cuentaJugador2=gameDto.getCuentaJugador2();
         this.version=gameDto.getVersion();
+        
           }
     
 

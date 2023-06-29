@@ -7,7 +7,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2023-06-28T01:21:10", comments="EclipseLink-2.7.10.v20211216-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2023-06-29T15:05:08", comments="EclipseLink-2.7.10.v20211216-rNA")
 @StaticMetamodel(Game.class)
 public class Game_ { 
 
@@ -20,5 +20,6 @@ public class Game_ {
     public static volatile SingularAttribute<Game, Double> cuentaJugador1;
     public static volatile SingularAttribute<Game, Double> cuentaJugador2;
     public static volatile SingularAttribute<Game, Long> id;
+    public static volatile SingularAttribute<Game, Long> version;
 
 }

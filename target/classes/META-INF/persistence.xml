@@ -5,6 +5,7 @@
     <class>cr.ac.una.monopoly.model.Game</class>
     <class>cr.ac.una.monopoly.model.Propiedad</class>
     <properties>
+          <property name="eclipselink.weaving" value="static"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521/XEPDB1"/>
       <property name="javax.persistence.jdbc.user" value="una"/>
       <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>

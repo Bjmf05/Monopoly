@@ -11,7 +11,6 @@ cr\ac\una\monopoly\controller\Controller.class
 cr\ac\una\monopoly\controller\VentasJ1.class
 cr\ac\una\monopoly\controller\Jugador2PropiedadesViewController.class
 cr\ac\una\monopoly\controller\Jugador1PropiedadesViewController.class
-cr\ac\una\monopoly\controller\PrincipalViewController.class
 cr\ac\una\monopoly\model\Position.class
 cr\ac\una\monopoly\util\Respuesta.class
 cr\ac\una\monopoly\model\Game.class

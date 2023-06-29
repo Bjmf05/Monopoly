@@ -21,11 +21,22 @@ import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.util.Mensaje;
 import cr.ac.una.monopoly.model.Position;
 import cr.ac.una.monopoly.model.BancoGame;
+import cr.ac.una.monopoly.model.Game;
+import cr.ac.una.monopoly.model.GameDto;
+import cr.ac.una.monopoly.model.GuardarPropiedad;
 import cr.ac.una.monopoly.model.PositionControl;
+import cr.ac.una.monopoly.model.PropiedadDto;
+import cr.ac.una.monopoly.service.GameService;
+import cr.ac.una.monopoly.service.PropiedadService;
+import cr.ac.una.monopoly.util.Respuesta;
+import cr.ac.una.unaplanilla.util.BindingUtils;
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 //import cr.ac.una.monopoly.controller.BancoViewController;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -65,7 +76,8 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXButton btnPropiedades2;
     @FXML
     private JFXButton btnTerminarTurno;
-
+@FXML
+    private JFXButton btnGuardar;
     @FXML
     private GridPane gridPaneTablero;
     @FXML
@@ -146,10 +158,10 @@ public class PrincipalViewController extends Controller implements Initializable
     void montarCarta() {
         gridPaneTablero.getChildren().remove(carta);
         mostrarImagenSuerte(carta);
-        int startColumn = 3;  // Columna inicial
-        int endColumn = 6;    // Columna final
-        int startRow = 3;     // Fila inicial
-        int endRow = 6;       // Fila final
+        int startColumn = 3; 
+        int endColumn = 6;    
+        int startRow = 3;     
+        int endRow = 6;       
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
 
         gridPaneTablero.getChildren().add(carta);
@@ -231,7 +243,6 @@ public class PrincipalViewController extends Controller implements Initializable
                 break;
             case 11:
 
-                //pagar por cada casa y hotel
                 break;
             case 12:
                 if (jugadorActual == 1) {
@@ -476,11 +487,11 @@ public class PrincipalViewController extends Controller implements Initializable
 
         Position position = this.positionControl.getPositionMap().get(valTotal);
 
-         //Llama la lista de libres y busca si esta ahi
+       
         List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
         List<String> propiedadesOcupadas = (List<String>) AppContext.getInstance().get("propiedadesOcupadas");
         int estado = 1;
-        if (propiedadesLibres.contains(position.getName())) { //Compara si esta o no
+        if (propiedadesLibres.contains(position.getName())) { 
             estado = 1;
         } else {
             estado = 0;
@@ -507,9 +518,7 @@ public class PrincipalViewController extends Controller implements Initializable
             List<Object> datos2 = (List<Object>) AppContext.getInstance().get("J2");
             Datos datos = (Datos) AppContext.getInstance().get("Llave");
             if (jugadorActual == 1) {
-                // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 1
-                cuentaJugador1 -= position.getPrice();
-                // Crea una nueva lista para guardar los datos de la propiedad
+              cuentaJugador1 -= position.getPrice();
                 System.out.println("Comprar " + position.getOwnedBy());
                 String nombre = position.getName();
                 if (datos1 == null) {
@@ -529,8 +538,7 @@ public class PrincipalViewController extends Controller implements Initializable
                 AppContext.getInstance().set("J1", datos1);
 
             } else {
-                // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 2
-                cuentaJugador2 -= position.getPrice();
+                  cuentaJugador2 -= position.getPrice();
 
                 String nombre = position.getName();
                 if (datos2 == null) {
@@ -548,9 +556,6 @@ public class PrincipalViewController extends Controller implements Initializable
                 datos2.add(nombres);
                 AppContext.getInstance().set("J2", datos2);
             }
-            // Realizar las acciones necesarias al comprar la posición
-            // Por ejemplo, actualizar el estado de la posición en la GUI, ajustar el saldo del jugador, etc.
-            // Mostrar un mensaje de confirmación
             String mensajeTexto = "¡Has comprado la Propiedad " + position.getName() + "!";
             mensaje.showConfirmation("Confirmación de compra", gridPaneTablero.getScene().getWindow(), mensajeTexto);
         } else {
@@ -560,7 +565,6 @@ public class PrincipalViewController extends Controller implements Initializable
         cargarValores();
         monopolio();
         btnComprar.setDisable(true);
-        //  venderPropiedad(valTotal);
     }
 
     @FXML
@@ -611,10 +615,10 @@ public class PrincipalViewController extends Controller implements Initializable
         Position propiedad = new Position();
         gridPaneTablero.getChildren().remove(carta);
         propiedad.showPosition(carta, valTotal);
-        int startColumn = 3;  // Columna inicial
-        int endColumn = 6;    // Columna final
-        int startRow = 3;     // Fila inicial
-        int endRow = 6;       // Fila final
+        int startColumn = 3;  
+        int endColumn = 6;    
+        int startRow = 3;    
+        int endRow = 6;      
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
         gridPaneTablero.getChildren().add(carta);
     }
@@ -752,14 +756,10 @@ public class PrincipalViewController extends Controller implements Initializable
             if (residuo <= 0) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
                 FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
-                //No tiene saldo suficiente 
-                //compara el valor de las propiedades que tiene con la deuda
-                // metodo que vende una propiedad
                 System.out.println(multa);
             } else if (residuo > 0) {
                 cuentaJugador1 -= multa;
-                //Deuda saldada
-                //Sale de la carcel 
+
                 System.out.println(multa);
             }
         } else if (jugadorActual == 2) {
@@ -768,13 +768,10 @@ public class PrincipalViewController extends Controller implements Initializable
             if (residuo <= 0) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
                 FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
-                //No tiene saldo suficiente 
-                //compara el valor de las propiedades que tiene con la deuda
-                // metodo que vende una propiedad
+       
             } else if (residuo > 0) {
                 cuentaJugador2 -= multa;
-                //Deuda saldada
-                //Sale de la carcel
+
                 System.out.println(multa);
             }
         }
@@ -1115,7 +1112,52 @@ public class PrincipalViewController extends Controller implements Initializable
 
         AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
     }
+    @FXML
+    void onActionBtnGuardar(ActionEvent event) {
+        guardarPartida();
+           
+    }
+    void guardarPartida(){
+        GameService gameService = new GameService();
+        GameDto gameDto = new GameDto();
+        gameDto.setFecha(LocalDate.now());
+        gameDto.setNomJugador1(lblName1.getText());
+        gameDto.setNomJugador2(lblName2.getText());
+        gameDto.setCuentaJugador1(cuentaJugador1);
+        gameDto.setCuentaJugador2(cuentaJugador2);
+        gameDto.setPosiFicha1(sumaTotal1);
+        gameDto.setPosiFicha2(sumaTotal2);
+         Respuesta respuesta = gameService.guardarPartida(gameDto);
+      Long gameId = ((GameDto) respuesta.getResultado("gameDto")).getId();
+       // guardar(gameService, gameId);
+    }
+ 
+public void guardar(GameService gameService, Long gameId) {
+    Game game = gameService.obtenerJuegoPorId(gameId);
+    boolean propiedadesGuardadas = false;
 
-    
+    if (game != null) {
+        int[] positionIndices = {2, 4, 5, 6, 7, 11, 12, 14, 15, 17, 18, 19, 20, 22, 25, 26, 28, 30};
+        PropiedadService propiedadService = new PropiedadService();
 
+        for (int positionIndex : positionIndices) {
+            Position position = this.positionControl.getPositionMap().get(positionIndex);
+
+            if (position.getOwnedBy() != 0) {
+                PropiedadDto propiedadDto = new PropiedadDto();
+                propiedadDto.setPropiId(Long.valueOf(position.getNumPosition()));
+                propiedadDto.setPropiPropietario(position.getOwnedBy());
+                propiedadDto.setPropiAlquiler(position.getRent());
+             propiedadDto.setGameId(game);
+
+                propiedadService.guardarPropiedad(propiedadDto);
+                propiedadesGuardadas = true;
+            }
+        }
+    }
+
+    if (!propiedadesGuardadas) {
+        System.out.println("No se guardaron propiedades");
+    }
+}
 }

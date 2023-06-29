@@ -6,6 +6,7 @@ package cr.ac.una.monopoly.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -28,6 +29,7 @@ public class GameDto implements Serializable {
     public Double cuentaJugador2;
     public Long version;
     private Boolean modificado;
+    private Collection<Propiedad> propiedadCollection;
 
     public Long getVersion() {
         return version;
@@ -40,22 +42,39 @@ public class GameDto implements Serializable {
 
     public GameDto() {
         this.id = new SimpleStringProperty();
-        this.fecha = new SimpleObjectProperty(LocalDate.now());
+        this.fecha = new SimpleObjectProperty<>(LocalDate.now());
         this.nomJugador1 = new SimpleStringProperty();
         this.nomJugador2 = new SimpleStringProperty();
         this.modificado = false;
     }
 
     public GameDto(Game game) {
-        this.id.set(game.getId().toString());
-        this.fecha.set(game.getFecha());
-        this.nomJugador1.set(game.getNomJugador1());
-        this.nomJugador2.set(game.getNomJugador2());
+       
+          if (game.getId() != null) {
+            this.id.set(game.getId().toString());
+        }
+             if (game.getFecha() != null) {
+        this.fecha = new SimpleObjectProperty<>(game.getFecha());
+    } else {
+        this.fecha = new SimpleObjectProperty<>(LocalDate.now());
+    }
+     
+        if (this.nomJugador1 == null) {
+    this.nomJugador1 = new SimpleStringProperty();
+}
+this.nomJugador1.set("valor");
+
+        if (this.nomJugador2 == null) {
+    this.nomJugador2 = new SimpleStringProperty();
+}
+this.nomJugador2.set("valor");
+
         this.posiFicha1=game.getPosiFicha1();
         this.posiFicha2=game.getPosiFicha2();
         this.cuentaJugador1=game.getCuentaJugador1();
         this.cuentaJugador2=game.getCuentaJugador2();
         this.version=game.getVersion();
+        this.propiedadCollection = game.getPropiedadCollection();
     }
 
     public Long getId() {
@@ -125,6 +144,18 @@ public class GameDto implements Serializable {
     public void setCuentaJugador2(Double cuentaJugador2) {
         this.cuentaJugador2 = cuentaJugador2;
     }    
+    public Collection<Propiedad> getPropiedadCollection() {
+    return propiedadCollection;
+}
+
+public void setPropiedadCollection(Collection<Propiedad> propiedadCollection) {
+    this.propiedadCollection = propiedadCollection;
+}
+
+    @Override
+    public String toString() {
+        return "GameDto{" + "id=" + id + ", fecha=" + fecha + ", nomJugador1=" + nomJugador1 + ", nomJugador2=" + nomJugador2 + ", posiFicha1=" + posiFicha1 + ", posiFicha2=" + posiFicha2 + ", cuentaJugador1=" + cuentaJugador1 + ", cuentaJugador2=" + cuentaJugador2 + ", version=" + version + ", modificado=" + modificado + '}';
+    }
 
 
     @Override

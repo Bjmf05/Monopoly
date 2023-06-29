@@ -124,7 +124,7 @@ public class PositionControl {
         positionMap.get(25).setNumPosition(25);
         positionMap.get(26).setNumPosition(26);
         positionMap.get(28).setNumPosition(28);
-        positionMap.get(30).setNumPosition(200);
+        positionMap.get(30).setNumPosition(30);
 
     }
 

@@ -25,9 +25,9 @@ import javax.persistence.Version;
 @Entity
 @Table(name = "PLAM_PROPIEDADES", schema = "UNA")
 @NamedQueries({
-    @NamedQuery(name = "Propiedad.findAll", query = "SELECT p FROM Propiedad p"),
-   /* @NamedQuery(name = "Propiedad.findByPropiId", query = "SELECT p FROM Propiedad p WHERE p.propiId = :propiId"),
-    @NamedQuery(name = "Propiedad.findByPropiPropietario", query = "SELECT p FROM Propiedad p WHERE p.propiPropietario = :propiPropietario"),
+    @NamedQuery(name = "Propiedad.findAll", query = "SELECT p FROM Propiedad p"), 
+     @NamedQuery(name = "Propiedad.findByPropiId", query = "SELECT p FROM Propiedad p WHERE p.propiId = :propiId")
+    /*@NamedQuery(name = "Propiedad.findByPropiPropietario", query = "SELECT p FROM Propiedad p WHERE p.propiPropietario = :propiPropietario"),
     @NamedQuery(name = "Propiedad.findByPropiAlquiler", query = "SELECT p FROM Propiedad p WHERE p.propiAlquiler = :propiAlquiler"),
     @NamedQuery(name = "Propiedad.findByPropiCasas", query = "SELECT p FROM Propiedad p WHERE p.propiCasas = :propiCasas"),
     @NamedQuery(name = "Propiedad.findByPropiHoteles", query = "SELECT p FROM Propiedad p WHERE p.propiHoteles = :propiHoteles"),
@@ -53,7 +53,7 @@ public class Propiedad implements Serializable {
     @Column(name = "PROPI_HIPOTECA")
     private Integer propiHipoteca;
     @Version
-    @Column(name = "GAME_VERSION")
+    @Column(name = "PROPIEDADES_VERSION")
     private Long version;
     @JoinColumn(name = "GAME_ID", referencedColumnName = "GAME_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -66,7 +66,20 @@ public class Propiedad implements Serializable {
         this.propiId = propiId;
     }
 
-  
+    public Propiedad(PropiedadDto propiedadDto) {
+        this.propiId = propiedadDto.getPropiId();
+        actualizar(propiedadDto);
+    }
+
+    public void actualizar(PropiedadDto propiedadDto) {
+        this.propiAlquiler = propiedadDto.getPropiAlquiler();
+        this.propiCasas = propiedadDto.getPropiCasas();
+        this.propiHipoteca = propiedadDto.getPropiHipoteca();
+        this.propiHoteles = propiedadDto.getPropiHoteles();
+        this.propiPropietario = propiedadDto.getPropiPropietario();
+        this.version = propiedadDto.getVersion();
+        this.gameId = propiedadDto.getGameId();
+    }
 
     public Long getPropiId() {
         return propiId;
@@ -127,7 +140,6 @@ public class Propiedad implements Serializable {
     public void setVersion(Long version) {
         this.version = version;
     }
-    
 
     @Override
     public int hashCode() {
@@ -153,5 +165,5 @@ public class Propiedad implements Serializable {
     public String toString() {
         return "cr.ac.una.monopoly.model.Propiedad[ propiId=" + propiId + " ]";
     }
-    
+
 }
