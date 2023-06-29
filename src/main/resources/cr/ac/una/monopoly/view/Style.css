@@ -147,3 +147,29 @@ label {
     -fx-background-image: url("../resources/construir.png");
     -fx-background-repeat: no-repeat;
 }
+.jfx-btnimg-Cargar{
+    -fx-background-image: url("../resources/cargar.png");
+    -fx-background-color: #0066ff;
+    -fx-background-repeat: no-repeat;
+}
+.jfx-btn-buscar{
+-fx-background-image: url("../resources/Buscar-48.png");
+  -fx-background-size: 30px 30px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;}
+
+.jfx-btn-buscar{-fx-background-color: #23B82E;}
+.jfx-btn-buscar:hover{-fx-background-color: #4efd5c;}
+.jfx-btn-aceptar{-fx-background-color: #3498db;}
+.jfx-btn-aceptar{-fx-background-image: url("../resources/Agregar-48.png");
+  -fx-background-size: 30px 30px;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left;}
+.jfx-btn-aceptar:hover{-fx-background-color: #69bcff;}
+
+.vbox-busqueda{
+    
+   
+          -fx-background-color: #f2f2f2;
+  -fx-effect: dropshadow(three-pass-box, rgba(33, 150, 243, 1), 10, 0, 0, 0);
+}

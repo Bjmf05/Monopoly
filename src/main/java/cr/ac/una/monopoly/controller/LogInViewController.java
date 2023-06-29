@@ -65,6 +65,8 @@ public class LogInViewController extends Controller implements Initializable {
     private JFXButton btnElegirFichas;
     private Image imageJ1;
     private Image imageJ2;
+    @FXML
+    private JFXButton btnCargarPartida;
 
     public String getTxtJugador1() {
         return txtJugador1.getText();
@@ -129,6 +131,11 @@ public class LogInViewController extends Controller implements Initializable {
     @FXML
     private void onActionBtnElegirFichas(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("FichaView");
+    }
+
+    @FXML
+    private void onActionBtnCargarPartida(ActionEvent event) {
+        FlowController.getInstance().goViewInWindow("CargarPartida");
     }
 
 }
