@@ -56,6 +56,7 @@ public class FichaViewController extends Controller implements Initializable {
         agregarContenidoJ1("/cr/ac/una/monopoly/resources/camion.png");
         agregarContenidoJ1("/cr/ac/una/monopoly/resources/embarcacion.png");
         agregarContenidoJ1("/cr/ac/una/monopoly/resources/sombrero.png");
+        
 
         agregarContenidoJ2("/cr/ac/una/monopoly/resources/helicoptero.png");
         agregarContenidoJ2("/cr/ac/una/monopoly/resources/jeep.png");
@@ -105,9 +106,10 @@ public class FichaViewController extends Controller implements Initializable {
         Datos rut = new Datos();
         rut.setRuta1(rutaImagen1);
         rut.setRuta2(rutaImagen2);
-        //   cargaImagen();
+     //   cargaImagen();
         AppContext.getInstance().set("Ruta", rut);
         ((Stage) root.getScene().getWindow()).close();
     }
-
+    
+  
 }

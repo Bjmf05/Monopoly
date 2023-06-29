@@ -20,26 +20,24 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import cr.ac.una.monopoly.util.Mensaje;
 import cr.ac.una.monopoly.model.Position;
+import cr.ac.una.monopoly.controller.VentasJ1;
+import cr.ac.una.monopoly.controller.VentasJ2;
+
 import cr.ac.una.monopoly.model.BancoGame;
-import cr.ac.una.monopoly.model.Game;
-import cr.ac.una.monopoly.model.GameDto;
-import cr.ac.una.monopoly.model.GuardarPropiedad;
-import cr.ac.una.monopoly.model.PositionControl;
-import cr.ac.una.monopoly.model.PropiedadDto;
-import cr.ac.una.monopoly.service.GameService;
-import cr.ac.una.monopoly.service.PropiedadService;
-import cr.ac.una.monopoly.util.Respuesta;
-import cr.ac.una.unaplanilla.util.BindingUtils;
-import java.time.LocalDate;
 
 import java.util.ArrayList;
-//import cr.ac.una.monopoly.controller.BancoViewController;
+
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -48,10 +46,8 @@ import javafx.scene.shape.Circle;
  */
 public class PrincipalViewController extends Controller implements Initializable {
 
-    @FXML
-    private JFXTextField txfJugador2;
-    @FXML
-    private JFXTextField txfJugador1;
+    private int recivirVenta;
+
     @FXML
     private ImageView ImVJugador1;
     @FXML
@@ -60,10 +56,6 @@ public class PrincipalViewController extends Controller implements Initializable
     private Label lblSaldoJugador1;
     @FXML
     private Label lblSaldoJugador2;
-    @FXML
-    private JFXTextField Vuelta1;
-    @FXML
-    private JFXTextField Vuelta2;
     @FXML
     private JFXButton btnFinalizarJuego;
     @FXML
@@ -76,8 +68,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private JFXButton btnPropiedades2;
     @FXML
     private JFXButton btnTerminarTurno;
-@FXML
-    private JFXButton btnGuardar;
+
     @FXML
     private GridPane gridPaneTablero;
     @FXML
@@ -110,21 +101,6 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     private JFXButton btnConstruir;
 
-    public double getCuentaJugador1() {
-        return cuentaJugador1;
-    }
-
-    public void setCuentaJugador1(double cuentaJugador1) {
-        this.cuentaJugador1 = cuentaJugador1;
-    }
-
-    public double getCuentaJugador2() {
-        return cuentaJugador2;
-    }
-
-    public void setCuentaJugador2(double cuentaJugador2) {
-        this.cuentaJugador2 = cuentaJugador2;
-    }
     private double cuentaJugador1 = 0;
     private double cuentaJugador2 = 0;
     private boolean fichaJugador2Creada = false;
@@ -146,6 +122,32 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     private Label lblJugadorEnTurno;
     List<Object> listaJ1 = new ArrayList<>();
+    @FXML
+    private Button boton1;
+    @FXML
+    private Button boton2;
+    @FXML
+    private Button boton3;
+    @FXML
+    private Label lblVuelta1;
+    @FXML
+    private Label lblVuelta2;
+
+    public double getCuentaJugador1() {
+        return cuentaJugador1;
+    }
+
+    public void setCuentaJugador1(double cuentaJugador1) {
+        this.cuentaJugador1 = cuentaJugador1;
+    }
+
+    public double getCuentaJugador2() {
+        return cuentaJugador2;
+    }
+
+    public void setCuentaJugador2(double cuentaJugador2) {
+        this.cuentaJugador2 = cuentaJugador2;
+    }
 
     public int getVenta() {
         return venta;
@@ -158,10 +160,10 @@ public class PrincipalViewController extends Controller implements Initializable
     void montarCarta() {
         gridPaneTablero.getChildren().remove(carta);
         mostrarImagenSuerte(carta);
-        int startColumn = 3; 
-        int endColumn = 6;    
-        int startRow = 3;     
-        int endRow = 6;       
+        int startColumn = 3;  // Columna inicial
+        int endColumn = 6;    // Columna final
+        int startRow = 3;     // Fila inicial
+        int endRow = 6;       // Fila final
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
 
         gridPaneTablero.getChildren().add(carta);
@@ -243,6 +245,7 @@ public class PrincipalViewController extends Controller implements Initializable
                 break;
             case 11:
 
+                //pagar por cada casa y hotel
                 break;
             case 12:
                 if (jugadorActual == 1) {
@@ -277,6 +280,9 @@ public class PrincipalViewController extends Controller implements Initializable
     @FXML
     void onActionBtnTerminarTurno(ActionEvent event) {
 
+        VentaJ2();
+        VentaJ1();
+        
         imgDado1.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         imgDado2.setImage(new Image("/cr/ac/una/monopoly/resources/fondoDado.png"));
         btnLanzarDados.setDisable(false);
@@ -406,7 +412,7 @@ public class PrincipalViewController extends Controller implements Initializable
             if (valor == 0) {
                 contadorJ1++;
                 pagoGo("J1", 200);
-                Vuelta1.setText("Vuelta: " + String.valueOf(contadorJ1));
+                lblVuelta1.setText(String.valueOf(contadorJ1));
 
             }
         }
@@ -419,7 +425,7 @@ public class PrincipalViewController extends Controller implements Initializable
             if (valor == 0) {
                 contadorJ2++;
                 pagoGo("J2", 200);
-                Vuelta2.setText("Vuelta: " + String.valueOf(contadorJ2));
+                lblVuelta2.setText(String.valueOf(contadorJ2));
             }
         }
     }
@@ -430,6 +436,8 @@ public class PrincipalViewController extends Controller implements Initializable
         String rutaJ2 = "/cr/ac/una/monopoly/resources/circuloAzul.png";
         creaListaPropiedadesLibres();
         creaListaPropiedadesCompradas();
+        listaPropiedadHipotecadaJ1();
+        listaPropiedadHipotecadaJ2();
 
         Datos datos = (Datos) AppContext.getInstance().get("Llave");
         lblName1.setText(datos.getJugador1());
@@ -458,7 +466,7 @@ public class PrincipalViewController extends Controller implements Initializable
         }
         List<Object> nombres = new ArrayList<>();
         nombres.add(Integer.valueOf(0));
-        nombres.add("No hay aras");
+        nombres.add("No hay compras");
         nombres.add(Double.valueOf(0));
         nombres.add(Double.valueOf(0));
         nombres.add(Double.valueOf(0));
@@ -470,56 +478,51 @@ public class PrincipalViewController extends Controller implements Initializable
 
     }
 
-    public void venderPropiedad(int recivirVenta) {
-        System.out.println(" Propiedad" + recivirVenta + "!");
-
-        if (recivirVenta != 0) {
-            Position position = this.positionControl.getPositionMap().get(recivirVenta);
-            System.out.println(" Propiedad" + position.getNumPosition() + "Dueño" + position.getOwnedBy() + "!");
-            position.setOwnedBy(2);
-            System.out.println(" Propiedad" + position.getNumPosition() + "Dueño" + position.getOwnedBy() + "!");
-        }
+    void venderPropiedad() {
 
     }
 
     @FXML
     void onActionBtnComprar(ActionEvent event) {
 
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
 
-       
+        //Llama la lista de libres y busca si esta ahi
         List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
-        List<String> propiedadesOcupadas = (List<String>) AppContext.getInstance().get("propiedadesOcupadas");
+        List<String> propiedadesOcupadasJ1 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ1");
+        List<String> propiedadesOcupadasJ2 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ2");
         int estado = 1;
-        if (propiedadesLibres.contains(position.getName())) { 
+        if (propiedadesLibres.contains(position.getName())) { //Compara si esta o no
             estado = 1;
         } else {
             estado = 0;
         }
 
-        System.out.println("Comprar " + position.getOwnedBy());
-        
         Mensaje mensaje = new Mensaje();
-        
-        if (position != null && position.getOwnedBy() == 0 && position.getPrice() != 0) {
+
+        if (position != null && estado == 1 && position.getPrice() != 0) {
             position.setOwnedBy(jugadorActual);
 
-             if (estado == 1) {//Esto lo que hace es que compara si la propiedad es libre o no
+            if (estado == 1 && jugadorActual == 1) {//Esto lo que hace es que compara si la propiedad es libre o no
                 propiedadesLibres.remove(position.getName());  // Elimina el dato de propiedadesLibres
-                propiedadesOcupadas.add(position.getName());   // Agrega el dato a propiedadesOcupadas
+                propiedadesOcupadasJ1.add(position.getName());   // Agrega el dato a propiedadesOcupadas
                 AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
-                AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+                AppContext.getInstance().set("propiedadesOcupadasJ1", propiedadesOcupadasJ1);
+            }
+            else if (estado == 1 && jugadorActual == 2) {//Esto lo que hace es que compara si la propiedad es libre o no
+                propiedadesLibres.remove(position.getName());  // Elimina el dato de propiedadesLibres
+                propiedadesOcupadasJ2.add(position.getName());   // Agrega el dato a propiedadesOcupadas
+                AppContext.getInstance().set("propiedadesLibres", propiedadesLibres);
+                AppContext.getInstance().set("propiedadesOcupadasJ2", propiedadesOcupadasJ2);
             }
 
-            
-            Position position1 = this.positionControl.getPositionMap().get(valTotal);
-            System.out.println(position1.getOwnedBy());
             List<Object> datos1 = (List<Object>) AppContext.getInstance().get("J1");
             List<Object> datos2 = (List<Object>) AppContext.getInstance().get("J2");
             Datos datos = (Datos) AppContext.getInstance().get("Llave");
             if (jugadorActual == 1) {
-              cuentaJugador1 -= position.getPrice();
-                System.out.println("Comprar " + position.getOwnedBy());
+                // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 1
+                cuentaJugador1 -= position.getPrice();
+                // Crea una nueva lista para guardar los datos de la propiedad
                 String nombre = position.getName();
                 if (datos1 == null) {
                     datos1 = new ArrayList<>();
@@ -529,16 +532,16 @@ public class PrincipalViewController extends Controller implements Initializable
                 nombres.add(position.getName());
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
-                nombres.add(Double.valueOf(position.getPrice()));
+                nombres.add(Double.valueOf(position.getMortgage()));
                 nombres.add(datos.getJugador1());
-                nombres.add(Integer.valueOf(position.getOwnedBy()));
+                nombres.add(Boolean.valueOf(position.isOwned()));
                 nombres.add(Double.valueOf(position.getPrice()));
-                System.out.println("Propiedad Comprada: " + nombre);
                 datos1.add(nombres);
                 AppContext.getInstance().set("J1", datos1);
 
             } else {
-                  cuentaJugador2 -= position.getPrice();
+                // Realiza el rebajo del valor de la propiedad que se esta comprando en la cuenta del jugador 2
+                cuentaJugador2 -= position.getPrice();
 
                 String nombre = position.getName();
                 if (datos2 == null) {
@@ -549,13 +552,15 @@ public class PrincipalViewController extends Controller implements Initializable
                 nombres.add(position.getName());
                 nombres.add(Double.valueOf(position.getPrice()));
                 nombres.add(Double.valueOf(position.getPrice() * 0.75));
-                nombres.add(Double.valueOf(position.getPrice()));
+                nombres.add(Double.valueOf(position.getMortgage()));
                 nombres.add(datos.getJugador2());
                 nombres.add(Boolean.valueOf(position.isOwned()));
-                System.out.println("Propiedad Comprada: " + nombre);
                 datos2.add(nombres);
                 AppContext.getInstance().set("J2", datos2);
             }
+            // Realizar las acciones necesarias al comprar la posición
+            // Por ejemplo, actualizar el estado de la posición en la GUI, ajustar el saldo del jugador, etc.
+            // Mostrar un mensaje de confirmación
             String mensajeTexto = "¡Has comprado la Propiedad " + position.getName() + "!";
             mensaje.showConfirmation("Confirmación de compra", gridPaneTablero.getScene().getWindow(), mensajeTexto);
         } else {
@@ -581,7 +586,7 @@ public class PrincipalViewController extends Controller implements Initializable
 
     void revizar() {
         cobroRenta();
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
         switch (characteristic) {
             case "Ve a carcel":
@@ -601,7 +606,7 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
     void desHabilitarBotones() {
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
         String characteristic = position.getCharacteristic();
         btnComprar.setDisable(characteristic.equals("Suerte") || characteristic.equals("Ve a carcel")
                 || characteristic.equals("Carcel") || characteristic.equals("Go")
@@ -615,20 +620,19 @@ public class PrincipalViewController extends Controller implements Initializable
         Position propiedad = new Position();
         gridPaneTablero.getChildren().remove(carta);
         propiedad.showPosition(carta, valTotal);
-        int startColumn = 3;  
-        int endColumn = 6;    
-        int startRow = 3;    
-        int endRow = 6;      
+        int startColumn = 3;  // Columna inicial
+        int endColumn = 6;    // Columna final
+        int startRow = 3;     // Fila inicial
+        int endRow = 6;       // Fila final
         GridPane.setConstraints(carta, startColumn, startRow, endColumn - startColumn + 1, endRow - startRow + 1);
         gridPaneTablero.getChildren().add(carta);
     }
-
     @Override
     public void initialize() {
 
     }
 
-    public PositionControl positionControl = new PositionControl();
+    private Position position = new Position();
 
     private Circle crearFicha(Color color, Image fichaImage) {
         Circle ficha = new Circle(14);
@@ -642,8 +646,8 @@ public class PrincipalViewController extends Controller implements Initializable
             if ((jugadorActual == 1 && color == Color.GREEN) || (jugadorActual == 2 && color == Color.BLUE)) {
                 c = gridPaneTablero.getColumnIndex(fichaImageView);
                 f = gridPaneTablero.getRowIndex(fichaImageView);
-                Position actualPosition = this.positionControl.getPositionMap().get(valTotal);
-                if (positionControl != null) {
+                Position actualPosition = this.position.getPositionMap().get(valTotal);
+                if (position != null) {
                     columna = actualPosition.getColumn();
                     fila = actualPosition.getRow();
                 }
@@ -663,6 +667,7 @@ public class PrincipalViewController extends Controller implements Initializable
         cuentaJugador1 += BonoInicial.getCuentaJ1();
         cuentaJugador2 += BonoInicial.getCuentaJ2();
         cargarValores();
+        
 
     }
 
@@ -674,7 +679,21 @@ public class PrincipalViewController extends Controller implements Initializable
             venta.setVentaJ1(0);
 
         }
-
+        //Hipoteca
+        VentasJ1 hipoteca1 = (VentasJ1) AppContext.getInstance().get("ValHipoteca1");
+        if (hipoteca1 != null) {
+            cuentaJugador1 += hipoteca1.getValHipoteca1();
+            cargarValores();
+            hipoteca1.setValHipoteca1(0);
+        }
+        
+        VentasJ1 hipotecaPago1 = (VentasJ1) AppContext.getInstance().get("RestaPagoHipoteca1");
+        if (hipotecaPago1 != null) {
+            cuentaJugador1 -= hipotecaPago1.getRestaPagoHipoteca1();
+            cargarValores();
+            hipotecaPago1.setRestaPagoHipoteca1(0);
+        }
+        
         return cuentaJugador1;
 
     }
@@ -688,7 +707,20 @@ public class PrincipalViewController extends Controller implements Initializable
             venta.setVentaJ2(0);
 
         }
-
+        //Hipoteca
+        VentasJ2 hipoteca2 = (VentasJ2) AppContext.getInstance().get("ValHipoteca2");
+        if (hipoteca2 != null) {
+            cuentaJugador2 += hipoteca2.getValHipoteca2();
+            cargarValores();
+            hipoteca2.setValHipoteca2(0);
+        }
+        
+        VentasJ2 hipotecaPago2 = (VentasJ2) AppContext.getInstance().get("RestaPagoHipoteca1");
+        if (hipotecaPago2 != null) {
+            cuentaJugador1 -= hipotecaPago2.getRestaPagoHipoteca2();
+            cargarValores();
+            hipotecaPago2.setRestaPagoHipoteca2(0);
+        }
         return cuentaJugador2;
 
     }
@@ -726,6 +758,29 @@ public class PrincipalViewController extends Controller implements Initializable
             }
             imvEmojiJ2.setImage(new Image(Juga2));
         }
+        
+        if (cuentaJugador1 <= 0) {
+            List<String> propiedadesOcupadasJ1 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ1");
+            if (propiedadesOcupadasJ1 != null || !propiedadesOcupadasJ1.isEmpty() ){
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Bancarrota", getStage(), "Usted esta en bancarrota, para poder continuar debe vender sus propiedades si no el juego a termiado.");
+            FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
+            }else {
+             new Mensaje().showModal(Alert.AlertType.ERROR, "Game Over", getStage(), "Felicidades " + lblName2.getText() + " usted es el ganador.\nPresione Aceptar para terminar el juego");
+             System.exit(0);
+             
+            }
+        } 
+
+        else if (cuentaJugador2 <= 0) {
+            List<String> propiedadesOcupadasJ2 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ2");
+            if (propiedadesOcupadasJ2 != null || !propiedadesOcupadasJ2.isEmpty() ){
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Bancarrota", getStage(), "Usted esta en bancarrota, para poder continuar debe vender sus propiedades si no el juego a termiado.");
+            FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
+            }else {
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Game Over", getStage(), "Felicidades " + lblName1.getText() + " usted es el ganador.\nPresione Aceptar para terminar el juego");
+            System.exit(0);
+            }
+        }
 
     }
 
@@ -733,6 +788,7 @@ public class PrincipalViewController extends Controller implements Initializable
         BancoGame bancoGame = new BancoGame();
         bancoGame.pagarBonoInicial();
         metodoReceptor();
+        
     }
 
     public void pagoGo(String Jugador, double cantidad) {
@@ -744,7 +800,7 @@ public class PrincipalViewController extends Controller implements Initializable
     private void carcel() {
         valTotal = 8;
         actualizarSumaTotal(valTotal);
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
         double multa = (int) (Math.random() * 301) + 20;
 
         String saldo;
@@ -756,10 +812,14 @@ public class PrincipalViewController extends Controller implements Initializable
             if (residuo <= 0) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
                 FlowController.getInstance().goViewInWindow("Jugador1PropiedadesView");
+                //No tiene saldo suficiente 
+                //compara el valor de las propiedades que tiene con la deuda
+                // metodo que vende una propiedad
                 System.out.println(multa);
             } else if (residuo > 0) {
                 cuentaJugador1 -= multa;
-
+                //Deuda saldada
+                //Sale de la carcel 
                 System.out.println(multa);
             }
         } else if (jugadorActual == 2) {
@@ -768,10 +828,13 @@ public class PrincipalViewController extends Controller implements Initializable
             if (residuo <= 0) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Venta o hipoteca de activos", getStage(), "Es necesario vender o hipotecar sus propiedades para cancelar la multa. Cuyo valor es de $" + multa);
                 FlowController.getInstance().goViewInWindow("Jugador2PropiedadesView");
-       
+                //No tiene saldo suficiente 
+                //compara el valor de las propiedades que tiene con la deuda
+                // metodo que vende una propiedad
             } else if (residuo > 0) {
                 cuentaJugador2 -= multa;
-
+                //Deuda saldada
+                //Sale de la carcel
                 System.out.println(multa);
             }
         }
@@ -781,18 +844,22 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
     private void cobroRenta() {
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        
+         List<String> listaPropiedadHipotecadaJ1 = (List<String>) AppContext.getInstance().get("listaPropiedadHipotecadaJ1");
+         List<String> listaPropiedadHipotecadaJ2 = (List<String>) AppContext.getInstance().get("listaPropiedadHipotecadaJ2");
+        
+        Position position = this.position.getPositionMap().get(valTotal);
         double rent = position.getRent();
 
         if (position.isOwned() && jugadorActual != position.getOwnedBy()) {
-
-            if (jugadorActual == 1) {
+            // revisar
+            if (jugadorActual == 1 && listaPropiedadHipotecadaJ1 == null || listaPropiedadHipotecadaJ1.isEmpty() ) {
                 if (valTotal == 2 || valTotal == 18) {
                     rent = rentaAguaOLuz() * valorUtilidades;
                 }
                 cuentaJugador1 -= rent;
                 cuentaJugador2 += rent;
-            } else {
+            }  else if (jugadorActual == 2 && listaPropiedadHipotecadaJ2 == null || listaPropiedadHipotecadaJ2.isEmpty()) {
                 if (valTotal == 2 || valTotal == 18) {
                     rent = rentaAguaOLuz() * valorUtilidades;
                 }
@@ -815,9 +882,9 @@ public class PrincipalViewController extends Controller implements Initializable
         Mensaje mensaje = new Mensaje();
 
         // Monopolio 1
-        Position position4 = this.positionControl.getPositionMap().get(4);
-        Position position6 = this.positionControl.getPositionMap().get(6);
-        Position position7 = this.positionControl.getPositionMap().get(7);
+        Position position4 = this.position.getPositionMap().get(4);
+        Position position6 = this.position.getPositionMap().get(6);
+        Position position7 = this.position.getPositionMap().get(7);
 
         if (jugadorActual == position4.getOwnedBy() && jugadorActual == position6.getOwnedBy() && jugadorActual == position7.getOwnedBy()) {
             if (!monopoly1Creado) {
@@ -833,9 +900,9 @@ public class PrincipalViewController extends Controller implements Initializable
         }
 
         // Monopolio 2
-        Position position12 = this.positionControl.getPositionMap().get(12);
-        Position position14 = this.positionControl.getPositionMap().get(14);
-        Position position15 = this.positionControl.getPositionMap().get(15);
+        Position position12 = this.position.getPositionMap().get(12);
+        Position position14 = this.position.getPositionMap().get(14);
+        Position position15 = this.position.getPositionMap().get(15);
 
         if (jugadorActual == position12.getOwnedBy() && jugadorActual == position14.getOwnedBy() && jugadorActual == position15.getOwnedBy()) {
             if (!monopoly2Creado) {
@@ -851,9 +918,9 @@ public class PrincipalViewController extends Controller implements Initializable
         }
 
         // Monopolio 3
-        Position position17 = this.positionControl.getPositionMap().get(17);
-        Position position19 = this.positionControl.getPositionMap().get(19);
-        Position position20 = this.positionControl.getPositionMap().get(20);
+        Position position17 = this.position.getPositionMap().get(17);
+        Position position19 = this.position.getPositionMap().get(19);
+        Position position20 = this.position.getPositionMap().get(20);
 
         if (jugadorActual == position17.getOwnedBy() && jugadorActual == position19.getOwnedBy() && jugadorActual == position20.getOwnedBy()) {
             if (!monopoly3Creado) {
@@ -869,9 +936,9 @@ public class PrincipalViewController extends Controller implements Initializable
         }
 
         // Monopolio 4
-        Position position25 = this.positionControl.getPositionMap().get(26);
-        Position position26 = this.positionControl.getPositionMap().get(25);
-        Position position28 = this.positionControl.getPositionMap().get(28);
+        Position position25 = this.position.getPositionMap().get(26);
+        Position position26 = this.position.getPositionMap().get(25);
+        Position position28 = this.position.getPositionMap().get(28);
 
         if (jugadorActual == position25.getOwnedBy() && jugadorActual == position26.getOwnedBy() && jugadorActual == position28.getOwnedBy()) {
             if (!monopoly4Creado) {
@@ -887,8 +954,8 @@ public class PrincipalViewController extends Controller implements Initializable
         }
 
         // Monopolio 5
-        Position position2 = this.positionControl.getPositionMap().get(2);
-        Position position18 = this.positionControl.getPositionMap().get(18);
+        Position position2 = this.position.getPositionMap().get(2);
+        Position position18 = this.position.getPositionMap().get(18);
 
         if (jugadorActual == position2.getOwnedBy() && jugadorActual == position18.getOwnedBy()) {
             if (!monopoly5Creado) {
@@ -902,10 +969,10 @@ public class PrincipalViewController extends Controller implements Initializable
         }
 
         // Monopolio 6
-        Position position5 = this.positionControl.getPositionMap().get(5);
-        Position position11 = this.positionControl.getPositionMap().get(11);
-        Position position22 = this.positionControl.getPositionMap().get(22);
-        Position position30 = this.positionControl.getPositionMap().get(30);
+        Position position5 = this.position.getPositionMap().get(5);
+        Position position11 = this.position.getPositionMap().get(11);
+        Position position22 = this.position.getPositionMap().get(22);
+        Position position30 = this.position.getPositionMap().get(30);
 
         if (jugadorActual == position5.getOwnedBy() && jugadorActual == position11.getOwnedBy() && jugadorActual == position22.getOwnedBy() && jugadorActual == position30.getOwnedBy()) {
             if (!monopoly6Creado) {
@@ -972,7 +1039,7 @@ public class PrincipalViewController extends Controller implements Initializable
 
     void construirCasa() {
         int maximoCasas = 4;
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
         Mensaje mensaje = new Mensaje();
 
         if (jugadorActual == position.getOwnedBy()) {
@@ -1054,7 +1121,7 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
     void construirHotel() {
-        Position position = this.positionControl.getPositionMap().get(valTotal);
+        Position position = this.position.getPositionMap().get(valTotal);
         Mensaje mensaje = new Mensaje();
         if (position.getNumHouse() == 4 && position.getNumHotel() == 0) {
             double hotelPrecio = position.getHotelPrice();
@@ -1080,7 +1147,8 @@ public class PrincipalViewController extends Controller implements Initializable
 
     }
 
-   private void creaListaPropiedadesLibres() {
+  
+    private void creaListaPropiedadesLibres() {
 
         List<String> propiedadesLibres = new ArrayList<>();
         propiedadesLibres.add("Agua");
@@ -1108,56 +1176,70 @@ public class PrincipalViewController extends Controller implements Initializable
     }
 
     private void creaListaPropiedadesCompradas() {
-        List<String> propiedadesOcupadas = new ArrayList<>();
+        List<String> propiedadesOcupadasJ1 = new ArrayList<>();
+        AppContext.getInstance().set("propiedadesOcupadasJ1", propiedadesOcupadasJ1);
+        
+        List<String> propiedadesOcupadasJ2 = new ArrayList<>();
+        AppContext.getInstance().set("propiedadesOcupadasJ2", propiedadesOcupadasJ2);
+    }
+    
+    
+    private void listaPropiedadHipotecadaJ1() {
+        List<String> listaPropiedadHipotecadaJ1 = new ArrayList<>();
+        
+        AppContext.getInstance().set("listaPropiedadHipotecadaJ1", listaPropiedadHipotecadaJ1);
+    }
+    
+     private void listaPropiedadHipotecadaJ2() {
+        List<String> listaPropiedadHipotecadaJ2 = new ArrayList<>();
+        
+        AppContext.getInstance().set("listaPropiedadHipotecadaJ2", listaPropiedadHipotecadaJ2);
+    }
 
-        AppContext.getInstance().set("propiedadesOcupadas", propiedadesOcupadas);
+////////////////////////////////////////////////////////////
+    @FXML
+    private void boton1(ActionEvent event) {
+        List<String> propiedadesLibres = (List<String>) AppContext.getInstance().get("propiedadesLibres");
+
+        System.out.println("\n\nElementos de propiedadesLibres:");
+        for (String elemento : propiedadesLibres) {
+            System.out.println(elemento);
+        }
+
     }
     @FXML
-    void onActionBtnGuardar(ActionEvent event) {
-        guardarPartida();
-           
-    }
-    void guardarPartida(){
-        GameService gameService = new GameService();
-        GameDto gameDto = new GameDto();
-        gameDto.setFecha(LocalDate.now());
-        gameDto.setNomJugador1(lblName1.getText());
-        gameDto.setNomJugador2(lblName2.getText());
-        gameDto.setCuentaJugador1(cuentaJugador1);
-        gameDto.setCuentaJugador2(cuentaJugador2);
-        gameDto.setPosiFicha1(sumaTotal1);
-        gameDto.setPosiFicha2(sumaTotal2);
-         Respuesta respuesta = gameService.guardarPartida(gameDto);
-      Long gameId = ((GameDto) respuesta.getResultado("gameDto")).getId();
-       // guardar(gameService, gameId);
-    }
- 
-public void guardar(GameService gameService, Long gameId) {
-    Game game = gameService.obtenerJuegoPorId(gameId);
-    boolean propiedadesGuardadas = false;
-
-    if (game != null) {
-        int[] positionIndices = {2, 4, 5, 6, 7, 11, 12, 14, 15, 17, 18, 19, 20, 22, 25, 26, 28, 30};
-        PropiedadService propiedadService = new PropiedadService();
-
-        for (int positionIndex : positionIndices) {
-            Position position = this.positionControl.getPositionMap().get(positionIndex);
-
-            if (position.getOwnedBy() != 0) {
-                PropiedadDto propiedadDto = new PropiedadDto();
-                propiedadDto.setPropiId(Long.valueOf(position.getNumPosition()));
-                propiedadDto.setPropiPropietario(position.getOwnedBy());
-                propiedadDto.setPropiAlquiler(position.getRent());
-             propiedadDto.setGameId(game);
-
-                propiedadService.guardarPropiedad(propiedadDto);
-                propiedadesGuardadas = true;
-            }
+    private void boton2(ActionEvent event) {
+        
+        List<String> propiedadesOcupadasJ1 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ1");
+        System.out.println("\n\nElementos de propiedadesOcupadas Jugador 1:");
+        for (String elemento : propiedadesOcupadasJ1) {
+            System.out.println(elemento);
         }
+        List<String> propiedadesOcupadasJ2 = (List<String>) AppContext.getInstance().get("propiedadesOcupadasJ2");
+
+        System.out.println("\n\nElementos de propiedadesOcupadas Jugador 2:");
+        for (String elemento : propiedadesOcupadasJ2) {
+            System.out.println(elemento);
+        }
+
     }
 
-    if (!propiedadesGuardadas) {
-        System.out.println("No se guardaron propiedades");
+    @FXML
+    private void boton3(ActionEvent event) {
+        List<String> listaPropiedadHipotecadaJ1 = (List<String>) AppContext.getInstance().get("listaPropiedadHipotecadaJ1");
+        System.out.println("\n\nElementos de listaPropiedadHipotecadaJ1:");
+        for (String elemento : listaPropiedadHipotecadaJ1) {
+            System.out.println(elemento);
+
+        }
+        List<String> listaPropiedadHipotecadaJ2 = (List<String>) AppContext.getInstance().get("listaPropiedadHipotecadaJ2");
+        System.out.println("\n\nElementos de listaPropiedadHipotecadaJ2:");
+        for (String elemento : listaPropiedadHipotecadaJ2) {
+            System.out.println(elemento);
+        }
+       
     }
-}
+
+  
+
 }

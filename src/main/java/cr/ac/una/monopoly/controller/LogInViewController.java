@@ -123,19 +123,20 @@ public class LogInViewController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        System.out.println("Hola");
+       
     }
 
     @FXML
     private void onActionBtnElegirFichas(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("FichaView");
+         FlowController.getInstance().goViewInWindow("FichaView");
     }
+    
 
 }
 
 class Datos {
 
-    private String Jugador1;
+   private String Jugador1;
     private String Jugador2;
     private String Ruta1;
 
